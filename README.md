@@ -1,4 +1,4 @@
-# Next.js Personal Boilerplate
+# Next.js Daniel's Boilerplate
 
 A personal boilerplate created by Daniel Halabi to facilitate building Next.js websites quickly and efficiently.
 
