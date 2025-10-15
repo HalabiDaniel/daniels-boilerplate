@@ -5,6 +5,7 @@ import { Header } from "@/components/layouts/header";
 import { ThemeProvider } from "@/components/ui/theme-provider";
 import Hero1 from "@/components/home/hero-1"
 import Hero2 from "@/components/home/hero-2"
+import About1 from "@/components/home/about-1"
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -41,6 +42,7 @@ export default function RootLayout({
           <Header />
           {children}
           <Hero1 />
+          <About1 />
         </ThemeProvider>
       </body>
     </html>

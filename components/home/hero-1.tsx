@@ -10,7 +10,7 @@ export default function Hero1() {
   return (
     <>
       <section
-        className="w-full min-h-screen bg-[#F4F7F3] dark:bg-neutral-900 relative pb-32"
+        className="w-full min-h-[500px] md:min-h-[550px] lg:min-h-[600px] xl:min-h-[650px] bg-[#F4F7F3] dark:bg-neutral-900 relative pb-32"
       >
         <div className="container mx-auto px-4 py-16 flex items-center justify-center gap-8">
           {/* Left side image */}
@@ -29,7 +29,7 @@ export default function Hero1() {
             <div
               className="px-3 py-1 rounded-full text-white text-[13px] border-2 border-white"
               style={{
-                background: 'linear-gradient(to right, oklch(0.5 0.134 242.749), oklch(0.293 0.066 243.157), black)'
+                background: 'oklch(0.5 0.134 242.749)'
               }}
             >
               v1.0 available for free
@@ -42,7 +42,7 @@ export default function Hero1() {
                 letterSpacing: '-1.35px'
               }}
             >
-              Your Friendly Neighborhood <span style={{ color: 'oklch(0.5 0.134 242.749)' }}>Boilerplate</span>
+              Your Friendly Neighborhood Next.js <span style={{ color: 'oklch(0.5 0.134 242.749)' }}>Boilerplate</span>
             </h1>
 
             {/* P */}
@@ -105,21 +105,6 @@ export default function Hero1() {
           </div>
         </div>
       </section>
-
-      {/* Image wrapper - positioned to overflow the hero section */}
-      <div className="w-full px-4 -mt-56 relative z-10">
-        <div className="container mx-auto max-w-[1200px]">
-          <div className="relative w-full aspect-[16/9] max-h-[500px] overflow-hidden rounded-2xl shadow-2xl">
-            <Image
-              src="/hero-img.png"
-              alt="Hero image"
-              fill
-              className="object-cover"
-              priority
-            />
-          </div>
-        </div>
-      </div>
     </>
   );
 }
