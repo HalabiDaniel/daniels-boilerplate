@@ -51,12 +51,8 @@ export default function About1() {
         </div>
       </div>
 
-      <div className="container mx-auto px-4 pb-16 pt-[320px] md:pt-[360px] space-y-16">
-        {/* First Row: Two Columns */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16">
-          {/* Left Column: Pill-Title-Subtitle */}
-          <div className="space-y-4">
-            {/* Pill */}
+      <div className="container mx-auto px-4 pb-16 pt-[320px] md:pt-[360px] space-y-8">
+        {/* Pill */}
             <div
               className="inline-block px-3 py-1 rounded-full text-white text-[13px] border-2 border-white"
               style={{
@@ -65,6 +61,10 @@ export default function About1() {
             >
               About the Boilerplate
             </div>
+        {/* First Row: Two Columns */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16">
+          {/* Left Column: Pill-Title-Subtitle */}
+          <div className="space-y-4">
             <h2
               className="font-semibold text-3xl md:text-[42px] md:leading-[50px] text-white"
               style={{
@@ -106,7 +106,7 @@ export default function About1() {
         </div>
 
         {/* Second Row: 4 Counter Columns */}
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12 mt-16">
           {counters.map((counter, index) => (
             <div key={index} className="text-center lg:text-left">
               <div
