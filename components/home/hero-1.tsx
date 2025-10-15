@@ -3,10 +3,16 @@
 import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import { ArrowRight } from 'lucide-react';
-import { useState } from 'react';
+import { useState, useRef } from 'react';
+import { SignUpButton, useUser } from '@clerk/nextjs';
+import Link from 'next/link';
 
 export default function Hero1() {
   const [isInputFocused, setIsInputFocused] = useState(false);
+  const [email, setEmail] = useState('');
+  const { isSignedIn } = useUser();
+  const buttonRef = useRef<HTMLButtonElement>(null);
+
   return (
     <>
       <section
@@ -50,48 +56,69 @@ export default function Hero1() {
               A personal boilerplate created by Daniel Halabi to facilitate building Next.js websites quickly and efficiently.
             </p>
 
-            {/* Input with Button */}
-            <div
-              className="w-full max-w-[450px] bg-[oklch(0.922_0_0)] dark:bg-[#262626] rounded-xl p-1.5 flex items-center gap-1"
-            >
-              <input
-                type="email"
-                placeholder="Add your email address"
-                className="flex-1 bg-transparent px-3 py-2 text-sm text-[#262626] dark:text-white placeholder:text-[#262626] dark:placeholder:text-white/70 outline-none"
-                onFocus={() => setIsInputFocused(true)}
-                onBlur={() => setIsInputFocused(false)}
-              />
-              <Button
-                className="shrink-0 dark:text-white overflow-hidden h-[42px] flex items-center justify-center text-sm relative"
-                style={{
-                  width: isInputFocused ? '42px' : 'auto',
-                  paddingLeft: isInputFocused ? '0' : '24px',
-                  paddingRight: isInputFocused ? '0' : '24px',
-                  transition: isInputFocused
-                    ? 'width 0.5s cubic-bezier(0.4, 0, 0.2, 1), padding 0.5s cubic-bezier(0.4, 0, 0.2, 1)'
-                    : 'width 0.4s cubic-bezier(0.4, 0, 0.2, 1), padding 0.4s cubic-bezier(0.4, 0, 0.2, 1)'
+            {/* Input with Button or Dashboard Button */}
+            {isSignedIn ? (
+              <Link href="/dashboard">
+                <Button className="dark:text-white">Go to your Dashboard</Button>
+              </Link>
+            ) : (
+              <form
+                onSubmit={(e) => {
+                  e.preventDefault();
+                  buttonRef.current?.click();
                 }}
+                className="w-full max-w-[450px] bg-[oklch(0.922_0_0)] dark:bg-[#262626] rounded-xl p-1.5 flex items-center gap-1"
               >
-                <span
-                  className="absolute inset-0 flex items-center justify-center"
-                  style={{
-                    opacity: isInputFocused ? 1 : 0,
-                    transition: isInputFocused ? 'opacity 0.15s ease-in-out 0.1s' : 'opacity 0s'
-                  }}
+                <input
+                  type="email"
+                  placeholder="Add your email address"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  className="flex-1 bg-transparent px-3 py-2 text-sm text-[#262626] dark:text-white placeholder:text-[#262626] dark:placeholder:text-white/70 outline-none"
+                  onFocus={() => setIsInputFocused(true)}
+                  onBlur={() => setIsInputFocused(false)}
+                />
+                <SignUpButton
+                  mode="modal"
+                  forceRedirectUrl="/dashboard"
+                  signInForceRedirectUrl="/dashboard"
+                  initialValues={{ emailAddress: email }}
                 >
-                  <ArrowRight className="h-4 w-4" />
-                </span>
-                <span
-                  className="whitespace-nowrap"
-                  style={{
-                    opacity: isInputFocused ? 0 : 1,
-                    transition: isInputFocused ? 'opacity 0s' : 'opacity 0.15s ease-in-out 0.1s'
-                  }}
-                >
-                  Get Started
-                </span>
-              </Button>
-            </div>
+                  <Button
+                    ref={buttonRef}
+                    type="button"
+                    className="shrink-0 dark:text-white overflow-hidden h-[42px] flex items-center justify-center text-sm relative"
+                    style={{
+                      width: isInputFocused ? '42px' : 'auto',
+                      paddingLeft: isInputFocused ? '0' : '24px',
+                      paddingRight: isInputFocused ? '0' : '24px',
+                      transition: isInputFocused
+                        ? 'width 0.5s cubic-bezier(0.4, 0, 0.2, 1), padding 0.5s cubic-bezier(0.4, 0, 0.2, 1)'
+                        : 'width 0.4s cubic-bezier(0.4, 0, 0.2, 1), padding 0.4s cubic-bezier(0.4, 0, 0.2, 1)'
+                    }}
+                  >
+                    <span
+                      className="absolute inset-0 flex items-center justify-center"
+                      style={{
+                        opacity: isInputFocused ? 1 : 0,
+                        transition: isInputFocused ? 'opacity 0.15s ease-in-out 0.1s' : 'opacity 0s'
+                      }}
+                    >
+                      <ArrowRight className="h-4 w-4" />
+                    </span>
+                    <span
+                      className="whitespace-nowrap"
+                      style={{
+                        opacity: isInputFocused ? 0 : 1,
+                        transition: isInputFocused ? 'opacity 0s' : 'opacity 0.15s ease-in-out 0.1s'
+                      }}
+                    >
+                      Get Started
+                    </span>
+                  </Button>
+                </SignUpButton>
+              </form>
+            )}
           </div>
 
           {/* Right side image */}
