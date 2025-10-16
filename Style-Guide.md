@@ -104,19 +104,36 @@
 
 ### Outline Button
 - **Variant**: outline
-- **Background Color (Light)**: Transparent
-- **Background Color (Dark)**: input/30
-- **Text Color (Light)**: Foreground
+- **Background Color**: Transparent
+- **Text Color (Light)**: #262626
 - **Text Color (Dark)**: White
-- **Border**: 1px solid border color
-- **Hover (Light)**: bg-accent
-- **Hover (Dark)**: bg-input/50
+- **Border**: 2px solid #262626 (light mode) / white (dark mode)
+- **Shadow**: None
+- **Hover Background (Light)**: #262626
+- **Hover Text (Light)**: White
+- **Hover Background (Dark)**: White
+- **Hover Text (Dark)**: #262626
 - **Font Size**: 14px (text-sm)
 - **Font Weight**: Medium
 - **Padding**: 24px horizontal (px-6), 12px vertical (py-3)
 - **Height**: 44px (h-11)
 - **Border Radius**: 6px (rounded-md)
 - **Usage**: Dashboard button for logged-in users in header
+
+### Outline Icon Button
+- **Variant**: outline
+- **Size**: icon (40x40px)
+- **Background Color**: Transparent
+- **Icon Color (Light)**: #262626
+- **Icon Color (Dark)**: White
+- **Border**: 2px solid #262626 (light mode) / white (dark mode)
+- **Shadow**: None
+- **Hover Background (Light)**: #262626
+- **Hover Icon (Light)**: White
+- **Hover Background (Dark)**: White
+- **Hover Icon (Dark)**: #262626
+- **Border Radius**: 6px (rounded-md)
+- **Usage**: GitHub button in Hero 1 for logged-in users
 
 ### Secondary Button (Light on Dark)
 - **Background Color**: White
@@ -143,6 +160,22 @@
 - **Button Height**: Fixed at 42px
 - **Usage**: Input fields with submit buttons (hero, footer newsletter)
 - **Note**: Text and icon color are always white regardless of theme
+
+### Ghost Icon Button (Theme Toggle)
+- **Variant**: ghost
+- **Size**: icon (40x40px)
+- **Background Color**: Transparent
+- **Icon Color (Light)**: Inherits from foreground
+- **Icon Color (Dark)**: Inherits from foreground
+- **Hover Background**: accent color (subtle)
+- **Icon Size**: 1.2rem (h-[1.2rem] w-[1.2rem])
+- **Icons**: Sun (light mode) / Moon (dark mode)
+- **Animation**: Rotate transition on theme change
+  - Sun: rotate-0 scale-100 (light) → -rotate-90 scale-0 (dark)
+  - Moon: rotate-90 scale-0 (light) → rotate-0 scale-100 (dark)
+- **Border Radius**: 6px (rounded-md)
+- **Usage**: Theme toggle in header
+- **Accessibility**: aria-label="Toggle theme"
 
 ## Animations
 

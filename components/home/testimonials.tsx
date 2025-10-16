@@ -4,28 +4,28 @@ import Image from 'next/image';
 
 const testimonials = [
   {
-    quote: "The A/B testing helped us refine our email campaigns, resulting in a huge increase in open rates.",
-    name: "Frederic Hill",
-    position: "Founder & CEO",
+    quote: "I used to spend hours hunting down tiny bugs. Now I just point at this template and poof, the problem solved before I even finish my coffee.",
+    name: "Alex Morgan",
+    position: "Freelance Developer",
     image: "/testimonials.png",
-    metric: "+ 120 %",
-    metricLabel: "Increase in ad awareness in the first month"
+    metric: "40+",
+    metricLabel: "hours saved on coding in the first day."
   },
   {
-    quote: "Our social media engagement soared within the first month of using this software.",
-    name: "Safaa Sampson",
-    position: "Account Executive",
+    quote: "I showed this template to my team, and they actually cheered. I have not seen humans react that way since free pizza day.",
+    name: "Jamie Lin",
+    position: "Startup CTO",
     image: "/testimonials.png",
-    metric: "+ 10 k",
-    metricLabel: "New followers in the last 4 months"
+    metric: "$10,000",
+    metricLabel: "saved on developer costs"
   },
   {
-    quote: "This software allowed us to increase our lead generation, leading to a rise in conversions.",
-    name: "Brendan Buck",
-    position: "Marketing Manager",
+    quote: "I dragged, I dropped, and suddenly my landing page looks like it was built by a designer who drinks coffee with unicorns.",
+    name: "Sam Patel",
+    position: "UI/UX Designer",
     image: "/testimonials.png",
-    metric: "+ 50 %",
-    metricLabel: "Increase in paid bookings vs last year"
+    metric: "50+",
+    metricLabel: "hours saved of hair-pulling frustration."
   }
 ];
 
@@ -57,12 +57,12 @@ export default function Testimonials() {
               letterSpacing: '-1px'
             }}
           >
-            Hear from our satisfied customers
+            Hear from my satisfied users
           </h2>
 
           {/* Text */}
           <p className="text-sm md:text-[15px] md:leading-[26px] font-normal text-white/90 max-w-[600px]">
-            The best way to showcase our commitment is through the experiences and stories of those who have partnered with us.
+            Alright, you caught me… these are not real users. But hey, this is your future testimonial section, so go ahead and enjoy it because it is already built for you!
           </p>
         </div>
 

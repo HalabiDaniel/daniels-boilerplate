@@ -7,16 +7,16 @@ export default function About1() {
 
   const tabs = [
     {
-      label: 'Mission',
-      content: 'We are dedicated to creating innovative solutions that empower businesses to thrive in the digital age. Our mission is to deliver exceptional value through cutting-edge technology and unparalleled service.'
+      label: 'SaaS-Ready',
+      content: 'Built with scalability in mind, this boilerplate comes preconfigured for modern SaaS applications, so you can launch faster with confidence.'
     },
     {
-      label: 'Vision',
-      content: 'To be the leading force in digital transformation, setting new standards for excellence and innovation. We envision a future where technology seamlessly integrates with human potential.'
+      label: 'Instant Start',
+      content: 'Clean architecture, modular code, and intuitive setup make it easy for anyone to get started and customize without friction.'
     },
     {
-      label: 'Values',
-      content: 'Integrity, innovation, and customer success drive everything we do. We believe in transparency, continuous improvement, and building lasting relationships with our clients and partners.'
+      label: 'Forever Free',
+      content: 'No paywalls and no hidden limits. Use it, build on it, and grow your project without ever worrying about costs.'
     }
   ];
 
@@ -45,7 +45,7 @@ export default function About1() {
             <img
               src="/hero-img-3.png"
               alt="Hero image"
-              className="w-full h-full object-cover"
+              className="w-full h-full object-cover object-left-center"
             />
           </div>
         </div>
@@ -53,14 +53,14 @@ export default function About1() {
 
       <div className="container mx-auto px-4 pb-16 pt-[320px] md:pt-[360px] space-y-8">
         {/* Pill */}
-            <div
-              className="inline-block px-3 py-1 rounded-full text-white text-[13px] border-2 border-white"
-              style={{
-                background: 'oklch(0.5 0.134 242.749)'
-              }}
-            >
-              About the Boilerplate
-            </div>
+        <div
+          className="inline-block px-3 py-1 rounded-full text-white text-[13px] border-2 border-white"
+          style={{
+            background: 'oklch(0.5 0.134 242.749)'
+          }}
+        >
+          About the Boilerplate
+        </div>
         {/* First Row: Two Columns */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16">
           {/* Left Column: Pill-Title-Subtitle */}

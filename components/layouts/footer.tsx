@@ -4,6 +4,7 @@ import { Button } from '@/components/ui/button';
 import { ArrowRight } from 'lucide-react';
 import { useState, useRef } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 
 export default function Footer() {
   const [isInputFocused, setIsInputFocused] = useState(false);
@@ -42,7 +43,7 @@ export default function Footer() {
 
           {/* Text */}
           <p className="text-base md:text-[16px] md:leading-[28px] font-normal text-white/80 max-w-[500px]">
-            Join thousands of developers who are building faster with our boilerplate.
+            Only two developers so far are using this boilerplate… but hey, you could be the third legendary coder to join the speed club.
           </p>
 
           {/* Get Started Button */}
@@ -55,9 +56,20 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-16 gap-8 mb-12">
           {/* Column 1 - Logo and Text (20%) */}
           <div className="md:col-span-4">
-            <div className="text-white font-bold text-xl mb-4">Logo</div>
+            <div className="flex items-center gap-3 mb-4">
+              <Image
+                src="/daniel-logo-white.png"
+                alt="Daniel's Next Logo"
+                width={40}
+                height={40}
+                className="h-10 w-10"
+              />
+              <span className="text-xl font-semibold text-white font-inter">
+                Daniel&apos;s Next
+              </span>
+            </div>
             <p className="text-white/70 text-sm leading-relaxed">
-              Building the future of web development, one component at a time.
+              I just wanted to make my life easier… and thought I would make yours a little easier too.
             </p>
           </div>
 
@@ -192,7 +204,7 @@ export default function Footer() {
         <div className="flex flex-col md:flex-row justify-between items-center gap-4">
           {/* Copyright - Left Aligned */}
           <p className="text-white/70 text-sm">
-            © {new Date().getFullYear()} Your Company. All rights reserved.
+            © {new Date().getFullYear()} Daniel Halabi. All rights reserved.
           </p>
 
           {/* Privacy and Terms - Right Aligned */}

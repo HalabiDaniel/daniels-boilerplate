@@ -22,7 +22,7 @@ export default function SideBySide() {
                 background: 'oklch(0.5 0.134 242.749)'
               }}
             >
-              Feature Highlight
+              Quick Start
             </div>
 
             {/* Heading */}
@@ -32,12 +32,12 @@ export default function SideBySide() {
                 letterSpacing: '-1px'
               }}
             >
-              Build faster with <span style={{ color: 'oklch(0.5 0.134 242.749)' }}>modern tools</span>
+              Launch Smarter, <span style={{ color: 'oklch(0.5 0.134 242.749)' }}>Code Faster</span>
             </h2>
 
             {/* Text */}
             <p className="text-sm md:text-[15px] md:leading-[26px] font-normal text-[#404040] dark:text-white/90 max-w-[500px]">
-              Everything you need to ship your next project quickly. Pre-configured with the best tools and practices to help you focus on what matters most.
+              Skip the endless setup and start building immediately. This boilerplate gives you everything you need to move from idea to live product without wasting time on configuration.
             </p>
 
             {/* Button */}
@@ -58,7 +58,7 @@ export default function SideBySide() {
             {/* Image */}
             <div className="relative z-10 rounded-2xl overflow-hidden">
               <Image
-                src="/side-by-side-1.jpg"
+                src="/side-by-side.png"
                 alt="Feature showcase"
                 width={600}
                 height={400}
@@ -84,7 +84,7 @@ export default function SideBySide() {
             {/* Image */}
             <div className="relative z-10 rounded-2xl overflow-hidden">
               <Image
-                src="/side-by-side-2.jpg"
+                src="/side-by-side.png"
                 alt="Feature showcase"
                 width={600}
                 height={400}
@@ -102,7 +102,7 @@ export default function SideBySide() {
                 background: 'oklch(0.5 0.134 242.749)'
               }}
             >
-              Another Feature
+              Team Ready
             </div>
 
             {/* Heading */}
@@ -112,12 +112,12 @@ export default function SideBySide() {
                 letterSpacing: '-1px'
               }}
             >
-              Scale with <span style={{ color: 'oklch(0.5 0.134 242.749)' }}>confidence</span>
+              Built for Makers, <span style={{ color: 'oklch(0.5 0.134 242.749)' }}>Loved by Teams</span>
             </h2>
 
             {/* Text */}
             <p className="text-sm md:text-[15px] md:leading-[26px] font-normal text-[#404040] dark:text-white/90 max-w-[500px]">
-              Built on a solid foundation with best practices baked in. From authentication to database management, everything is ready to scale with your business.
+              Whether you’re a solo founder or part of a growing team, the clean structure and powerful integrations make collaboration effortless and development seamless.
             </p>
 
             {/* Button */}

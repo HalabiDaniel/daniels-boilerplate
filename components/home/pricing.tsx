@@ -90,7 +90,7 @@ export default function Pricing() {
 
                     {/* Text */}
                     <p className="text-sm md:text-[15px] md:leading-[26px] font-normal text-muted-foreground max-w-[600px]">
-                        Start building your dream project today with flexible pricing options that scale with your needs
+                        Whoa, calm down! You saw the pricing section and thought this template might cost money? Relax, it is 100% free. I just added this section to make your life easier… not to scare you!
                     </p>
                 </div>
 

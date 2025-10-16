@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { Moon, Sun } from "lucide-react";
 import { useTheme } from "next-themes";
 import { Button } from "@/components/ui/button";
@@ -19,8 +20,18 @@ export function Header() {
                 <div className="flex items-center justify-between">
                     {/* Column 1: Logo - Far Left */}
                     <div className="flex-shrink-0">
-                        <Link href="/" className="text-xl font-bold">
-                            Logo
+                        <Link href="/" className="flex items-center gap-3">
+                            <Image 
+                                src="/daniel-logo.png" 
+                                alt="Daniel's Next Logo" 
+                                width={40} 
+                                height={40}
+                                className="h-10 w-10"
+                                priority
+                            />
+                            <span className="text-xl font-semibold text-black dark:text-white font-inter">
+                                Daniel&apos;s Next
+                            </span>
                         </Link>
                     </div>
 
@@ -74,7 +85,7 @@ function HeaderButton() {
     if (isSignedIn) {
         return (
             <Link href="/dashboard">
-                <Button variant="outline">
+                <Button variant="outline" className="border-2 border-[#262626] dark:border-white text-[#262626] dark:text-white shadow-none hover:bg-[#262626] hover:text-white dark:hover:bg-white dark:hover:text-[#262626]">
                     Dashboard
                 </Button>
             </Link>

@@ -2,7 +2,7 @@
 
 import Image from 'next/image';
 import { Button } from '@/components/ui/button';
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight, Github } from 'lucide-react';
 import { useState, useRef } from 'react';
 import { SignUpButton, useUser } from '@clerk/nextjs';
 import Link from 'next/link';
@@ -58,9 +58,20 @@ export default function Hero1() {
 
             {/* Input with Button or Dashboard Button */}
             {isSignedIn ? (
-              <Link href="/dashboard">
-                <Button className="text-white">Go to Dashboard</Button>
-              </Link>
+              <div className="flex items-center gap-3">
+                <Link href="https://github.com/HalabiDaniel/daniels-boilerplate" target="_blank" rel="noopener noreferrer">
+                  <Button
+                    variant="outline"
+                    size="icon"
+                    className="bg-transparent border-2 border-[#262626] dark:border-white text-[#262626] dark:text-white shadow-none hover:bg-[#262626] hover:text-white dark:hover:bg-white dark:hover:text-[#262626]"
+                  >
+                    <Github className="h-4 w-4" />
+                  </Button>
+                </Link>
+                <Link href="/dashboard">
+                  <Button className="text-white">Go to Dashboard</Button>
+                </Link>
+              </div>
             ) : (
               <form
                 onSubmit={(e) => {

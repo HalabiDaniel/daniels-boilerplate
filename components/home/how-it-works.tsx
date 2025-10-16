@@ -1,5 +1,6 @@
 'use client';
 
+import React from 'react';
 import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import { ArrowRight } from 'lucide-react';
@@ -8,18 +9,18 @@ export default function HowItWorks() {
   const steps = [
     {
       number: 1,
-      title: 'Pick a plan',
-      description: 'Go through each of your options, taking note of which check the boxes of your needs.'
+      title: 'Prepare your environment',
+      description: 'Clone the GitHub repository, install all dependencies, and plug in your API keys to get everything up and running smoothly.'
     },
     {
       number: 2,
-      title: 'Implement changes',
-      description: 'Identify areas for improvement using our detailed insights. Refine your content with ease.'
+      title: 'Implement your changes',
+      description: 'Customize the codebase freely, adjust the design, and add your own features to shape the app exactly how you want it.'
     },
     {
       number: 3,
-      title: 'Monitor progress',
-      description: 'Our real-time updates and alerts keep you informed. Watch your ecommerce venture thrive.'
+      title: 'Launch your business',
+      description: 'Skip the tedious setup and focus on what matters, building and growing your SaaS. Go live in days, not weeks.'
     }
   ];
 
@@ -47,12 +48,12 @@ export default function HowItWorks() {
               letterSpacing: '-1px'
             }}
           >
-            Our <span style={{ color: 'oklch(0.5 0.134 242.749)' }}>step-by-step</span> approach
+            The <span style={{ color: 'oklch(0.5 0.134 242.749)' }}>step-by-step</span> process
           </h2>
 
           {/* Description */}
           <p className="text-sm md:text-[15px] md:leading-[26px] font-normal text-[#404040] dark:text-white/90 text-center max-w-[600px] mx-auto">
-            With concepts in hand, we meticulously design, refining every detail to align with your vision and objectives.
+            Using Daniel’s Next.js boilerplate is incredibly easy. Just clone the repository, make your changes, and deploy your project in minutes.
           </p>
 
           {/* Steps Container */}
@@ -64,9 +65,9 @@ export default function HowItWorks() {
           >
             <div className="flex flex-col lg:flex-row items-stretch gap-6">
               {steps.map((step, index) => (
-                <>
+                <React.Fragment key={step.number}>
                   {/* Step Column */}
-                  <div key={step.number} className="flex-1 space-y-4">
+                  <div className="flex-1 space-y-4">
                     {/* Row 1: Title and Pill */}
                     <div className="flex items-center justify-between gap-4">
                       <h4 className="font-semibold text-xl md:text-2xl text-[oklch(0.145_0_0)] dark:text-white">
@@ -90,11 +91,11 @@ export default function HowItWorks() {
 
                   {/* Arrow Column */}
                   {index < steps.length - 1 && (
-                    <div key={`arrow-${index}`} className="flex items-center justify-center lg:w-12 lg:flex-shrink-0">
+                    <div className="flex items-center justify-center lg:w-12 lg:flex-shrink-0">
                       <ArrowRight className="w-6 h-6 text-[#404040] dark:text-white/70" />
                     </div>
                   )}
-                </>
+                </React.Fragment>
               ))}
             </div>
           </div>
@@ -110,16 +111,6 @@ export default function HowItWorks() {
           <div className="grid grid-cols-1 lg:grid-cols-[55%_45%]">
             {/* Left Column: Content */}
             <div className="p-8 md:p-12 space-y-6 flex flex-col justify-center">
-              {/* Pill */}
-              <div
-                className="inline-block px-3 py-1 rounded-full text-white text-[13px] border-2 border-white self-start"
-                style={{
-                  background: 'oklch(0.5 0.134 242.749)'
-                }}
-              >
-                Ready Templates
-              </div>
-
               {/* Heading */}
               <h2
                 className="font-semibold text-3xl md:text-[42px] md:leading-[50px] text-[oklch(0.145_0_0)] dark:text-white text-left"
@@ -127,12 +118,12 @@ export default function HowItWorks() {
                   letterSpacing: '-1px'
                 }}
               >
-                Essentials to power your website creation
+                Beautifully Built Sections for Conversion
               </h2>
 
               {/* Text */}
               <p className="text-sm md:text-[15px] md:leading-[26px] font-normal text-[#404040] dark:text-white/90 text-left">
-                Getting started is a breeze, regardless of your level of experience. Let us automate your tasks.
+                Daniel’s Next.js boilerplate not only gives you a complete, ready-to-use solution, but also includes a wide selection of custom-built sections with beautiful, high-converting UI designs.
               </p>
 
               {/* Button */}
@@ -144,10 +135,10 @@ export default function HowItWorks() {
             {/* Right Column: Image */}
             <div className="relative min-h-[300px] lg:min-h-[400px] pt-8 lg:pt-12">
               <Image
-                src="/how-it-works.jpg"
+                src="/how-it-works.png"
                 alt="How it works"
                 fill
-                className="object-cover object-right-bottom"
+                className="object-contain object-right-bottom"
               />
             </div>
           </div>
