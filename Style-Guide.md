@@ -87,9 +87,66 @@
 - **Button Padding**: 24px horizontal (px-6), 10px vertical (py-2.5)
 - **Gap**: 4px (gap-1)
 
+## Buttons
+
+### Primary Button (Default)
+- **Variant**: default
+- **Background Color**: oklch(0.5 0.134 242.749) (primary blue) - same in light and dark mode
+- **Text Color**: White - always white in both light and dark mode
+- **Hover**: bg-primary/90
+- **Font Size**: 14px (text-sm)
+- **Font Weight**: Medium
+- **Padding**: 24px horizontal (px-6), 12px vertical (py-3)
+- **Height**: 44px (h-11)
+- **Border Radius**: 6px (rounded-md)
+- **Usage**: Main CTAs, primary actions (Get Started, etc.)
+- **Note**: Text color is always white regardless of theme
+
+### Outline Button
+- **Variant**: outline
+- **Background Color (Light)**: Transparent
+- **Background Color (Dark)**: input/30
+- **Text Color (Light)**: Foreground
+- **Text Color (Dark)**: White
+- **Border**: 1px solid border color
+- **Hover (Light)**: bg-accent
+- **Hover (Dark)**: bg-input/50
+- **Font Size**: 14px (text-sm)
+- **Font Weight**: Medium
+- **Padding**: 24px horizontal (px-6), 12px vertical (py-3)
+- **Height**: 44px (h-11)
+- **Border Radius**: 6px (rounded-md)
+- **Usage**: Dashboard button for logged-in users in header
+
+### Secondary Button (Light on Dark)
+- **Background Color**: White
+- **Text Color**: #262626
+- **Hover**: bg-white/90
+- **Font Size**: 14px (text-sm)
+- **Font Weight**: Medium
+- **Padding**: 24px horizontal (px-6), 12px vertical (py-3)
+- **Height**: 44px (h-11)
+- **Border Radius**: 6px (rounded-md)
+- **Usage**: CTAs on dark/blue backgrounds (footer CTA section)
+- **Note**: Colors apply to both light and dark mode
+
+### Transitioned Input Button
+- **Initial State**: Same as Primary Button
+- **Background Color**: oklch(0.5 0.134 242.749) (primary blue) - same in light and dark mode
+- **Text Color**: White - always white in both light and dark mode
+- **Focused State**: Shrinks to icon-only (42x42px square)
+- **Icon**: ArrowRight (white)
+- **Shrink Duration**: 500ms
+- **Expand Duration**: 400ms
+- **Easing**: cubic-bezier(0.4, 0, 0.2, 1)
+- **Text Fade**: Instant hide, 150ms fade-in with 100ms delay
+- **Button Height**: Fixed at 42px
+- **Usage**: Input fields with submit buttons (hero, footer newsletter)
+- **Note**: Text and icon color are always white regardless of theme
+
 ## Animations
 
-### Button Transition (Hero-1)
+### Button Transition (Input Fields)
 - **Shrink Duration**: 500ms
 - **Expand Duration**: 400ms
 - **Easing**: cubic-bezier(0.4, 0, 0.2, 1)

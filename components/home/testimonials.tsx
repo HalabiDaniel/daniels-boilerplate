@@ -31,7 +31,7 @@ const testimonials = [
 
 export default function Testimonials() {
   return (
-    <section 
+    <section
       className="w-full py-16 md:py-24"
       style={{
         backgroundColor: 'oklch(0.293 0.066 243.157)'
@@ -71,7 +71,10 @@ export default function Testimonials() {
           {testimonials.map((testimonial, index) => (
             <div
               key={index}
-              className="bg-white/10 backdrop-blur-sm rounded-2xl p-6 space-y-6"
+              className="rounded-2xl p-6 space-y-6"
+              style={{
+                backgroundColor: 'oklch(0.5 0.134 242.749 / 0.5)'
+              }}
             >
               {/* Quote */}
               <p className="text-white text-base md:text-[16px] leading-relaxed">

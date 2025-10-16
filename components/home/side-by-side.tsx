@@ -41,7 +41,7 @@ export default function SideBySide() {
             </p>
 
             {/* Button */}
-            <Button className="dark:text-white">Get Started</Button>
+            <Button className="text-white">Get Started</Button>
           </div>
 
           {/* Right Column: Image with Background */}
@@ -121,7 +121,7 @@ export default function SideBySide() {
             </p>
 
             {/* Button */}
-            <Button className="dark:text-white">Get Started</Button>
+            <Button className="text-white">Get Started</Button>
           </div>
         </div>
       </div>

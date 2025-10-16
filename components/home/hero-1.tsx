@@ -18,7 +18,7 @@ export default function Hero1() {
       <section
         className="w-full min-h-[500px] md:min-h-[550px] lg:min-h-[600px] xl:min-h-[650px] bg-[#F4F7F3] dark:bg-neutral-900 relative pb-32"
       >
-        <div className="container mx-auto px-4 py-16 flex items-center justify-center gap-8">
+        <div className="container mx-auto px-4 py-18 flex items-center justify-center gap-8">
           {/* Left side image */}
           <div className="hidden lg:block relative w-[20%] h-[300px]">
             <Image
@@ -59,7 +59,7 @@ export default function Hero1() {
             {/* Input with Button or Dashboard Button */}
             {isSignedIn ? (
               <Link href="/dashboard">
-                <Button className="dark:text-white">Go to your Dashboard</Button>
+                <Button className="text-white">Go to Dashboard</Button>
               </Link>
             ) : (
               <form
@@ -87,7 +87,7 @@ export default function Hero1() {
                   <Button
                     ref={buttonRef}
                     type="button"
-                    className="shrink-0 dark:text-white overflow-hidden h-[42px] flex items-center justify-center text-sm relative"
+                    className="shrink-0 overflow-hidden h-[42px] flex items-center justify-center text-sm relative text-white"
                     style={{
                       width: isInputFocused ? '42px' : 'auto',
                       paddingLeft: isInputFocused ? '0' : '24px',
