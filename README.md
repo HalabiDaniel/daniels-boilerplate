@@ -42,3 +42,17 @@ npm run build
 ## Environment Setup
 
 Check the `.env.example` file to understand what environment variables and API keys are needed for the project.
+
+## Authentication Setup
+
+The authentication system in this boilerplate uses Clerk. Clerk is easy to use and setup, relatively affordable, and stable. 
+
+### Authentication Setup
+
+1. Signup for a free Clerk account by visiting https://clerk.com.
+
+2. Click create application, enter a name, and select the sign in options.
+
+3. This will show you the quickstart page. Make sure you choose Next.js, and then copy the Clerk API Keys (NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY and CLERK_SECRET_KEY) and paste them in your .env.local file. See .env.example for more information.
+
+4. Follow the on-screen steps, configure your Clerk sign-up and sign-in settings, and run your server.

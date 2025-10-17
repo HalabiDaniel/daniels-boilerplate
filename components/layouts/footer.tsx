@@ -5,8 +5,10 @@ import { ArrowRight } from 'lucide-react';
 import { useState, useRef } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
+import { SignUpButton, useUser } from '@clerk/nextjs';
 
 export default function Footer() {
+  const { isSignedIn } = useUser();
   const [isInputFocused, setIsInputFocused] = useState(false);
   const [email, setEmail] = useState('');
   const buttonRef = useRef<HTMLButtonElement>(null);
@@ -47,9 +49,19 @@ export default function Footer() {
           </p>
 
           {/* Get Started Button */}
-          <Button className="bg-white text-[#262626] hover:bg-white/90">
-            Get Started
-          </Button>
+          {isSignedIn ? (
+            <Link href="/dashboard">
+              <Button className="bg-white text-[#262626] hover:bg-white/90">
+                Go to Dashboard
+              </Button>
+            </Link>
+          ) : (
+            <SignUpButton mode="modal" forceRedirectUrl="/dashboard">
+              <Button className="bg-white text-[#262626] hover:bg-white/90">
+                Get Started
+              </Button>
+            </SignUpButton>
+          )}
         </div>
 
         {/* Footer Content */}

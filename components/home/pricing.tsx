@@ -1,67 +1,20 @@
 'use client';
 
 import { useState } from 'react';
-import { useUser } from '@clerk/nextjs';
+import { SignUpButton, useUser } from '@clerk/nextjs';
 import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
+import { SUBSCRIPTION_PLANS } from '@/lib/subscription-plans';
+import { Lock } from 'lucide-react';
 
 export default function Pricing() {
     const [isAnnual, setIsAnnual] = useState(false);
     const { isSignedIn } = useUser();
     const router = useRouter();
 
-    const handleGetStarted = () => {
-        if (isSignedIn) {
-            router.push('/dashboard');
-        } else {
-            router.push('/sign-up');
-        }
+    const handleDashboardRedirect = () => {
+        router.push('/dashboard');
     };
-
-    const plans = [
-        {
-            name: 'Starter',
-            description: 'Perfect for individuals and small projects with big dreams',
-            monthlyPrice: 9,
-            annualPrice: 90,
-            features: [
-                'Up to 5 projects',
-                'Basic analytics',
-                'Email support',
-                '5GB storage',
-                'Community access',
-                'Community access'
-            ]
-        },
-        {
-            name: 'Pro',
-            description: 'Best for growing teams and businesses with big plans',
-            monthlyPrice: 29,
-            annualPrice: 290,
-            features: [
-                'Unlimited projects',
-                'Advanced analytics',
-                'Priority support',
-                '100GB storage',
-                'Team collaboration',
-            ],
-            featured: true
-        },
-        {
-            name: 'Enterprise',
-            description: 'For large organizations with custom needs',
-            monthlyPrice: 99,
-            annualPrice: 990,
-            features: [
-                'Everything in Pro',
-                'Dedicated support',
-                'Custom solutions',
-                'Unlimited storage',
-                'Advanced security',
-                'Community access'
-            ]
-        }
-    ];
 
     return (
         <section className="w-full py-16 md:py-20 bg-background">
@@ -121,65 +74,100 @@ export default function Pricing() {
 
                 {/* Pricing Cards */}
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                    {plans.map((plan, index) => (
-                        <div
-                            key={index}
-                            className={`rounded-2xl p-8 bg-card border ${plan.featured ? 'scale-105' : ''}`}
-                        >
-                            {plan.featured && (
-                                <div
-                                    className="inline-block px-3 py-1 rounded-full text-white text-xs font-semibold mb-4"
-                                    style={{
-                                        background: 'oklch(0.5 0.134 242.749)'
-                                    }}
-                                >
-                                    Most Popular
-                                </div>
-                            )}
-
-                            <h3 className="text-2xl font-bold mb-2 text-foreground">
-                                {plan.name}
-                            </h3>
-                            <p className="text-sm mb-6 text-muted-foreground">
-                                {plan.description}
-                            </p>
-
-                            <div className="mb-8">
-                                <span className="text-4xl font-bold text-foreground">
-                                    ${isAnnual ? plan.annualPrice : plan.monthlyPrice}
-                                </span>
-                                <span className="text-sm text-muted-foreground">
-                                    /{isAnnual ? 'year' : 'month'}
-                                </span>
-                            </div>
-
-                            <ul className="space-y-3 mb-8">
-                                {plan.features.map((feature, featureIndex) => (
-                                    <li key={featureIndex} className="flex items-start gap-2">
-                                        <svg
-                                            className="w-5 h-5 mt-0.5 flex-shrink-0"
-                                            style={{ color: 'oklch(0.5 0.134 242.749)' }}
-                                            fill="none"
-                                            stroke="currentColor"
-                                            viewBox="0 0 24 24"
-                                        >
-                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                                        </svg>
-                                        <span className="text-sm text-muted-foreground">
-                                            {feature}
-                                        </span>
-                                    </li>
-                                ))}
-                            </ul>
-
-                            <Button
-                                onClick={handleGetStarted}
-                                className="w-full text-white"
+                    {SUBSCRIPTION_PLANS.map((plan) => {
+                        const isLocked = plan.locked || false;
+                        const isFree = plan.monthlyPrice === 0;
+                        
+                        return (
+                            <div
+                                key={plan.id}
+                                className={`rounded-2xl p-8 bg-card border ${plan.featured ? 'scale-105' : ''} ${isLocked ? 'opacity-60' : ''} relative`}
                             >
-                                {isSignedIn ? 'Go to Dashboard' : 'Get Started'}
-                            </Button>
-                        </div>
-                    ))}
+                                {isLocked && (
+                                    <div className="absolute top-4 right-4">
+                                        <Lock className="h-5 w-5 text-muted-foreground" />
+                                    </div>
+                                )}
+
+                                {plan.featured && !isLocked && (
+                                    <div
+                                        className="inline-block px-3 py-1 rounded-full text-white text-xs font-semibold mb-4"
+                                        style={{
+                                            background: 'oklch(0.5 0.134 242.749)'
+                                        }}
+                                    >
+                                        Most Popular
+                                    </div>
+                                )}
+
+                                <h3 className="text-2xl font-bold mb-2 text-foreground">
+                                    {plan.name}
+                                </h3>
+                                <p className="text-sm mb-6 text-muted-foreground">
+                                    {plan.description}
+                                </p>
+
+                                <div className="mb-8">
+                                    {isFree ? (
+                                        <span className="text-4xl font-bold text-foreground">Free</span>
+                                    ) : (
+                                        <>
+                                            <span className="text-4xl font-bold text-foreground">
+                                                ${isAnnual ? plan.annualPrice : plan.monthlyPrice}
+                                            </span>
+                                            <span className="text-sm text-muted-foreground">
+                                                /{isAnnual ? 'year' : 'month'}
+                                            </span>
+                                        </>
+                                    )}
+                                </div>
+
+                                <ul className="space-y-3 mb-8">
+                                    {plan.features.map((feature, featureIndex) => (
+                                        <li key={featureIndex} className="flex items-start gap-2">
+                                            <svg
+                                                className="w-5 h-5 mt-0.5 flex-shrink-0"
+                                                style={{ color: 'oklch(0.5 0.134 242.749)' }}
+                                                fill="none"
+                                                stroke="currentColor"
+                                                viewBox="0 0 24 24"
+                                            >
+                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                                            </svg>
+                                            <span className="text-sm text-muted-foreground">
+                                                {feature}
+                                            </span>
+                                        </li>
+                                    ))}
+                                </ul>
+
+                                {isLocked ? (
+                                    <Button
+                                        className="w-full text-white"
+                                        disabled
+                                    >
+                                        Coming Soon
+                                    </Button>
+                                ) : !isSignedIn ? (
+                                    <SignUpButton 
+                                        mode="modal" 
+                                        forceRedirectUrl="/dashboard"
+                                    >
+                                        <Button className="w-full text-white">
+                                            Get Started
+                                        </Button>
+                                    </SignUpButton>
+                                ) : (
+                                    <Button
+                                        onClick={handleDashboardRedirect}
+                                        className="w-full text-white"
+                                    >
+                                        Go to Dashboard
+                                    </Button>
+                                )}
+                            </div>
+                        );
+                    })}
                 </div>
             </div>
         </section>

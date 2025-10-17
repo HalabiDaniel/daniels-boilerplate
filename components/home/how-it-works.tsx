@@ -4,8 +4,12 @@ import React from 'react';
 import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import { ArrowRight } from 'lucide-react';
+import { SignUpButton, useUser } from '@clerk/nextjs';
+import Link from 'next/link';
 
 export default function HowItWorks() {
+  const { isSignedIn } = useUser();
+  
   const steps = [
     {
       number: 1,
@@ -128,7 +132,15 @@ export default function HowItWorks() {
 
               {/* Button */}
               <div className="flex justify-start">
-                <Button className="text-white">Get Started</Button>
+                {isSignedIn ? (
+                  <Link href="/dashboard">
+                    <Button className="text-white">Go to Dashboard</Button>
+                  </Link>
+                ) : (
+                  <SignUpButton mode="modal" forceRedirectUrl="/dashboard">
+                    <Button className="text-white">Get Started</Button>
+                  </SignUpButton>
+                )}
               </div>
             </div>
 

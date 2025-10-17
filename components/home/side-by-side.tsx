@@ -3,7 +3,7 @@
 import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
-import { useUser } from '@clerk/nextjs';
+import { SignUpButton, useUser } from '@clerk/nextjs';
 
 export default function SideBySide() {
   const { isSignedIn } = useUser();
@@ -41,7 +41,15 @@ export default function SideBySide() {
             </p>
 
             {/* Button */}
-            <Button className="text-white">Get Started</Button>
+            {isSignedIn ? (
+              <Link href="/dashboard">
+                <Button className="text-white">Go to Dashboard</Button>
+              </Link>
+            ) : (
+              <SignUpButton mode="modal" forceRedirectUrl="/dashboard">
+                <Button className="text-white">Get Started</Button>
+              </SignUpButton>
+            )}
           </div>
 
           {/* Right Column: Image with Background */}
@@ -121,7 +129,15 @@ export default function SideBySide() {
             </p>
 
             {/* Button */}
-            <Button className="text-white">Get Started</Button>
+            {isSignedIn ? (
+              <Link href="/dashboard">
+                <Button className="text-white">Go to Dashboard</Button>
+              </Link>
+            ) : (
+              <SignUpButton mode="modal" forceRedirectUrl="/dashboard">
+                <Button className="text-white">Get Started</Button>
+              </SignUpButton>
+            )}
           </div>
         </div>
       </div>
