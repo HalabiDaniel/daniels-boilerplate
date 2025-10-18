@@ -3,17 +3,85 @@
 import { useState } from 'react';
 import { SignUpButton, useUser } from '@clerk/nextjs';
 import { useRouter } from 'next/navigation';
+import { useQuery } from 'convex/react';
+import { api } from '@/convex/_generated/api';
 import { Button } from '@/components/ui/button';
 import { SUBSCRIPTION_PLANS } from '@/lib/subscription-plans';
 import { Lock } from 'lucide-react';
 
 export default function Pricing() {
     const [isAnnual, setIsAnnual] = useState(false);
-    const { isSignedIn } = useUser();
+    const [isProcessing, setIsProcessing] = useState(false);
+    const { isSignedIn, user } = useUser();
     const router = useRouter();
+
+    // Fetch user subscription data from Convex
+    const userSubscription = useQuery(
+        (api as any).users?.getUserByClerkId,
+        isSignedIn && user?.id ? { clerkId: user.id } : "skip"
+    );
+
+    // Loading state while fetching data
+    const isLoadingSubscription = isSignedIn && userSubscription === undefined;
+
+    // Helper function to get plan index
+    const getPlanIndex = (planId: string) => {
+        return SUBSCRIPTION_PLANS.findIndex(p => p.id === planId);
+    };
+
+    // Get current user's plan index
+    const currentPlanId = userSubscription?.subscriptionPlanId || 'free';
+    const currentPlanIndex = getPlanIndex(currentPlanId);
+
+    // Helper function to determine button text and action
+    const getButtonConfig = (plan: typeof SUBSCRIPTION_PLANS[0]) => {
+        if (!isSignedIn) {
+            return { text: 'Get Started', action: 'signup' };
+        }
+
+        const cardPlanIndex = getPlanIndex(plan.id);
+
+        if (cardPlanIndex <= currentPlanIndex) {
+            return { text: 'Go to Dashboard', action: 'dashboard' };
+        } else {
+            return { text: `Upgrade to ${plan.name}`, action: 'upgrade' };
+        }
+    };
 
     const handleDashboardRedirect = () => {
         router.push('/dashboard');
+    };
+
+    // Handle upgrade button click
+    const handleUpgrade = async (planId: string) => {
+        setIsProcessing(true);
+
+        try {
+            const response = await fetch('/api/create-checkout-session', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    planId,
+                    billingPeriod: isAnnual ? 'annual' : 'monthly',
+                }),
+            });
+
+            if (!response.ok) {
+                const error = await response.json();
+                throw new Error(error.error || 'Failed to create checkout session');
+            }
+
+            const { url } = await response.json();
+
+            // Redirect to Stripe Checkout
+            window.location.href = url;
+        } catch (error) {
+            console.error('Upgrade error:', error);
+            alert(error instanceof Error ? error.message : 'Failed to start checkout. Please try again.');
+            setIsProcessing(false);
+        }
     };
 
     return (
@@ -141,30 +209,72 @@ export default function Pricing() {
                                     ))}
                                 </ul>
 
-                                {isLocked ? (
-                                    <Button
-                                        className="w-full text-white"
-                                        disabled
-                                    >
-                                        Coming Soon
-                                    </Button>
-                                ) : !isSignedIn ? (
-                                    <SignUpButton 
-                                        mode="modal" 
-                                        forceRedirectUrl="/dashboard"
-                                    >
-                                        <Button className="w-full text-white">
-                                            Get Started
+                                {(() => {
+                                    if (isLocked) {
+                                        return (
+                                            <Button
+                                                className="w-full text-white"
+                                                disabled
+                                            >
+                                                Coming Soon
+                                            </Button>
+                                        );
+                                    }
+
+                                    const buttonConfig = getButtonConfig(plan);
+
+                                    if (buttonConfig.action === 'signup') {
+                                        // For free plan, redirect to dashboard
+                                        if (isFree) {
+                                            return (
+                                                <SignUpButton 
+                                                    mode="modal" 
+                                                    forceRedirectUrl="/dashboard"
+                                                >
+                                                    <Button className="w-full text-white">
+                                                        {buttonConfig.text}
+                                                    </Button>
+                                                </SignUpButton>
+                                            );
+                                        }
+                                        
+                                        // For paid plans, redirect to checkout handler with plan info
+                                        const checkoutUrl = `/checkout-handler?planId=${plan.id}&billingPeriod=${isAnnual ? 'annual' : 'monthly'}`;
+                                        return (
+                                            <SignUpButton 
+                                                mode="modal" 
+                                                forceRedirectUrl={checkoutUrl}
+                                            >
+                                                <Button className="w-full text-white">
+                                                    {buttonConfig.text}
+                                                </Button>
+                                            </SignUpButton>
+                                        );
+                                    }
+
+                                    if (buttonConfig.action === 'dashboard') {
+                                        return (
+                                            <Button
+                                                onClick={handleDashboardRedirect}
+                                                className="w-full text-white"
+                                                disabled={isLoadingSubscription || isProcessing}
+                                            >
+                                                {buttonConfig.text}
+                                            </Button>
+                                        );
+                                    }
+
+                                    // buttonConfig.action === 'upgrade'
+                                    return (
+                                        <Button
+                                            onClick={() => handleUpgrade(plan.id)}
+                                            className="w-full text-white"
+                                            disabled={isLoadingSubscription || isProcessing}
+                                        >
+                                            {buttonConfig.text}
                                         </Button>
-                                    </SignUpButton>
-                                ) : (
-                                    <Button
-                                        onClick={handleDashboardRedirect}
-                                        className="w-full text-white"
-                                    >
-                                        Go to Dashboard
-                                    </Button>
-                                )}
+                                    );
+                                })()}
                             </div>
                         );
                     })}

@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { Webhook } from 'svix';
 import { clerkClient } from '@clerk/nextjs/server';
+import { ConvexHttpClient } from 'convex/browser';
+import { api } from '@/convex/_generated/api';
 
 export async function POST(req: NextRequest) {
   // Get the webhook secret from environment variables
@@ -52,9 +54,37 @@ export async function POST(req: NextRequest) {
   // Handle the webhook
   const eventType = evt.type;
   const client = await clerkClient();
+  const convex = new ConvexHttpClient(process.env.NEXT_PUBLIC_CONVEX_URL!);
 
   try {
     switch (eventType) {
+      case 'user.created':
+        // Create user in Convex when they sign up
+        const { id: clerkId, email_addresses } = evt.data;
+        const primaryEmail = email_addresses?.[0]?.email_address;
+
+        if (clerkId && primaryEmail) {
+          await convex.mutation((api as any).users.upsertUser, {
+            clerkId,
+            email: primaryEmail,
+            subscriptionPlanId: 'free',
+          });
+        }
+        break;
+
+      case 'user.updated':
+        // Update user email if it changed
+        const { id: userId, email_addresses: updatedEmails } = evt.data;
+        const updatedPrimaryEmail = updatedEmails?.[0]?.email_address;
+
+        if (userId && updatedPrimaryEmail) {
+          await convex.mutation((api as any).users.upsertUser, {
+            clerkId: userId,
+            email: updatedPrimaryEmail,
+          });
+        }
+        break;
+
       case 'subscription.created':
       case 'subscription.updated':
         // Update user metadata with subscription info
@@ -70,9 +100,9 @@ export async function POST(req: NextRequest) {
 
       case 'subscription.deleted':
         // Downgrade user to free plan
-        const { user_id: userId } = evt.data;
+        const { user_id: subUserId } = evt.data;
         
-        await client.users.updateUserMetadata(userId, {
+        await client.users.updateUserMetadata(subUserId, {
           publicMetadata: {
             subscriptionPlan: 'free',
             subscriptionExpiry: null,

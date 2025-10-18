@@ -4,9 +4,14 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { useUser, useClerk } from '@clerk/nextjs';
+import { useQuery, useMutation } from 'convex/react';
+import { api } from '@/convex/_generated/api';
 import { Button } from '@/components/ui/button';
-import { LayoutDashboard, Package, CreditCard, Settings, LogOut } from 'lucide-react';
-import { getUserPlan, getExpiryDateString } from '@/lib/subscription-helpers';
+import { LayoutDashboard, Package, CreditCard, Settings, LogOut, Moon, Sun } from 'lucide-react';
+import { getPlanById, getDefaultPlan } from '@/lib/subscription-plans';
+import { formatExpiryDateShort } from '@/lib/subscription-helpers';
+import { useEffect } from 'react';
+import { useTheme } from 'next-themes';
 
 const dashboardPages = [
   { name: 'My Dashboard', href: '/dashboard', icon: LayoutDashboard },
@@ -15,14 +20,64 @@ const dashboardPages = [
   { name: 'Profile Settings', href: '/dashboard/profile-settings', icon: Settings },
 ];
 
+function ThemeToggle() {
+  const { theme, setTheme } = useTheme();
+
+  return (
+    <Button
+      variant="ghost"
+      size="icon"
+      onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+      aria-label="Toggle theme"
+      className="h-8 w-8 flex-shrink-0"
+    >
+      <Sun className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
+      <Moon className="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
+    </Button>
+  );
+}
+
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const { user } = useUser();
   const { signOut } = useClerk();
 
-  // Get user's subscription plan using helper
-  const userPlan = getUserPlan(user);
-  const expiryText = getExpiryDateString(user);
+  // Fetch user subscription data from Convex
+  const convexUser = useQuery(
+    api.users.getUserByClerkId,
+    user?.id ? { clerkId: user.id } : "skip"
+  );
+
+  // Mutation to create user if they don't exist
+  const upsertUser = useMutation(api.users.upsertUser);
+
+  // Create user in Convex if they don't exist (fallback for webhook)
+  useEffect(() => {
+    if (user && convexUser === null) {
+      // User is signed in but doesn't exist in Convex
+      const primaryEmail = user.emailAddresses?.[0]?.emailAddress;
+      if (primaryEmail) {
+        upsertUser({
+          clerkId: user.id,
+          email: primaryEmail,
+          subscriptionPlanId: 'free',
+        }).catch(console.error);
+      }
+    }
+  }, [user, convexUser, upsertUser]);
+
+  // Get user's subscription plan from Convex data
+  const userPlan = convexUser?.subscriptionPlanId
+    ? getPlanById(convexUser.subscriptionPlanId) || getDefaultPlan()
+    : getDefaultPlan();
+
+  // Format expiry date
+  const expiryText = convexUser?.currentPeriodEnd && convexUser.subscriptionPlanId !== 'free'
+    ? formatExpiryDateShort(convexUser.currentPeriodEnd, convexUser.autoRenew)
+    : 'No expiry';
+
+  // Loading state
+  const isLoading = user && convexUser === undefined;
 
   const getUserInitials = () => {
     if (!user) return 'U';
@@ -42,19 +97,22 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
     <div className="flex min-h-screen">
       {/* Sidebar */}
       <aside className="w-[17.5%] min-w-[220px] max-w-[17.5%] rounded-2xl border bg-card m-4 p-6 flex flex-col">
-        {/* Logo */}
-        <Link href="/" className="flex items-center justify-center gap-3 mb-6">
-          <Image
-            src="/daniel-logo.png"
-            alt="Daniel's Next Logo"
-            width={40}
-            height={40}
-            className="h-10 w-10"
-          />
-          <span className="text-lg font-semibold font-inter">
-            Daniel&apos;s Next
-          </span>
-        </Link>
+        {/* Logo and Theme Toggle */}
+        <div className="flex items-center justify-between mb-6">
+          <Link href="/" className="flex items-center gap-3">
+            <Image
+              src="/daniel-logo.png"
+              alt="Daniel's Next Logo"
+              width={40}
+              height={40}
+              className="h-10 w-10"
+            />
+            <span className="text-lg font-semibold font-inter">
+              Daniel&apos;s Next
+            </span>
+          </Link>
+          <ThemeToggle />
+        </div>
 
         {/* Divider */}
         <div className="w-full h-px bg-border mb-6"></div>
@@ -70,7 +128,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                   variant="ghost"
                   className={`w-full justify-start gap-3 text-sm font-medium transition-colors ${isActive
                     ? 'text-white pointer-events-none'
-                    : 'hover:bg-transparent hover:text-[oklch(0.5_0.134_242.749)]'
+                    : 'hover:!bg-transparent dark:hover:text-[oklch(0.5_0.134_242.749)]'
                     }`}
                   style={
                     isActive
@@ -101,19 +159,29 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
 
           {/* Membership Card */}
           <div className="border rounded-lg p-3 bg-card">
-            <div className="flex items-center gap-3">
-              <Image
-                src={userPlan.dashboardImage}
-                alt="Membership"
-                width={32}
-                height={32}
-                className="h-8 w-8"
-              />
-              <div className="flex-1 min-w-0">
-                <p className="text-sm font-bold">{userPlan.displayName}</p>
-                <p className="text-xs text-muted-foreground">{expiryText}</p>
+            {isLoading ? (
+              <div className="flex items-center gap-3">
+                <div className="h-8 w-8 bg-muted animate-pulse rounded" />
+                <div className="flex-1 min-w-0 space-y-2">
+                  <div className="h-4 bg-muted animate-pulse rounded w-24" />
+                  <div className="h-3 bg-muted animate-pulse rounded w-20" />
+                </div>
               </div>
-            </div>
+            ) : (
+              <div className="flex items-center gap-3">
+                <Image
+                  src={userPlan.dashboardImage}
+                  alt="Membership"
+                  width={32}
+                  height={32}
+                  className="h-8 w-8"
+                />
+                <div className="flex-1 min-w-0">
+                  <p className="text-sm font-bold">{userPlan.displayName}</p>
+                  <p className="text-xs text-muted-foreground">{expiryText}</p>
+                </div>
+              </div>
+            )}
           </div>
 
           {/* User Card */}

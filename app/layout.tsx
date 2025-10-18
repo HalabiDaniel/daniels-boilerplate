@@ -4,6 +4,7 @@ import "./globals.css";
 import { ConditionalLayout } from "@/components/layouts/conditional-layout";
 import { ThemeProvider } from "@/components/ui/theme-provider";
 import { ClerkProvider } from '@clerk/nextjs';
+import { ConvexClientProvider } from "@/components/convex-client-provider";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -32,14 +33,16 @@ export default function RootLayout({
           className={`${geistSans.variable} ${geistMono.variable} antialiased`}
           suppressHydrationWarning={true}
         >
-          <ThemeProvider
-            attribute="class"
-            defaultTheme="system"
-            enableSystem
-            disableTransitionOnChange
-          >
-            <ConditionalLayout>{children}</ConditionalLayout>
-          </ThemeProvider>
+          <ConvexClientProvider>
+            <ThemeProvider
+              attribute="class"
+              defaultTheme="system"
+              enableSystem
+              disableTransitionOnChange
+            >
+              <ConditionalLayout>{children}</ConditionalLayout>
+            </ThemeProvider>
+          </ConvexClientProvider>
         </body>
       </html>
     </ClerkProvider>
