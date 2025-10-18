@@ -199,3 +199,34 @@
     @apply w-full max-w-6xl mx-auto px-4 sm:px-6 lg:px-8;
   }
 }
+
+@layer components {
+  .prose {
+    @apply text-foreground;
+    max-width: 65ch;
+  }
+
+  .prose p {
+    @apply mb-4 leading-7;
+  }
+
+  .prose h4 {
+    @apply text-xl font-semibold mt-8 mb-4 text-foreground;
+  }
+
+  .prose ul {
+    @apply list-disc pl-6 mb-4 space-y-2;
+  }
+
+  .prose li {
+    @apply leading-7;
+  }
+
+  .prose strong {
+    @apply font-semibold;
+  }
+
+  .prose a {
+    @apply text-primary underline hover:text-primary/80;
+  }
+}

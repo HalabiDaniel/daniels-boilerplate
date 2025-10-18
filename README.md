@@ -105,6 +105,7 @@ export const SUBSCRIPTION_PLANS: SubscriptionPlan[] = [
 
 6. Now we need to configure the webhook for Stripe. Navigate to **Developers** → **Webhooks** and click **+ Add endpoint**. Configure the endpoint by adding the **Endpoint URL** which is `https://yourdomain.com/api/webhooks/stripe`. If you're still in local development, you can use ngrok to point your local server to a static domain. Make sure to select the following events to listen to:
    - ✅ `checkout.session.completed`
+   - ✅ `customer.subscription.created`
    - ✅ `customer.subscription.updated`
    - ✅ `customer.subscription.deleted`
    - ✅ `invoice.payment_failed`
