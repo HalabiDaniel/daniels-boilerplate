@@ -85,7 +85,7 @@ export default function Pricing() {
     };
 
     return (
-        <section className="w-full py-16 md:py-20 bg-background">
+        <section id="pricing" className="w-full py-16 md:py-20 bg-background scroll-mt-20">
             <div className="container mx-auto px-4 max-w-[1200px]">
                 {/* Header Section - Centered */}
                 <div className="flex flex-col items-center text-center space-y-4 mb-12">

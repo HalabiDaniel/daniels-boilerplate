@@ -111,7 +111,7 @@ export const updateSubscriptionFromWebhook = mutation({
     if (!user && args.clerkId) {
       user = await ctx.db
         .query("users")
-        .withIndex("by_clerk_id", (q) => q.eq("clerkId", args.clerkId))
+        .withIndex("by_clerk_id", (q) => q.eq("clerkId", args.clerkId!))
         .first();
       
       // If found by clerkId but missing stripeCustomerId, update it

@@ -29,7 +29,7 @@ export default function HowItWorks() {
   ];
 
   return (
-    <section className="w-full bg-[#F4F7F3] dark:bg-neutral-900">
+    <section id="how-it-works" className="w-full bg-[#F4F7F3] dark:bg-neutral-900 scroll-mt-20">
       <div className="container mx-auto px-4 py-16 md:py-24 space-y-16">
         {/* First Section: Steps */}
         <div className="space-y-8">

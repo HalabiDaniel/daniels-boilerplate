@@ -215,16 +215,16 @@ export default function Footer() {
         {/* Bottom Row - Copyright and Links */}
         <div className="flex flex-col md:flex-row justify-between items-center gap-4">
           {/* Copyright - Left Aligned */}
-          <p className="text-white/70 text-sm">
+          <p className="text-white/70 text-sm" suppressHydrationWarning>
             © {new Date().getFullYear()} Daniel Halabi. All rights reserved.
           </p>
 
           {/* Privacy and Terms - Right Aligned */}
           <div className="flex items-center gap-6">
-            <Link href="#" className="text-white/70 text-sm hover:text-white transition-colors">
+            <Link href="/privacy" className="text-white/70 text-sm hover:text-white transition-colors">
               Privacy Policy
             </Link>
-            <Link href="#" className="text-white/70 text-sm hover:text-white transition-colors">
+            <Link href="/terms" className="text-white/70 text-sm hover:text-white transition-colors">
               Terms & Conditions
             </Link>
           </div>

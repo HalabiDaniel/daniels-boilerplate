@@ -1,6 +1,13 @@
 # Next.js Daniel's Boilerplate
 
-A personal boilerplate created by Daniel Halabi to facilitate building Next.js websites quickly and efficiently.
+A personal boilerplate created by Daniel Halabi to facilitate building Next.js websites quickly and efficiently. The project includes a full landing page with at least 10 separate and interchangeable sections, a full "About Us" page, a full "Contact Us" page, privacy policy and terms pages, and a complete dashboard layout. The boilerplate has pre-prepared integrations with Convex as database, Clerk for authentication, Stripe for payment and subscription handling, Resend for emails, and Cloudinary for file storage. All you have to do is follow the simple steps below and you will have a fully functional and beautiful website to kickstart your projects.
+
+## Upcoming Features
+- [ ] Full mobile responsiveness across the website
+- [ ] Organized list of components and sections allowing you to easily insert them anywhere
+- [ ] Fully dynamic theming, which lets you change the website's colors and fonts in a matter of seconds using tweakcn.com
+- [ ] Admin dashboard to manage users, subscriptions, and more.
+- [ ] Analytics integration via PostHog
 
 ## License & Usage
 

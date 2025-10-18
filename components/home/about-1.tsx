@@ -35,7 +35,8 @@ export default function About1() {
 
   return (
     <section
-      className="w-full min-h-[700px] md:min-h-[750px] lg:min-h-[800px] xl:min-h-[850px] flex items-end relative"
+      id="about-us"
+      className="w-full min-h-[700px] md:min-h-[750px] lg:min-h-[800px] xl:min-h-[850px] flex items-end relative scroll-mt-20"
       style={{ backgroundColor: 'oklch(0.293 0.066 243.157)' }}
     >
       {/* Hero Image Overlay */}
