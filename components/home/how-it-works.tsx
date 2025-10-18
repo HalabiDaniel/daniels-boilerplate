@@ -122,7 +122,7 @@ export default function HowItWorks() {
                   letterSpacing: '-1px'
                 }}
               >
-                Beautifully Built Sections for Conversion
+                Beautiful Sections Built for Conversion
               </h2>
 
               {/* Text */}
