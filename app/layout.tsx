@@ -5,6 +5,7 @@ import { ConditionalLayout } from "@/components/layouts/conditional-layout";
 import { ThemeProvider } from "@/components/ui/theme-provider";
 import { ClerkProvider } from '@clerk/nextjs';
 import { ConvexClientProvider } from "@/components/convex-client-provider";
+import { Toaster } from "@/components/ui/sonner";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -41,6 +42,7 @@ export default function RootLayout({
               disableTransitionOnChange
             >
               <ConditionalLayout>{children}</ConditionalLayout>
+              <Toaster />
             </ThemeProvider>
           </ConvexClientProvider>
         </body>
