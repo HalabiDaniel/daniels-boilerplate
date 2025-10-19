@@ -23,4 +23,24 @@ export default defineSchema({
     .index("by_clerk_id", ["clerkId"])
     .index("by_stripe_customer_id", ["stripeCustomerId"])
     .index("by_email", ["email"]),
+  
+  admins: defineTable({
+    clerkId: v.string(),              // Clerk user ID
+    userId: v.id("users"),            // Reference to users table
+    email: v.string(),                // Admin email
+    name: v.string(),                 // Admin full name
+    accessLevel: v.union(
+      v.literal("Full Access"),
+      v.literal("Partial Access"),
+      v.literal("Limited Access")
+    ),
+    accountCreatedAt: v.number(),     // Unix timestamp from users table
+    becameAdminAt: v.number(),        // Unix timestamp when promoted to admin
+    createdAt: v.number(),            // Record creation timestamp
+    updatedAt: v.number(),            // Record update timestamp
+  })
+    .index("by_clerk_id", ["clerkId"])
+    .index("by_user_id", ["userId"])
+    .index("by_access_level", ["accessLevel"])
+    .index("by_email", ["email"]),
 });

@@ -112,3 +112,38 @@ export const SUBSCRIPTION_PLANS: SubscriptionPlan[] = [
 Finally, copy the signing secret (starts with `whsec_`) and paste it in your .env.local file. 
 
 Now you can make test payments and subscriptions on your website. Use the test credit-card numbers `4242 4242 4242 4242` for Visa `5555 5555 5555 4444` for Mastercard.
+
+## Adding Admin Users
+
+To grant admin access to users, use the interactive admin script:
+
+```bash
+npm run add-admin
+```
+
+It will ask for the user's clerkID and their chosen access level. Then it will completely handle giving the user admin access.
+
+**Note**: User must already be signed up (exist in Convex users table), and `.env.local` file must contain: `NEXT_PUBLIC_CONVEX_URL` + `CLERK_SECRET_KEY`.
+
+### Finding a User's Clerk ID
+
+1. Go to your Clerk Dashboard
+2. Navigate to Users
+3. Click on the user
+4. Copy their User ID (starts with `user_`)
+
+### Access Levels
+
+- **Full Access**: Can manage other admins, full dashboard access
+- **Partial Access**: Limited admin capabilities
+- **Limited Access**: Read-only or minimal admin access
+
+### Configure the session token in Clerk
+
+1. In the Clerk Dashboard, under the `Configure` tab, navigate to the `Sessions` page.
+2. Under `Customize` session token, in the `Claims` editor, enter the following JSON and click save.
+``` json
+{
+  "metadata": "{{user.public_metadata}}"
+}
+```

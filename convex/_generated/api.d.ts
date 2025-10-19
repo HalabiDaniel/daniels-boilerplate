@@ -8,6 +8,8 @@
  * @module
  */
 
+import type * as adminSetup from "../adminSetup.js";
+import type * as admins from "../admins.js";
 import type * as fixSubscription from "../fixSubscription.js";
 import type * as users from "../users.js";
 
@@ -26,6 +28,8 @@ import type {
  * ```
  */
 declare const fullApi: ApiFromModules<{
+  adminSetup: typeof adminSetup;
+  admins: typeof admins;
   fixSubscription: typeof fixSubscription;
   users: typeof users;
 }>;
