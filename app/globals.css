@@ -229,4 +229,44 @@
   .prose a {
     @apply text-primary underline hover:text-primary/80;
   }
+
+  @keyframes fade-in {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  .animate-fade-in {
+    animation: fade-in 0.3s ease-in-out;
+  }
+
+  /* Expandable user card animations: top border moves up on open, down on close */
+  @keyframes card-open-up {
+    from {
+      transform: translateY(0);
+    }
+    to {
+      transform: translateY(-12px);
+    }
+  }
+
+  @keyframes card-close-down {
+    from {
+      transform: translateY(-12px);
+    }
+    to {
+      transform: translateY(0);
+    }
+  }
+
+  .animate-card-open-up {
+    animation: card-open-up 0.3s ease-in-out forwards;
+  }
+
+  .animate-card-close-down {
+    animation: card-close-down 0.15s ease-in-out forwards;
+  }
 }

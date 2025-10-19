@@ -145,6 +145,25 @@ export function formatExpiryDateShort(timestamp: number, autoRenew?: boolean): s
 }
 
 /**
+ * Format subscription date without prefix (just dd/mm/yyyy)
+ * @param timestamp - Unix timestamp in milliseconds
+ * @returns Formatted string like "dd/mm/yyyy"
+ */
+export function formatDateOnly(timestamp: number): string {
+  // Check if timestamp is valid
+  if (!timestamp || isNaN(timestamp)) {
+    return 'Invalid date';
+  }
+
+  const date = new Date(timestamp);
+  const day = String(date.getDate()).padStart(2, '0');
+  const month = String(date.getMonth() + 1).padStart(2, '0');
+  const year = date.getFullYear();
+
+  return `${day}/${month}/${year}`;
+}
+
+/**
  * Check if user can upgrade to plan
  */
 export function canUpgradeToPlan(

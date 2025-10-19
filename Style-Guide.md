@@ -186,3 +186,72 @@
 - **Text Fade**: Instant hide, 150ms fade-in with 100ms delay
 - **Button Height**: Fixed at 42px
 - **Icon Button Size**: 42x42px
+
+
+## Sidebar Components
+
+### Expandable User Card
+
+The user card at the bottom of the sidebar in `/dashboard` and `/admin` layouts has an expandable feature:
+
+#### Collapsed State (Default)
+- **Container**: Border, rounded-lg, p-3, bg-card
+- **Hover**: bg-accent/50 transition
+- **Cursor**: pointer
+- **Layout**: Horizontal flex with gap-3
+- **User Avatar**: 
+  - Size: 32x32px (h-8 w-8)
+  - Background: oklch(0.5 0.134 242.749)
+  - Text: White, text-sm, font-semibold
+  - Content: User initials
+- **User Name**: text-sm, font-medium, truncated
+- **Logout Button**: Ghost variant, icon size (32x32px)
+
+#### Expanded State
+- **Animation**: expand-card (0.3s cubic-bezier)
+- **Container**: Takes full remaining height of sidebar
+- **Padding**: p-6
+- **Layout**: Vertical flex column
+
+**Header Row:**
+- Edit button (left): Ghost variant, icon size
+- User avatar (center): 48x48px (h-12 w-12), larger initials (text-lg)
+- Close button (right): Ghost variant, icon size with X icon
+
+**User Information:**
+- Full name: text-base, font-semibold, centered
+- Email: text-sm, text-muted-foreground, centered
+- Spacing: mb-4 between sections
+
+**Cards Section:**
+- Membership card: Always shown
+- Admin access level card: Only shown if user is admin
+- Spacing: space-y-3, mb-6
+
+**Logout Button:**
+- Full width (w-full)
+- Primary button style (default variant)
+- Background: oklch(0.5 0.134 242.749)
+- Text: White with logout icon
+- Icon: LogOut from lucide-react (h-4 w-4 mr-2)
+
+#### Behavior
+- Clicking anywhere on collapsed card expands it (except logout button)
+- When expanded, sidebar navigation links and membership/admin cards are hidden
+- Edit button redirects to `/dashboard/profile-settings` (even from `/admin`)
+- Close button returns card to collapsed state and restores sidebar content
+- Logout button signs out the user in both states
+
+#### Animation Details
+```css
+@keyframes expand-card {
+  from {
+    height: auto;
+    opacity: 0.8;
+  }
+  to {
+    height: 100%;
+    opacity: 1;
+  }
+}
+```

@@ -3,14 +3,17 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
-import { useUser, useClerk } from '@clerk/nextjs';
+import { useUser } from '@clerk/nextjs';
 import { useQuery } from 'convex/react';
 import { api } from '@/convex/_generated/api';
 import { Button } from '@/components/ui/button';
 import { Toaster } from '@/components/ui/sonner';
-import { LayoutDashboard, Users, CreditCard, BarChart, Shield, Settings, LogOut, Moon, Sun, AlertCircle, RefreshCw } from 'lucide-react';
+import { LayoutDashboard, Users, CreditCard, BarChart, Shield, Settings, Moon, Sun, AlertCircle, RefreshCw } from 'lucide-react';
 import { useTheme } from 'next-themes';
 import { useState } from 'react';
+import { ExpandableUserCard } from '@/components/layouts/expandable-user-card';
+import { getPlanById, getDefaultPlan } from '@/lib/subscription-plans';
+import { formatDateOnly } from '@/lib/subscription-helpers';
 
 const adminPages = [
   { name: 'Dashboard', href: '/admin', icon: LayoutDashboard, minAccess: 'Limited Access' },
@@ -70,12 +73,18 @@ function ThemeToggle() {
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const { user } = useUser();
-  const { signOut } = useClerk();
   const [retryCount, setRetryCount] = useState(0);
+  const [isUserCardExpanded, setIsUserCardExpanded] = useState(false);
 
   // Fetch admin data from Convex
   const adminData = useQuery(
     api.admins.getAdminByClerkId,
+    user?.id ? { clerkId: user.id } : "skip"
+  );
+
+  // Fetch user subscription data from Convex
+  const convexUser = useQuery(
+    api.users.getUserByClerkId,
     user?.id ? { clerkId: user.id } : "skip"
   );
 
@@ -105,11 +114,118 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
     return `${firstName} ${lastNameInitial}`;
   };
 
+  const getUserFullName = () => {
+    if (!user) return 'User';
+    const firstName = user.firstName || 'User';
+    const lastName = user.lastName || '';
+    return `${firstName} ${lastName}`.trim();
+  };
+
+  const getUserEmail = () => {
+    return user?.emailAddresses?.[0]?.emailAddress || 'No email';
+  };
+
   // Filter navigation items based on access level
   const filteredAdminPages = adminPages.filter(page => {
     if (!adminData?.accessLevel) return false;
     return hasAccessToPage(adminData.accessLevel, page.minAccess);
   });
+
+  // Admin access level card component
+  const adminCard = isLoading ? (
+    <div className="border rounded-lg p-3 bg-card">
+      <div className="flex items-center gap-3">
+        <div className="h-8 w-8 bg-muted animate-pulse rounded" />
+        <div className="flex-1 min-w-0 space-y-2">
+          <div className="h-4 bg-muted animate-pulse rounded w-24" />
+          <div className="h-3 bg-muted animate-pulse rounded w-20" />
+        </div>
+      </div>
+    </div>
+  ) : hasError ? (
+    <div className="border rounded-lg p-3 bg-card">
+      <div className="space-y-2">
+        <div className="flex items-center gap-2 text-destructive">
+          <AlertCircle className="h-4 w-4" />
+          <p className="text-xs font-medium">Failed to load admin data</p>
+        </div>
+        <Button
+          variant="outline"
+          size="sm"
+          onClick={handleRetry}
+          className="w-full h-7 text-xs"
+        >
+          <RefreshCw className="h-3 w-3 mr-1" />
+          Retry
+        </Button>
+      </div>
+    </div>
+  ) : adminData ? (
+    <div className="border rounded-lg p-3 bg-card">
+      <div className="flex items-center gap-3">
+        <Image
+          src={ACCESS_LEVEL_IMAGES[adminData.accessLevel as keyof typeof ACCESS_LEVEL_IMAGES]}
+          alt={adminData.accessLevel}
+          width={32}
+          height={32}
+          className="h-8 w-8"
+        />
+        <div className="flex-1 min-w-0">
+          <p className="text-sm font-bold">{adminData.accessLevel}</p>
+          <p className="text-xs text-muted-foreground">Admin</p>
+        </div>
+      </div>
+    </div>
+  ) : (
+    <div className="border rounded-lg p-3 bg-card">
+      <div className="flex items-center gap-3">
+        <div className="h-8 w-8 bg-muted rounded" />
+        <div className="flex-1 min-w-0">
+          <p className="text-sm font-bold">No Access</p>
+          <p className="text-xs text-muted-foreground">Not an admin</p>
+        </div>
+      </div>
+    </div>
+  );
+
+  // Get user's subscription plan from Convex data
+  const userPlan = convexUser?.subscriptionPlanId
+    ? getPlanById(convexUser.subscriptionPlanId) || getDefaultPlan()
+    : getDefaultPlan();
+
+  // Format expiry date (just the date without prefix)
+  const expiryText = convexUser?.currentPeriodEnd && convexUser.subscriptionPlanId !== 'free'
+    ? formatDateOnly(convexUser.currentPeriodEnd)
+    : 'No expiry';
+
+  // Membership card
+  const membershipCard = (convexUser === undefined || isLoading) ? (
+    <div className="border rounded-lg p-3 bg-card">
+      <div className="flex items-center gap-3">
+        <div className="h-8 w-8 bg-muted animate-pulse rounded" />
+        <div className="flex-1 min-w-0 space-y-2">
+          <div className="h-4 bg-muted animate-pulse rounded w-24" />
+          <div className="h-3 bg-muted animate-pulse rounded w-20" />
+        </div>
+      </div>
+    </div>
+  ) : (
+    <div className="border rounded-lg p-3 bg-card">
+      <div className="flex items-center gap-3">
+        <Image
+          src={userPlan.dashboardImage}
+          alt="Membership"
+          width={32}
+          height={32}
+          className="h-8 w-8"
+        />
+        <div className="flex-1 min-w-0">
+          <p className="text-sm font-bold">{userPlan.displayName}</p>
+          <p className="text-xs text-muted-foreground">{expiryText}</p>
+        </div>
+      </div>
+    </div>
+  );
 
   return (
     <div className="flex min-h-screen">
@@ -135,117 +251,61 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
         {/* Divider */}
         <div className="w-full h-px bg-border mb-6"></div>
 
-        {/* Navigation Pages */}
-        <nav className="flex-1 space-y-2">
-          {isLoading ? (
-            // Skeleton loader for navigation
-            <>
-              {[1, 2, 3, 4, 5, 6].map((i) => (
-                <div key={i} className="h-9 bg-muted animate-pulse rounded-md" />
-              ))}
-            </>
-          ) : (
-            filteredAdminPages.map((page) => {
-              const Icon = page.icon;
-              const isActive = pathname === page.href;
-              return (
-                <Link key={page.href} href={page.href}>
-                  <Button
-                    variant="ghost"
-                    className={`w-full justify-start gap-3 text-sm font-medium transition-colors ${isActive
-                      ? 'text-white pointer-events-none'
-                      : 'hover:!bg-transparent dark:hover:text-[oklch(0.5_0.134_242.749)]'
-                      }`}
-                    style={
-                      isActive
-                        ? { backgroundColor: 'oklch(0.5 0.134 242.749)' }
-                        : {}
-                    }
-                  >
-                    <Icon className="h-4 w-4" />
-                    {page.name}
-                  </Button>
-                </Link>
-              );
-            })
-          )}
-        </nav>
+        {/* Navigation Pages - Hidden when user card is expanded */}
+        {!isUserCardExpanded && (
+          <nav className="flex-1 space-y-2">
+            {isLoading ? (
+              // Skeleton loader for navigation
+              <>
+                {[1, 2, 3, 4, 5, 6].map((i) => (
+                  <div key={i} className="h-9 bg-muted animate-pulse rounded-md" />
+                ))}
+              </>
+            ) : (
+              filteredAdminPages.map((page) => {
+                const Icon = page.icon;
+                const isActive = pathname === page.href;
+                return (
+                  <Link key={page.href} href={page.href}>
+                    <Button
+                      variant="ghost"
+                      className={`w-full justify-start gap-3 text-sm font-medium transition-colors ${isActive
+                        ? 'text-white pointer-events-none'
+                        : 'hover:!bg-transparent dark:hover:text-[oklch(0.5_0.134_242.749)]'
+                        }`}
+                      style={
+                        isActive
+                          ? { backgroundColor: 'oklch(0.5 0.134 242.749)' }
+                          : {}
+                      }
+                    >
+                      <Icon className="h-4 w-4" />
+                      {page.name}
+                    </Button>
+                  </Link>
+                );
+              })
+            )}
+          </nav>
+        )}
 
         {/* Bottom Section */}
-        <div className="space-y-3">
-          {/* Admin Membership Card */}
-          <div className="border rounded-lg p-3 bg-card">
-            {isLoading ? (
-              <div className="flex items-center gap-3">
-                <div className="h-8 w-8 bg-muted animate-pulse rounded" />
-                <div className="flex-1 min-w-0 space-y-2">
-                  <div className="h-4 bg-muted animate-pulse rounded w-24" />
-                  <div className="h-3 bg-muted animate-pulse rounded w-20" />
-                </div>
-              </div>
-            ) : hasError ? (
-              <div className="space-y-2">
-                <div className="flex items-center gap-2 text-destructive">
-                  <AlertCircle className="h-4 w-4" />
-                  <p className="text-xs font-medium">Failed to load admin data</p>
-                </div>
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={handleRetry}
-                  className="w-full h-7 text-xs"
-                >
-                  <RefreshCw className="h-3 w-3 mr-1" />
-                  Retry
-                </Button>
-              </div>
-            ) : adminData ? (
-              <div className="flex items-center gap-3">
-                <Image
-                  src={ACCESS_LEVEL_IMAGES[adminData.accessLevel as keyof typeof ACCESS_LEVEL_IMAGES]}
-                  alt={adminData.accessLevel}
-                  width={32}
-                  height={32}
-                  className="h-8 w-8"
-                />
-                <div className="flex-1 min-w-0">
-                  <p className="text-sm font-bold">{adminData.accessLevel}</p>
-                  <p className="text-xs text-muted-foreground">Admin</p>
-                </div>
-              </div>
-            ) : (
-              <div className="flex items-center gap-3">
-                <div className="h-8 w-8 bg-muted rounded" />
-                <div className="flex-1 min-w-0">
-                  <p className="text-sm font-bold">No Access</p>
-                  <p className="text-xs text-muted-foreground">Not an admin</p>
-                </div>
-              </div>
-            )}
-          </div>
+        <div className={`${isUserCardExpanded ? 'flex-1 flex flex-col' : 'space-y-3'}`}>
+          {/* Admin Access Level Card - Hidden when user card is expanded */}
+          {!isUserCardExpanded && adminCard}
 
           {/* User Card */}
-          <div className="border rounded-lg p-3 bg-card">
-            <div className="flex items-center gap-3">
-              <div
-                className="h-8 w-8 rounded flex items-center justify-center text-white text-sm font-semibold flex-shrink-0"
-                style={{ backgroundColor: 'oklch(0.5 0.134 242.749)' }}
-              >
-                {getUserInitials()}
-              </div>
-              <div className="flex-1 min-w-0">
-                <p className="text-sm font-medium truncate">{getUserDisplayName()}</p>
-              </div>
-              <Button
-                variant="ghost"
-                size="icon"
-                onClick={() => signOut()}
-                aria-label="Sign out"
-                className="h-8 w-8 flex-shrink-0"
-              >
-                <LogOut className="h-[1.2rem] w-[1.2rem]" />
-              </Button>
-            </div>
+          <div className={isUserCardExpanded ? 'flex-1' : ''}>
+            <ExpandableUserCard
+              userInitials={getUserInitials()}
+              userDisplayName={getUserDisplayName()}
+              userFullName={getUserFullName()}
+              userEmail={getUserEmail()}
+              membershipCard={membershipCard}
+              adminCard={adminCard}
+              isAdmin={!!adminData}
+              onExpandChange={setIsUserCardExpanded}
+            />
           </div>
         </div>
       </aside>

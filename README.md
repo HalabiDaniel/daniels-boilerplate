@@ -6,7 +6,7 @@ A personal boilerplate created by Daniel Halabi to facilitate building Next.js w
 - [ ] Full mobile responsiveness across the website
 - [ ] Organized list of components and sections allowing you to easily insert them anywhere
 - [ ] Fully dynamic theming, which lets you change the website's colors and fonts in a matter of seconds using tweakcn.com
-- [ ] Admin dashboard to manage users, subscriptions, and more.
+- [x] Admin dashboard to manage users, subscriptions, and more.
 - [ ] Analytics integration via PostHog
 
 ## License & Usage
