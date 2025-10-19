@@ -1,6 +1,7 @@
 'use client';
 
 import Image from 'next/image';
+import { PillBadge } from '@/components/daniels-elements/elements/card-elements';
 
 const testimonials = [
   {
@@ -41,14 +42,7 @@ export default function Testimonials() {
         {/* Header Section */}
         <div className="flex flex-col items-center text-center space-y-6 mb-16">
           {/* Pill */}
-          <div
-            className="px-3 py-1 rounded-full text-white text-[13px] border-2 border-white"
-            style={{
-              background: 'oklch(0.5 0.134 242.749)'
-            }}
-          >
-            Customer Testimonials
-          </div>
+          <PillBadge />
 
           {/* Heading */}
           <h2

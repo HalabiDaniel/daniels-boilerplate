@@ -16,21 +16,21 @@ export function InputWithButton() {
         e.preventDefault();
         console.log('Email submitted:', email);
       }}
-      className="w-full max-w-[450px] bg-[oklch(0.922_0_0)] dark:bg-[#262626] rounded-xl p-1.5 flex items-center gap-1"
+      className="w-full max-w-[450px] bg-accent dark:bg-secondary rounded-xl p-1.5 flex items-center gap-1"
     >
       <input
         type="email"
         placeholder="Add your email address"
         value={email}
         onChange={(e) => setEmail(e.target.value)}
-        className="flex-1 bg-transparent px-3 py-2 text-sm text-[#262626] dark:text-white placeholder:text-[#262626] dark:placeholder:text-white/70 outline-none"
+        className="flex-1 bg-transparent px-3 py-2 text-sm text-foreground placeholder:text-foreground/70 outline-none"
         onFocus={() => setIsInputFocused(true)}
         onBlur={() => setIsInputFocused(false)}
       />
       <Button
         ref={buttonRef}
         type="submit"
-        className="shrink-0 overflow-hidden h-[42px] flex items-center justify-center text-sm relative text-white"
+        className="shrink-0 overflow-hidden h-[42px] flex items-center justify-center text-sm relative text-primary-foreground hover:bg-foreground hover:text-muted dark:hover:bg-background dark:hover:text-foreground"
         style={{
           width: isInputFocused ? '42px' : 'auto',
           paddingLeft: isInputFocused ? '0' : '24px',
@@ -313,21 +313,21 @@ export function InputWithButton() {
         e.preventDefault();
         console.log('Email submitted:', email);
       }}
-      className="w-full max-w-[450px] bg-[oklch(0.922_0_0)] dark:bg-[#262626] rounded-xl p-1.5 flex items-center gap-1"
+      className="w-full max-w-[450px] bg-accent dark:bg-secondary rounded-xl p-1.5 flex items-center gap-1"
     >
       <input
         type="email"
         placeholder="Add your email address"
         value={email}
         onChange={(e) => setEmail(e.target.value)}
-        className="flex-1 bg-transparent px-3 py-2 text-sm text-[#262626] dark:text-white placeholder:text-[#262626] dark:placeholder:text-white/70 outline-none"
+        className="flex-1 bg-transparent px-3 py-2 text-sm text-foreground placeholder:text-foreground/70 outline-none"
         onFocus={() => setIsInputFocused(true)}
         onBlur={() => setIsInputFocused(false)}
       />
       <Button
         ref={buttonRef}
         type="submit"
-        className="shrink-0 overflow-hidden h-[42px] flex items-center justify-center text-sm relative text-white"
+        className="shrink-0 overflow-hidden h-[42px] flex items-center justify-center text-sm relative text-primary-foreground hover:bg-foreground hover:text-muted dark:hover:bg-background dark:hover:text-foreground"
         style={{
           width: isInputFocused ? '42px' : 'auto',
           paddingLeft: isInputFocused ? '0' : '24px',

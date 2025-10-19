@@ -31,10 +31,9 @@ export default function TeamMember({
 
   return (
     <div
-      className="rounded-2xl p-6 bg-card border transition-all duration-300 flex flex-col items-center text-center"
-      style={{
-        backgroundColor: isHovered ? 'oklch(0.5 0.134 242.749)' : undefined
-      }}
+      className={\`rounded-2xl p-6 border transition-all duration-300 flex flex-col items-center text-center \${
+        isHovered ? 'bg-primary' : 'bg-card'
+      }\`}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
@@ -51,7 +50,7 @@ export default function TeamMember({
       {/* Name */}
       <h3
         className={\`text-xl font-semibold transition-colors duration-300 \${
-          isHovered ? 'text-white' : 'text-foreground'
+          isHovered ? 'text-primary-foreground' : 'text-foreground'
         }\`}
       >
         {memberName}
@@ -60,7 +59,7 @@ export default function TeamMember({
       {/* Position */}
       <p
         className={\`text-sm transition-colors duration-300 mt-1 \${
-          isHovered ? 'text-white' : 'text-muted-foreground'
+          isHovered ? 'text-primary-foreground' : 'text-muted-foreground'
         }\`}
       >
         {memberPosition}
@@ -69,10 +68,7 @@ export default function TeamMember({
       {/* Email Button */}
       <a href={memberEmail} className="w-full mt-5">
         <Button
-          className="w-full text-white transition-colors duration-300"
-          style={{
-            backgroundColor: isHovered ? '#262626' : undefined
-          }}
+          className="w-full text-primary-foreground hover:bg-foreground hover:text-muted dark:hover:bg-background dark:hover:text-foreground transition-colors duration-300"
         >
           <Mail className="w-4 h-4 mr-2" />
           Email Me
@@ -95,22 +91,17 @@ export default function InfoElement({ icon: Icon, title, description }: InfoElem
   return (
     <div className="space-y-3">
       {/* Icon Container */}
-      <div
-        className="w-16 h-16 rounded-lg flex items-center justify-center"
-        style={{
-          backgroundColor: 'oklch(0.5 0.134 242.749 / 0.1)'
-        }}
-      >
-        <Icon className="w-8 h-8 text-[#262626] dark:text-white" strokeWidth={1} />
+      <div className="w-16 h-16 rounded-lg flex items-center justify-center bg-primary-alpha-10">
+        <Icon className="w-8 h-8 text-foreground" strokeWidth={1} />
       </div>
 
       {/* Title */}
-      <h4 className="font-semibold text-sm text-[oklch(0.145_0_0)] dark:text-white">
+      <h4 className="font-semibold text-sm text-foreground">
         {title}
       </h4>
 
       {/* Description */}
-      <p className="text-xs md:text-[13px] md:leading-[22px] font-normal text-[#404040] dark:text-white/90">
+      <p className="text-xs md:text-[13px] md:leading-[22px] font-normal text-muted-foreground dark:text-foreground">
         {description}
       </p>
     </div>
@@ -119,22 +110,16 @@ export default function InfoElement({ icon: Icon, title, description }: InfoElem
 
 export const NUMBER_COUNTER_CODE = `export default function NumberCounter({ number, label }: { number: string; label: string }) {
   return (
-    <div
-      className="text-center rounded-2xl p-6 dark:bg-black"
-      style={{
-        backgroundColor: 'oklch(0.5 0.134 242.749 / 0.075)'
-      }}
-    >
+    <div className="text-center rounded-2xl p-6 bg-primary-alpha-75 dark:bg-card">
       <div
-        className="font-bold text-4xl md:text-[56px] md:leading-[64px] mb-2"
+        className="font-bold text-4xl md:text-[56px] md:leading-[64px] mb-2 text-primary"
         style={{
-          letterSpacing: '-1.5px',
-          color: 'oklch(0.5 0.134 242.749)'
+          letterSpacing: '-1.5px'
         }}
       >
         {number}<span className="text-2xl md:text-3xl relative top-[-0.35em]">+</span>
       </div>
-      <div className="text-sm md:text-[15px] text-[#262626]/80 dark:text-white/80">
+      <div className="text-sm md:text-[15px] text-foreground/80">
         {label}
       </div>
     </div>
@@ -171,10 +156,7 @@ export default function MembershipCard({ planName, expiryText, dashboardImage }:
 
 export const USER_INITIALS_AVATAR_CODE = `export default function UserInitialsAvatar({ initials }: { initials: string }) {
   return (
-    <div
-      className="h-8 w-8 rounded flex items-center justify-center text-white text-sm font-semibold flex-shrink-0"
-      style={{ backgroundColor: 'oklch(0.5 0.134 242.749)' }}
-    >
+    <div className="h-8 w-8 rounded flex items-center justify-center text-primary-foreground text-sm font-semibold flex-shrink-0 bg-primary">
       {initials}
     </div>
   );
@@ -188,10 +170,9 @@ export function TeamMemberCard() {
   return (
     <div className="max-w-xs mx-auto">
       <div
-        className="rounded-2xl p-6 bg-card border transition-all duration-300 flex flex-col items-center text-center"
-        style={{
-          backgroundColor: isHovered ? 'oklch(0.5 0.134 242.749)' : undefined
-        }}
+        className={`rounded-2xl p-6 border transition-all duration-300 flex flex-col items-center text-center ${
+          isHovered ? 'bg-primary' : 'bg-card'
+        }`}
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
       >
@@ -208,7 +189,7 @@ export function TeamMemberCard() {
         {/* Name */}
         <h3
           className={`text-xl font-semibold transition-colors duration-300 ${
-            isHovered ? 'text-white' : 'text-foreground'
+            isHovered ? 'text-primary-foreground' : 'text-foreground'
           }`}
         >
           John Doe
@@ -217,7 +198,7 @@ export function TeamMemberCard() {
         {/* Position */}
         <p
           className={`text-sm transition-colors duration-300 mt-1 ${
-            isHovered ? 'text-white' : 'text-muted-foreground'
+            isHovered ? 'text-primary-foreground' : 'text-muted-foreground'
           }`}
         >
           Founder and CEO
@@ -226,10 +207,7 @@ export function TeamMemberCard() {
         {/* Email Button */}
         <a href="mailto:john@example.com" className="w-full mt-5">
           <Button
-            className="w-full text-white transition-colors duration-300"
-            style={{
-              backgroundColor: isHovered ? '#262626' : undefined
-            }}
+            className="w-full text-primary-foreground hover:bg-foreground hover:text-muted dark:hover:bg-background dark:hover:text-foreground transition-colors duration-300"
           >
             <Mail className="w-4 h-4 mr-2" />
             Email Me
@@ -245,22 +223,17 @@ export function InfoElement() {
     <div className="max-w-xs">
       <div className="space-y-3">
         {/* Icon Container */}
-        <div
-          className="w-16 h-16 rounded-lg flex items-center justify-center"
-          style={{
-            backgroundColor: 'oklch(0.5 0.134 242.749 / 0.1)'
-          }}
-        >
-          <Rocket className="w-8 h-8 text-[#262626] dark:text-white" strokeWidth={1} />
+        <div className="w-16 h-16 rounded-lg flex items-center justify-center bg-primary-alpha-10">
+          <Rocket className="w-8 h-8 text-foreground" strokeWidth={1} />
         </div>
 
         {/* Title */}
-        <h4 className="font-semibold text-sm text-[oklch(0.145_0_0)] dark:text-white">
+        <h4 className="font-semibold text-sm text-foreground">
           Fast Development
         </h4>
 
         {/* Description */}
-        <p className="text-xs md:text-[13px] md:leading-[22px] font-normal text-[#404040] dark:text-white/90">
+        <p className="text-xs md:text-[13px] md:leading-[22px] font-normal text-muted-foreground dark:text-foreground">
           Build and ship your projects faster with pre-configured components and integrations.
         </p>
       </div>
@@ -271,22 +244,16 @@ export function InfoElement() {
 export function NumberCounter() {
   return (
     <div className="max-w-xs mx-auto">
-      <div
-        className="text-center rounded-2xl p-6 dark:bg-black"
-        style={{
-          backgroundColor: 'oklch(0.5 0.134 242.749 / 0.075)'
-        }}
-      >
+      <div className="text-center rounded-2xl p-6 bg-primary-alpha-75 dark:bg-card">
         <div
-          className="font-bold text-4xl md:text-[56px] md:leading-[64px] mb-2"
+          className="font-bold text-4xl md:text-[56px] md:leading-[64px] mb-2 text-primary"
           style={{
-            letterSpacing: '-1.5px',
-            color: 'oklch(0.5 0.134 242.749)'
+            letterSpacing: '-1.5px'
           }}
         >
           75<span className="text-2xl md:text-3xl relative top-[-0.35em]">+</span>
         </div>
-        <div className="text-sm md:text-[15px] text-[#262626]/80 dark:text-white/80">
+        <div className="text-sm md:text-[15px] text-foreground/80">
           Custom Components
         </div>
       </div>
@@ -319,22 +286,13 @@ export function MembershipCard() {
 export function UserInitialsAvatar() {
   return (
     <div className="flex items-center gap-4">
-      <div
-        className="h-8 w-8 rounded flex items-center justify-center text-white text-sm font-semibold flex-shrink-0"
-        style={{ backgroundColor: 'oklch(0.5 0.134 242.749)' }}
-      >
+      <div className="h-8 w-8 rounded flex items-center justify-center text-primary-foreground text-sm font-semibold flex-shrink-0 bg-primary">
         JD
       </div>
-      <div
-        className="h-12 w-12 rounded flex items-center justify-center text-white text-lg font-semibold"
-        style={{ backgroundColor: 'oklch(0.5 0.134 242.749)' }}
-      >
+      <div className="h-12 w-12 rounded flex items-center justify-center text-primary-foreground text-lg font-semibold bg-primary">
         JD
       </div>
-      <div
-        className="h-16 w-16 rounded flex items-center justify-center text-white text-xl font-semibold"
-        style={{ backgroundColor: 'oklch(0.5 0.134 242.749)' }}
-      >
+      <div className="h-16 w-16 rounded flex items-center justify-center text-primary-foreground text-xl font-semibold bg-primary">
         JD
       </div>
     </div>

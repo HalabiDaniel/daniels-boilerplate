@@ -60,9 +60,10 @@ export default function TeamMember({
       {/* Email Button */}
       <a href={memberEmail} className="w-full mt-5">
         <Button
-          className="w-full text-white transition-colors duration-300"
+          className="w-full transition-colors duration-300"
           style={{
-            backgroundColor: isHovered ? '#262626' : undefined
+            backgroundColor: isHovered ? '#262626' : undefined,
+            color: 'white'
           }}
         >
           <Mail className="w-4 h-4 mr-2" />

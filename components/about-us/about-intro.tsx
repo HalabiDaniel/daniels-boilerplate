@@ -1,6 +1,8 @@
 'use client';
 
 import { useState } from 'react';
+import { PillBadge } from '@/components/daniels-elements/elements/card-elements';
+import { HighlightedText } from '@/components/daniels-elements/elements/highlighted-text';
 
 export default function AboutIntro() {
   const [activeTab, setActiveTab] = useState(0);
@@ -40,14 +42,7 @@ export default function AboutIntro() {
     >
       <div className="container mx-auto px-4 space-y-8">
         {/* Pill */}
-        <div
-          className="inline-block px-3 py-1 rounded-full text-white text-[13px] border-2 border-white"
-          style={{
-            background: 'oklch(0.5 0.134 242.749)'
-          }}
-        >
-          About the Boilerplate
-        </div>
+        <PillBadge />
 
         {/* First Row: Two Columns */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16">
@@ -59,7 +54,7 @@ export default function AboutIntro() {
                 letterSpacing: '-1px'
               }}
             >
-              Making your dream project <span style={{ color: 'oklch(0.5 0.134 242.749)' }}>one step closer</span>
+              Making your dream project <HighlightedText>one step closer</HighlightedText>
             </h2>
             <p className="text-sm md:text-[15px] md:leading-[26px] font-normal text-[#262626]/90 dark:text-white/90 max-w-[500px]">
               Building a project from scratch everytime is tiring, time consuming, and useless. I plan to make my work and yours more efficient, more fun, and way easier.
@@ -74,11 +69,23 @@ export default function AboutIntro() {
                 <button
                   key={index}
                   onClick={() => setActiveTab(index)}
-                  className={`flex-1 px-6 py-3 text-sm md:text-base font-semibold transition-all ${getButtonRoundedClass(index)}`}
+                  className={`flex-1 px-6 py-3 text-sm md:text-base font-semibold transition-all cursor-pointer ${getButtonRoundedClass(index)}`}
                   style={{
-                    backgroundColor: activeTab === index ? 'oklch(0.5 0.134 242.749)' : 'oklch(0.391 0.09 240.876)',
+                    backgroundColor: activeTab === index 
+                      ? 'var(--primary)' 
+                      : 'var(--chart-4)',
                     color: 'white',
                     letterSpacing: '-0.3px'
+                  }}
+                  onMouseEnter={(e) => {
+                    if (activeTab !== index) {
+                      e.currentTarget.style.backgroundColor = 'var(--ring)';
+                    }
+                  }}
+                  onMouseLeave={(e) => {
+                    if (activeTab !== index) {
+                      e.currentTarget.style.backgroundColor = 'var(--chart-4)';
+                    }
                   }}
                 >
                   {tab.label}

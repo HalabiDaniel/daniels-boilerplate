@@ -2,6 +2,7 @@
 
 import Image from 'next/image';
 import { Check } from 'lucide-react';
+import { Button } from '@/components/ui/button';
 
 // Code templates for each card type
 export const EMPTY_CARD_CODE = `<div className="rounded-2xl p-8 bg-card border">
@@ -13,9 +14,8 @@ export const IMAGE_WITH_OFFSET_CODE = `import Image from 'next/image';
 <div className="relative">
   {/* Background Layer */}
   <div
-    className="absolute inset-0 rounded-2xl"
+    className="absolute inset-0 rounded-2xl bg-primary-alpha-10"
     style={{
-      backgroundColor: 'oklch(0.5 0.134 242.749 / 0.1)',
       transform: 'translate(20px, 20px)',
       zIndex: 0
     }}
@@ -31,25 +31,15 @@ export const IMAGE_WITH_OFFSET_CODE = `import Image from 'next/image';
   </div>
 </div>`;
 
-export const PILL_BADGE_CODE = `<div
-  className="inline-block px-3 py-1 rounded-full text-white text-[13px] border-2 border-white"
-  style={{
-    background: 'oklch(0.5 0.134 242.749)'
-  }}
->
+export const PILL_BADGE_CODE = `<div className="inline-block px-3 py-1 rounded-full text-[13px] border-2 bg-primary text-background dark:text-foreground border-background dark:border-foreground">
   Your badge text
 </div>`;
 
 export const TESTIMONIAL_CARD_CODE = `import Image from 'next/image';
 
-<div
-  className="rounded-2xl p-6 space-y-6"
-  style={{
-    backgroundColor: 'oklch(0.5 0.134 242.749 / 0.5)'
-  }}
->
+<div className="rounded-2xl p-6 space-y-6 bg-primary-alpha-50">
   {/* Quote */}
-  <p className="text-white text-base md:text-[16px] leading-relaxed">
+  <p className="text-primary-foreground text-base md:text-[16px] leading-relaxed">
     Your testimonial quote goes here.
   </p>
 
@@ -67,24 +57,24 @@ export const TESTIMONIAL_CARD_CODE = `import Image from 'next/image';
 
     {/* Name and Position */}
     <div>
-      <p className="text-white font-semibold text-sm">
+      <p className="text-primary-foreground font-semibold text-sm">
         Person Name
       </p>
-      <p className="text-white/70 text-xs">
+      <p className="text-primary-foreground/70 text-xs">
         Job Title
       </p>
     </div>
   </div>
 
   {/* Divider */}
-  <div className="h-px bg-white/20" />
+  <div className="h-px bg-primary-foreground/20" />
 
   {/* Metric Section */}
   <div>
-    <p className="text-white font-bold text-2xl md:text-3xl mb-1">
+    <p className="text-primary-foreground font-bold text-2xl md:text-3xl mb-1">
       50+
     </p>
-    <p className="text-white/70 text-xs">
+    <p className="text-primary-foreground/70 text-xs">
       metric description
     </p>
   </div>
@@ -94,12 +84,7 @@ export const PRICING_CARD_CODE = `import { Button } from '@/components/ui/button
 
 <div className="rounded-2xl p-8 bg-card border">
   {/* Optional Featured Badge */}
-  <div
-    className="inline-block px-3 py-1 rounded-full text-white text-xs font-semibold mb-4"
-    style={{
-      background: 'oklch(0.5 0.134 242.749)'
-    }}
-  >
+  <div className="inline-block px-3 py-1 rounded-full text-primary-foreground text-xs font-semibold mb-4 bg-primary">
     Most Popular
   </div>
 
@@ -122,8 +107,7 @@ export const PRICING_CARD_CODE = `import { Button } from '@/components/ui/button
   <ul className="space-y-3 mb-8">
     <li className="flex items-start gap-2">
       <svg
-        className="w-5 h-5 mt-0.5 flex-shrink-0"
-        style={{ color: 'oklch(0.5 0.134 242.749)' }}
+        className="w-5 h-5 mt-0.5 flex-shrink-0 text-primary"
         fill="none"
         stroke="currentColor"
         viewBox="0 0 24 24"
@@ -136,8 +120,7 @@ export const PRICING_CARD_CODE = `import { Button } from '@/components/ui/button
     </li>
     <li className="flex items-start gap-2">
       <svg
-        className="w-5 h-5 mt-0.5 flex-shrink-0"
-        style={{ color: 'oklch(0.5 0.134 242.749)' }}
+        className="w-5 h-5 mt-0.5 flex-shrink-0 text-primary"
         fill="none"
         stroke="currentColor"
         viewBox="0 0 24 24"
@@ -150,7 +133,7 @@ export const PRICING_CARD_CODE = `import { Button } from '@/components/ui/button
     </li>
   </ul>
 
-  <Button className="w-full text-white">
+  <Button className="w-full">
     Get Started
   </Button>
 </div>`;
@@ -169,9 +152,8 @@ export function ImageWithOffset() {
     <div className="relative max-w-[400px] mx-auto">
       {/* Background Layer */}
       <div
-        className="absolute inset-0 rounded-2xl"
+        className="absolute inset-0 rounded-2xl bg-primary-alpha-10"
         style={{
-          backgroundColor: 'oklch(0.5 0.134 242.749 / 0.1)',
           transform: 'translate(20px, 20px)',
           zIndex: 0
         }}
@@ -191,12 +173,7 @@ export function ImageWithOffset() {
 
 export function PillBadge() {
   return (
-    <div
-      className="inline-block px-3 py-1 rounded-full text-white text-[13px] border-2 border-white"
-      style={{
-        background: 'oklch(0.5 0.134 242.749)'
-      }}
-    >
+    <div className="inline-block px-3 py-1 rounded-full text-[13px] border-2 bg-primary text-background dark:text-foreground border-background dark:border-foreground">
       v1.0 available for free
     </div>
   );
@@ -204,14 +181,9 @@ export function PillBadge() {
 
 export function TestimonialCard() {
   return (
-    <div
-      className="rounded-2xl p-6 space-y-6 max-w-[400px]"
-      style={{
-        backgroundColor: 'oklch(0.5 0.134 242.749 / 0.5)'
-      }}
-    >
+    <div className="rounded-2xl p-6 space-y-6 max-w-[400px] bg-primary-alpha-50">
       {/* Quote */}
-      <p className="text-white text-base md:text-[16px] leading-relaxed">
+      <p className="text-primary-foreground text-base md:text-[16px] leading-relaxed">
         I used to spend hours hunting down tiny bugs. Now I just point at this template and poof, the problem solved before I even finish my coffee.
       </p>
 
@@ -229,24 +201,24 @@ export function TestimonialCard() {
 
         {/* Name and Position */}
         <div>
-          <p className="text-white font-semibold text-sm">
+          <p className="text-primary-foreground font-semibold text-sm">
             Alex Morgan
           </p>
-          <p className="text-white/70 text-xs">
+          <p className="text-primary-foreground/70 text-xs">
             Freelance Developer
           </p>
         </div>
       </div>
 
       {/* Divider */}
-      <div className="h-px bg-white/20" />
+      <div className="h-px bg-primary-foreground/20" />
 
       {/* Metric Section */}
       <div>
-        <p className="text-white font-bold text-2xl md:text-3xl mb-1">
+        <p className="text-primary-foreground font-bold text-2xl md:text-3xl mb-1">
           40+
         </p>
-        <p className="text-white/70 text-xs">
+        <p className="text-primary-foreground/70 text-xs">
           hours saved on coding in the first day.
         </p>
       </div>
@@ -258,12 +230,7 @@ export function PricingCard() {
   return (
     <div className="rounded-2xl p-8 bg-card border max-w-[400px]">
       {/* Featured Badge */}
-      <div
-        className="inline-block px-3 py-1 rounded-full text-white text-xs font-semibold mb-4"
-        style={{
-          background: 'oklch(0.5 0.134 242.749)'
-        }}
-      >
+      <div className="inline-block px-3 py-1 rounded-full text-primary-foreground text-xs font-semibold mb-4 bg-primary">
         Most Popular
       </div>
 
@@ -285,51 +252,34 @@ export function PricingCard() {
 
       <ul className="space-y-3 mb-8">
         <li className="flex items-start gap-2">
-          <Check
-            className="w-5 h-5 mt-0.5 flex-shrink-0"
-            style={{ color: 'oklch(0.5 0.134 242.749)' }}
-          />
+          <Check className="w-5 h-5 mt-0.5 flex-shrink-0 text-primary" />
           <span className="text-sm text-muted-foreground">
             Unlimited projects
           </span>
         </li>
         <li className="flex items-start gap-2">
-          <Check
-            className="w-5 h-5 mt-0.5 flex-shrink-0"
-            style={{ color: 'oklch(0.5 0.134 242.749)' }}
-          />
+          <Check className="w-5 h-5 mt-0.5 flex-shrink-0 text-primary" />
           <span className="text-sm text-muted-foreground">
             Priority support
           </span>
         </li>
         <li className="flex items-start gap-2">
-          <Check
-            className="w-5 h-5 mt-0.5 flex-shrink-0"
-            style={{ color: 'oklch(0.5 0.134 242.749)' }}
-          />
+          <Check className="w-5 h-5 mt-0.5 flex-shrink-0 text-primary" />
           <span className="text-sm text-muted-foreground">
             Advanced analytics
           </span>
         </li>
         <li className="flex items-start gap-2">
-          <Check
-            className="w-5 h-5 mt-0.5 flex-shrink-0"
-            style={{ color: 'oklch(0.5 0.134 242.749)' }}
-          />
+          <Check className="w-5 h-5 mt-0.5 flex-shrink-0 text-primary" />
           <span className="text-sm text-muted-foreground">
             Custom integrations
           </span>
         </li>
       </ul>
 
-      <button
-        className="w-full px-6 py-3 rounded-lg text-white font-medium"
-        style={{
-          background: 'oklch(0.5 0.134 242.749)'
-        }}
-      >
+      <Button className="w-full">
         Get Started
-      </button>
+      </Button>
     </div>
   );
 }

@@ -4,8 +4,8 @@ A personal boilerplate created by Daniel Halabi to facilitate building Next.js w
 
 ## Upcoming Features
 - [ ] Full mobile responsiveness across the website
-- [ ] Organized list of components and sections allowing you to easily insert them anywhere
-- [ ] Fully dynamic theming, which lets you change the website's colors and fonts in a matter of seconds using tweakcn.com
+- [x] Organized list of components and sections allowing you to easily insert them anywhere
+- [x] Fully dynamic theming, which lets you change the website's colors and fonts in a matter of seconds using tweakcn.com
 - [x] Admin dashboard to manage users, subscriptions, and more.
 - [ ] Analytics integration via PostHog
 
@@ -49,6 +49,10 @@ npm run build
 ## Environment Setup
 
 Check the `.env.example` file to understand what environment variables and API keys are needed for the project.
+
+## Editing the Theme (colors, fonts, and more)
+
+The website uses an organized CSS theme, which I obtained from https://tweakcn.com/. The way the website's elements work is by referring to the variables in /app/globals.css. To change the website's main colors typography, visit https://tweakcn.com/, create a theme for free, and copy the CSS code into your globals.css (or use their terminal command). This will apply the changes to all elements across the website. If you still need to edit specific elements, all you need to do is open the element file (e.g., `button-elements.tsx`) and edit the component's style.
 
 ## Authentication Setup (Clerk)
 

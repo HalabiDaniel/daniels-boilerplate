@@ -1,4 +1,6 @@
 import Image from 'next/image';
+import { PillBadge } from '@/components/daniels-elements/elements/card-elements';
+import { HighlightedText } from '@/components/daniels-elements/elements/highlighted-text';
 
 export default function Hero2() {
   return (
@@ -11,14 +13,7 @@ export default function Hero2() {
           {/* Left side - Text content */}
           <div className="flex flex-col items-start text-left space-y-6 max-w-[720px]">
             {/* Pill */}
-            <div
-              className="px-3 py-1 rounded-full text-white text-[13px] border-2 border-white"
-              style={{
-                background: 'linear-gradient(to right, oklch(0.5 0.134 242.749), oklch(0.293 0.066 243.157), black)'
-              }}
-            >
-              v1.0 available for free
-            </div>
+            <PillBadge />
 
             {/* H1 */}
             <h1
@@ -27,7 +22,7 @@ export default function Hero2() {
                 letterSpacing: '-1.35px'
               }}
             >
-              Your Friendly Neighborhood Next.js <span style={{ color: 'oklch(0.5 0.134 242.749)' }}>Boilerplate</span>
+              Your Friendly Neighborhood Next.js <HighlightedText>Boilerplate</HighlightedText>
             </h1>
 
             {/* P */}

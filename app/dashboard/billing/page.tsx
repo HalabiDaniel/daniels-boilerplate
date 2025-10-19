@@ -176,7 +176,7 @@ export default function BillingPage() {
 
               <Button
                 onClick={handleManageSubscription}
-                className="w-full text-white"
+                className="w-full"
                 disabled={isProcessing || isFree}
               >
                 {isProcessing ? 'Loading...' : 'Manage subscription'}

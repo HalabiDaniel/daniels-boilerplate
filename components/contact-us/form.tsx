@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import Image from 'next/image';
 import { Button } from '@/components/ui/button';
+import { PillBadge } from '@/components/daniels-elements/elements/card-elements';
 
 export default function ContactForm() {
   const [formData, setFormData] = useState({
@@ -32,11 +33,7 @@ export default function ContactForm() {
           <div className="p-8 md:p-12 space-y-6" style={{ background: 'oklch(0.5 0.134 242.749)' }}>
             {/* Pill */}
             <div className="flex justify-start">
-              <div
-                className="inline-block px-3 py-1 rounded-full text-[#262626] text-[13px] border-2 border-white bg-white"
-              >
-                Contact us
-              </div>
+              <PillBadge />
             </div>
 
             {/* Heading */}

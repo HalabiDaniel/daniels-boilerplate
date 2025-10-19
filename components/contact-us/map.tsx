@@ -1,4 +1,5 @@
 import React from 'react';
+import { PillBadge } from '@/components/daniels-elements/elements/card-elements';
 
 export default function Map() {
   return (
@@ -9,14 +10,7 @@ export default function Map() {
           <div className="space-y-8">
             {/* Pill */}
             <div className="flex justify-start">
-              <div
-                className="inline-block px-3 py-1 rounded-full text-white text-[13px] border-2 border-white"
-                style={{
-                  background: 'oklch(0.5 0.134 242.749)'
-                }}
-              >
-                Visit us
-              </div>
+              <PillBadge />
             </div>
 
             {/* Heading */}

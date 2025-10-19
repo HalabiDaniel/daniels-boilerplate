@@ -4,6 +4,8 @@ import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import { SignUpButton, useUser } from '@clerk/nextjs';
+import { PillBadge } from '@/components/daniels-elements/elements/card-elements';
+import { HighlightedText } from '@/components/daniels-elements/elements/highlighted-text';
 
 export default function SideBySide() {
   const { isSignedIn } = useUser();
@@ -16,14 +18,7 @@ export default function SideBySide() {
           {/* Left Column: Content */}
           <div className="space-y-6">
             {/* Pill */}
-            <div
-              className="inline-block px-3 py-1 rounded-full text-white text-[13px] border-2 border-white"
-              style={{
-                background: 'oklch(0.5 0.134 242.749)'
-              }}
-            >
-              Quick Start
-            </div>
+            <PillBadge />
 
             {/* Heading */}
             <h2
@@ -32,7 +27,7 @@ export default function SideBySide() {
                 letterSpacing: '-1px'
               }}
             >
-              Launch Smarter, <span style={{ color: 'oklch(0.5 0.134 242.749)' }}>Code Faster</span>
+              Launch Smarter, <HighlightedText>Code Faster</HighlightedText>
             </h2>
 
             {/* Text */}
@@ -43,11 +38,11 @@ export default function SideBySide() {
             {/* Button */}
             {isSignedIn ? (
               <Link href="/dashboard">
-                <Button className="text-white">Go to Dashboard</Button>
+                <Button>Go to Dashboard</Button>
               </Link>
             ) : (
               <SignUpButton mode="modal" forceRedirectUrl="/dashboard">
-                <Button className="text-white">Get Started</Button>
+                <Button>Get Started</Button>
               </SignUpButton>
             )}
           </div>
@@ -104,14 +99,7 @@ export default function SideBySide() {
           {/* Right Column: Content */}
           <div className="space-y-6 order-1 lg:order-2">
             {/* Pill */}
-            <div
-              className="inline-block px-3 py-1 rounded-full text-white text-[13px] border-2 border-white"
-              style={{
-                background: 'oklch(0.5 0.134 242.749)'
-              }}
-            >
-              Team Ready
-            </div>
+            <PillBadge />
 
             {/* Heading */}
             <h2
@@ -120,7 +108,7 @@ export default function SideBySide() {
                 letterSpacing: '-1px'
               }}
             >
-              Built for Makers, <span style={{ color: 'oklch(0.5 0.134 242.749)' }}>Loved by Teams</span>
+              Built for Makers, <HighlightedText>Loved by Teams</HighlightedText>
             </h2>
 
             {/* Text */}
@@ -131,11 +119,11 @@ export default function SideBySide() {
             {/* Button */}
             {isSignedIn ? (
               <Link href="/dashboard">
-                <Button className="text-white">Go to Dashboard</Button>
+                <Button>Go to Dashboard</Button>
               </Link>
             ) : (
               <SignUpButton mode="modal" forceRedirectUrl="/dashboard">
-                <Button className="text-white">Get Started</Button>
+                <Button>Get Started</Button>
               </SignUpButton>
             )}
           </div>

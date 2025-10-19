@@ -4,6 +4,8 @@ import React from 'react';
 import Image from 'next/image';
 import InfoElement from './info-element';
 import { Sheet, Router, ShieldUser, Banknote } from 'lucide-react';
+import { PillBadge } from '@/components/daniels-elements/elements/card-elements';
+import { HighlightedText } from '@/components/daniels-elements/elements/highlighted-text';
 
 export default function AboutInfo() {
     // To change the icons, simply add their component names from https://lucide.dev/ in the import statement above first
@@ -37,14 +39,7 @@ export default function AboutInfo() {
                     {/* Left Column: Content */}
                     <div className="space-y-8">
                         {/* Pill */}
-                        <div
-                            className="inline-block px-3 py-1 rounded-full text-white text-[13px] border-2 border-white"
-                            style={{
-                                background: 'oklch(0.5 0.134 242.749)'
-                            }}
-                        >
-                            Features and capabilities
-                        </div>
+                        <PillBadge />
 
                         {/* Heading */}
                         <h2
@@ -53,7 +48,7 @@ export default function AboutInfo() {
                                 letterSpacing: '-1px'
                             }}
                         >
-                            Everything you need to <span style={{ color: 'oklch(0.5 0.134 242.749)' }}>launch fast</span>
+                            Everything you need to <HighlightedText>launch fast</HighlightedText>
                         </h2>
 
                         {/* Description */}

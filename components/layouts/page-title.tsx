@@ -1,3 +1,5 @@
+import { HighlightedText } from '@/components/daniels-elements/elements/highlighted-text';
+
 interface PageTitleProps {
     pillText: string;
     pageTitle: string;
@@ -33,10 +35,7 @@ export default function PageTitle({
                             letterSpacing: '-1px',
                         }}
                     >
-                        {pageTitle}{' '}
-                        <span style={{ color: 'oklch(0.5 0.134 242.749)' }}>
-                            {pageTitleHighlighted}
-                        </span>
+                        {pageTitle} <HighlightedText>{pageTitleHighlighted}</HighlightedText>
                     </h1>
 
                     {/* P */}

@@ -9,6 +9,8 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from '@/components/ui/accordion';
+import { PillBadge } from '@/components/daniels-elements/elements/card-elements';
+import { HighlightedText } from '@/components/daniels-elements/elements/highlighted-text';
 
 export default function AboutFaqs() {
   const faqs = [
@@ -41,14 +43,7 @@ export default function AboutFaqs() {
           {/* Left Column */}
           <div className="space-y-6 lg:pr-4">
             {/* Pill */}
-            <div
-              className="inline-block px-3 py-1 rounded-full text-white text-[13px] border-2 border-white"
-              style={{
-                background: 'oklch(0.5 0.134 242.749)'
-              }}
-            >
-              FAQs
-            </div>
+            <PillBadge />
 
             {/* Title */}
             <h2
@@ -57,7 +52,7 @@ export default function AboutFaqs() {
                 letterSpacing: '-1px'
               }}
             >
-              Frequently Asked <span style={{ color: 'oklch(0.5 0.134 242.749)' }}>Questions</span>
+              Frequently Asked <HighlightedText>Questions</HighlightedText>
             </h2>
 
             {/* Description */}
@@ -67,7 +62,7 @@ export default function AboutFaqs() {
 
             {/* Button */}
             <Link href="/contact-us">
-              <Button className="text-white">Not enough? Contact us now.</Button>
+              <Button>Not enough? Contact us now.</Button>
             </Link>
           </div>
 

@@ -1,7 +1,9 @@
 'use client';
 
-import React from 'react';
+import React, { useState } from 'react';
 import TeamMember from './team-member';
+import { PillBadge } from '@/components/daniels-elements/elements/card-elements';
+import { HighlightedText } from '@/components/daniels-elements/elements/highlighted-text';
 
 export default function AboutTeam() {
     const teamMembers = [
@@ -36,14 +38,7 @@ export default function AboutTeam() {
             <div className="container mx-auto px-4 py-12 md:py-16 space-y-6">
                 {/* Pill */}
                 <div className="flex justify-center">
-                    <div
-                        className="inline-block px-3 py-1 rounded-full text-white text-[13px] border-2 border-white"
-                        style={{
-                            background: 'oklch(0.5 0.134 242.749)'
-                        }}
-                    >
-                        Our Team
-                    </div>
+                    <PillBadge />
                 </div>
 
                 {/* Heading */}
@@ -53,7 +48,7 @@ export default function AboutTeam() {
                         letterSpacing: '-1px'
                     }}
                 >
-                    Meet the <span style={{ color: 'oklch(0.5 0.134 242.749)' }}>talented team</span>
+                    Meet the <HighlightedText>talented team</HighlightedText>
                 </h2>
 
                 {/* Description */}

@@ -161,10 +161,10 @@ export function ExpandableUserCard({
           {/* Logout button */}
           <Button
             onClick={handleLogout}
-            className="w-full text-white hover:text-white"
+            className="w-full text-white hover:bg-foreground hover:text-muted dark:hover:bg-background dark:hover:text-foreground"
             style={{ backgroundColor: 'oklch(0.5 0.134 242.749)' }}
             onMouseEnter={(e) => {
-              (e.currentTarget as HTMLButtonElement).style.backgroundColor = '#262626';
+              (e.currentTarget as HTMLButtonElement).style.backgroundColor = '';
             }}
             onMouseLeave={(e) => {
               (e.currentTarget as HTMLButtonElement).style.backgroundColor = 'oklch(0.5 0.134 242.749)';

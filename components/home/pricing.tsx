@@ -8,6 +8,8 @@ import { api } from '@/convex/_generated/api';
 import { Button } from '@/components/ui/button';
 import { SUBSCRIPTION_PLANS } from '@/lib/subscription-plans';
 import { Lock } from 'lucide-react';
+import { PillBadge } from '@/components/daniels-elements/elements/card-elements';
+import { HighlightedText } from '@/components/daniels-elements/elements/highlighted-text';
 
 export default function Pricing() {
     const [isAnnual, setIsAnnual] = useState(false);
@@ -90,14 +92,7 @@ export default function Pricing() {
                 {/* Header Section - Centered */}
                 <div className="flex flex-col items-center text-center space-y-4 mb-12">
                     {/* Pill */}
-                    <div
-                        className="inline-block px-3 py-1 rounded-full text-white text-[13px] border-2 border-white"
-                        style={{
-                            background: 'oklch(0.5 0.134 242.749)'
-                        }}
-                    >
-                        Pricing Plans
-                    </div>
+                    <PillBadge />
 
                     {/* Heading */}
                     <h2
@@ -106,7 +101,7 @@ export default function Pricing() {
                             letterSpacing: '-1px'
                         }}
                     >
-                        Choose the <span style={{ color: 'oklch(0.5 0.134 242.749)' }}>perfect plan</span> for you
+                        Choose the <HighlightedText>perfect plan</HighlightedText> for you
                     </h2>
 
                     {/* Text */}
@@ -213,7 +208,7 @@ export default function Pricing() {
                                     if (isLocked) {
                                         return (
                                             <Button
-                                                className="w-full text-white"
+                                                className="w-full"
                                                 disabled
                                             >
                                                 Coming Soon
@@ -231,7 +226,7 @@ export default function Pricing() {
                                                     mode="modal" 
                                                     forceRedirectUrl="/dashboard"
                                                 >
-                                                    <Button className="w-full text-white">
+                                                    <Button className="w-full">
                                                         {buttonConfig.text}
                                                     </Button>
                                                 </SignUpButton>
@@ -245,7 +240,7 @@ export default function Pricing() {
                                                 mode="modal" 
                                                 forceRedirectUrl={checkoutUrl}
                                             >
-                                                <Button className="w-full text-white">
+                                                <Button className="w-full">
                                                     {buttonConfig.text}
                                                 </Button>
                                             </SignUpButton>
@@ -256,7 +251,7 @@ export default function Pricing() {
                                         return (
                                             <Button
                                                 onClick={handleDashboardRedirect}
-                                                className="w-full text-white"
+                                                className="w-full"
                                                 disabled={isLoadingSubscription || isProcessing}
                                             >
                                                 {buttonConfig.text}
@@ -268,7 +263,7 @@ export default function Pricing() {
                                     return (
                                         <Button
                                             onClick={() => handleUpgrade(plan.id)}
-                                            className="w-full text-white"
+                                            className="w-full"
                                             disabled={isLoadingSubscription || isProcessing}
                                         >
                                             {buttonConfig.text}

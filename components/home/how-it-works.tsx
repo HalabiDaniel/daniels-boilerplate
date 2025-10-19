@@ -6,6 +6,8 @@ import { Button } from '@/components/ui/button';
 import { ArrowRight } from 'lucide-react';
 import { SignUpButton, useUser } from '@clerk/nextjs';
 import Link from 'next/link';
+import { PillBadge } from '@/components/daniels-elements/elements/card-elements';
+import { HighlightedText } from '@/components/daniels-elements/elements/highlighted-text';
 
 export default function HowItWorks() {
   const { isSignedIn } = useUser();
@@ -35,14 +37,7 @@ export default function HowItWorks() {
         <div className="space-y-8">
           {/* Pill */}
           <div className="flex justify-center">
-            <div
-              className="inline-block px-3 py-1 rounded-full text-white text-[13px] border-2 border-white"
-              style={{
-                background: 'oklch(0.5 0.134 242.749)'
-              }}
-            >
-              How it works
-            </div>
+            <PillBadge />
           </div>
 
           {/* Heading */}
@@ -52,7 +47,7 @@ export default function HowItWorks() {
               letterSpacing: '-1px'
             }}
           >
-            The <span style={{ color: 'oklch(0.5 0.134 242.749)' }}>step-by-step</span> process
+            The <HighlightedText>step-by-step</HighlightedText> process
           </h2>
 
           {/* Description */}
@@ -134,11 +129,11 @@ export default function HowItWorks() {
               <div className="flex justify-start">
                 {isSignedIn ? (
                   <Link href="/dashboard">
-                    <Button className="text-white">Go to Dashboard</Button>
+                    <Button>Go to Dashboard</Button>
                   </Link>
                 ) : (
                   <SignUpButton mode="modal" forceRedirectUrl="/dashboard">
-                    <Button className="text-white">Get Started</Button>
+                    <Button>Get Started</Button>
                   </SignUpButton>
                 )}
               </div>

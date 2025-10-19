@@ -6,6 +6,8 @@ import { ArrowRight, Github } from 'lucide-react';
 import { useState, useRef } from 'react';
 import { SignUpButton, useUser } from '@clerk/nextjs';
 import Link from 'next/link';
+import { PillBadge } from '@/components/daniels-elements/elements/card-elements';
+import { HighlightedText } from '@/components/daniels-elements/elements/highlighted-text';
 
 export default function Hero1() {
   const [isInputFocused, setIsInputFocused] = useState(false);
@@ -32,14 +34,7 @@ export default function Hero1() {
           {/* Content wrapper with max-width */}
           <div className="w-full max-w-[720px] flex flex-col items-center text-center space-y-6">
             {/* Pill */}
-            <div
-              className="px-3 py-1 rounded-full text-white text-[13px] border-2 border-white"
-              style={{
-                background: 'oklch(0.5 0.134 242.749)'
-              }}
-            >
-              v1.0 available for free
-            </div>
+            <PillBadge />
 
             {/* H1 */}
             <h1
@@ -48,7 +43,7 @@ export default function Hero1() {
                 letterSpacing: '-1.35px'
               }}
             >
-              Your Friendly Neighborhood Next.js <span style={{ color: 'oklch(0.5 0.134 242.749)' }}>Boilerplate</span>
+              Your Friendly Neighborhood Next.js <HighlightedText>Boilerplate</HighlightedText>
             </h1>
 
             {/* P */}
@@ -63,13 +58,12 @@ export default function Hero1() {
                   <Button
                     variant="outline"
                     size="icon"
-                    className="bg-transparent border-2 border-[#262626] dark:border-white text-[#262626] dark:text-white shadow-none hover:bg-[#262626] hover:text-white dark:hover:bg-white dark:hover:text-[#262626]"
                   >
                     <Github className="h-4 w-4" />
                   </Button>
                 </Link>
                 <Link href="/dashboard">
-                  <Button className="text-white">Go to Dashboard</Button>
+                  <Button>Go to Dashboard</Button>
                 </Link>
               </div>
             ) : (
@@ -98,7 +92,7 @@ export default function Hero1() {
                   <Button
                     ref={buttonRef}
                     type="button"
-                    className="shrink-0 overflow-hidden h-[42px] flex items-center justify-center text-sm relative text-white"
+                    className="shrink-0 overflow-hidden h-[42px] flex items-center justify-center text-sm relative bg-primary text-white hover:bg-foreground hover:text-background"
                     style={{
                       width: isInputFocused ? '42px' : 'auto',
                       paddingLeft: isInputFocused ? '0' : '24px',

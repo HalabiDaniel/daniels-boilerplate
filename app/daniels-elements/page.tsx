@@ -1,4 +1,5 @@
 import { TypographyElements } from '@/components/daniels-elements/elements/typography-elements';
+import { HighlightedTextShowcase } from '@/components/daniels-elements/elements/highlighted-text';
 import { ElementCard } from '@/components/daniels-elements/element-card';
 import {
   PrimaryButton,
@@ -56,6 +57,7 @@ import {
   MEMBERSHIP_CARD_CODE,
   USER_INITIALS_AVATAR_CODE,
 } from '@/components/daniels-elements/elements/specialized-elements';
+import PageTitle from '@/components/layouts/page-title';
 
 export default function DanielsElementsPage() {
   return (
@@ -67,17 +69,18 @@ export default function DanielsElementsPage() {
       >
         Skip to content
       </a>
+
+      <PageTitle pillText='Components' pageTitle='All Elements' pageTitleHighlighted='' description='A comprehensive showcase of reusable UI components. Preview and copy code for any element.'/>
       
       <div id="main-content" className="container mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 lg:py-12">
-        <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold mb-3 sm:mb-4">Daniel's Elements</h1>
-        <p className="text-base sm:text-lg text-muted-foreground mb-6 sm:mb-8">
-          A comprehensive showcase of reusable UI components. Preview and copy code for any element.
-        </p>
       
       {/* Typography Elements */}
       <section className="mb-8 sm:mb-10 lg:mb-12" aria-labelledby="typography-heading">
         <h2 id="typography-heading" className="text-xl sm:text-2xl font-semibold mb-4 sm:mb-6">Typography</h2>
         <TypographyElements />
+        <div className="mt-4 sm:mt-6">
+          <HighlightedTextShowcase />
+        </div>
       </section>
 
       {/* Button Elements */}

@@ -85,7 +85,7 @@ function HeaderButton() {
     if (isSignedIn) {
         return (
             <Link href="/dashboard">
-                <Button variant="outline" className="border-2 border-[#262626] dark:border-white text-[#262626] dark:text-white shadow-none hover:bg-[#262626] hover:text-white dark:hover:bg-white dark:hover:text-[#262626]">
+                <Button variant="outline">
                     Dashboard
                 </Button>
             </Link>
@@ -94,7 +94,7 @@ function HeaderButton() {
 
     return (
         <SignUpButton mode="modal" forceRedirectUrl="/dashboard">
-            <Button className="text-white">Get Started</Button>
+            <Button>Get Started</Button>
         </SignUpButton>
     );
 }

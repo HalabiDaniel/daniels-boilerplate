@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { PillBadge } from '@/components/daniels-elements/elements/card-elements';
 
 export default function About1() {
   const [activeTab, setActiveTab] = useState(0);
@@ -54,14 +55,7 @@ export default function About1() {
 
       <div className="container mx-auto px-4 pb-16 pt-[320px] md:pt-[360px] space-y-8">
         {/* Pill */}
-        <div
-          className="inline-block px-3 py-1 rounded-full text-white text-[13px] border-2 border-white"
-          style={{
-            background: 'oklch(0.5 0.134 242.749)'
-          }}
-        >
-          About the Boilerplate
-        </div>
+        <PillBadge />
         {/* First Row: Two Columns */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16">
           {/* Left Column: Pill-Title-Subtitle */}
@@ -87,11 +81,23 @@ export default function About1() {
                 <button
                   key={index}
                   onClick={() => setActiveTab(index)}
-                  className={`flex-1 px-6 py-3 text-sm md:text-base font-semibold transition-all ${getButtonRoundedClass(index)}`}
+                  className={`flex-1 px-6 py-3 text-sm md:text-base font-semibold transition-all cursor-pointer ${getButtonRoundedClass(index)}`}
                   style={{
-                    backgroundColor: activeTab === index ? 'oklch(0.5 0.134 242.749)' : 'oklch(0.391 0.09 240.876)',
+                    backgroundColor: activeTab === index 
+                      ? 'var(--primary)' 
+                      : 'var(--chart-4)',
                     color: 'white',
                     letterSpacing: '-0.3px'
+                  }}
+                  onMouseEnter={(e) => {
+                    if (activeTab !== index) {
+                      e.currentTarget.style.backgroundColor = 'var(--ring)';
+                    }
+                  }}
+                  onMouseLeave={(e) => {
+                    if (activeTab !== index) {
+                      e.currentTarget.style.backgroundColor = 'var(--chart-4)';
+                    }
                   }}
                 >
                   {tab.label}

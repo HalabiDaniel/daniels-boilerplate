@@ -6,6 +6,7 @@ import { useState, useRef } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { SignUpButton, useUser } from '@clerk/nextjs';
+import { PillBadge } from '@/components/daniels-elements/elements/card-elements';
 
 export default function Footer() {
   const { isSignedIn } = useUser();
@@ -29,14 +30,7 @@ export default function Footer() {
           }}
         >
           {/* Pill */}
-          <div
-            className="px-3 py-1 rounded-full text-white text-[13px] border-2 border-white"
-            style={{
-              background: 'oklch(0.5 0.134 242.749)'
-            }}
-          >
-            Get Started Today
-          </div>
+          <PillBadge />
 
           {/* Heading */}
           <h2 className="font-semibold text-3xl md:text-[42px] md:leading-[52px] text-white">
@@ -51,13 +45,13 @@ export default function Footer() {
           {/* Get Started Button */}
           {isSignedIn ? (
             <Link href="/dashboard">
-              <Button className="bg-white text-[#262626] hover:bg-white/90">
+              <Button variant="secondary">
                 Go to Dashboard
               </Button>
             </Link>
           ) : (
             <SignUpButton mode="modal" forceRedirectUrl="/dashboard">
-              <Button className="bg-white text-[#262626] hover:bg-white/90">
+              <Button variant="secondary">
                 Get Started
               </Button>
             </SignUpButton>
@@ -176,7 +170,7 @@ export default function Footer() {
               <Button
                 ref={buttonRef}
                 type="submit"
-                className="shrink-0 overflow-hidden h-[42px] flex items-center justify-center text-sm relative text-white"
+                className="shrink-0 overflow-hidden h-[42px] flex items-center justify-center text-sm relative bg-primary text-white hover:bg-foreground hover:text-background"
                 style={{
                   width: isInputFocused ? '42px' : 'auto',
                   paddingLeft: isInputFocused ? '0' : '24px',

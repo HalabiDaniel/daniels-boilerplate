@@ -10,7 +10,7 @@ export const PRIMARY_BUTTON_CODE = `import { Button } from '@/components/ui/butt
 
 export default function PrimaryButtonExample() {
   return (
-    <Button className="text-white">
+    <Button className="text-primary-foreground hover:bg-foreground hover:text-muted dark:hover:bg-background dark:hover:text-foreground">
       Click me
     </Button>
   );
@@ -22,7 +22,7 @@ export default function OutlineButtonExample() {
   return (
     <Button 
       variant="outline" 
-      className="border-2 border-[#262626] dark:border-white text-[#262626] dark:text-white shadow-none hover:bg-[#262626] hover:text-white dark:hover:bg-white dark:hover:text-[#262626]"
+      className="border-2 border-foreground text-foreground shadow-none hover:bg-foreground hover:text-muted dark:hover:bg-background dark:hover:text-foreground"
     >
       Dashboard
     </Button>
@@ -37,7 +37,7 @@ export default function OutlineIconButtonExample() {
     <Button
       variant="outline"
       size="icon"
-      className="bg-transparent border-2 border-[#262626] dark:border-white text-[#262626] dark:text-white shadow-none hover:bg-[#262626] hover:text-white dark:hover:bg-white dark:hover:text-[#262626]"
+      className="bg-transparent border-2 border-foreground text-foreground shadow-none hover:bg-foreground hover:text-muted dark:hover:bg-background dark:hover:text-foreground"
     >
       <Github className="h-4 w-4" />
     </Button>
@@ -48,7 +48,7 @@ export const SECONDARY_BUTTON_CODE = `import { Button } from '@/components/ui/bu
 
 export default function SecondaryButtonExample() {
   return (
-    <Button className="bg-white text-[#262626] hover:bg-white/90">
+    <Button className="bg-card text-foreground hover:bg-foreground hover:text-background dark:hover:bg-foreground dark:hover:text-background">
       Get Started
     </Button>
   );
@@ -92,20 +92,20 @@ export default function TransitionedInputButtonExample() {
         e.preventDefault();
         console.log('Submitted:', email);
       }}
-      className="w-full max-w-[450px] bg-[oklch(0.922_0_0)] dark:bg-[#262626] rounded-xl p-1.5 flex items-center gap-1"
+      className="w-full max-w-[450px] bg-accent dark:bg-secondary rounded-xl p-1.5 flex items-center gap-1"
     >
       <input
         type="email"
         placeholder="Add your email address"
         value={email}
         onChange={(e) => setEmail(e.target.value)}
-        className="flex-1 bg-transparent px-3 py-2 text-sm text-[#262626] dark:text-white placeholder:text-[#262626] dark:placeholder:text-white/70 outline-none"
+        className="flex-1 bg-transparent px-3 py-2 text-sm text-foreground placeholder:text-foreground/70 outline-none"
         onFocus={() => setIsInputFocused(true)}
         onBlur={() => setIsInputFocused(false)}
       />
       <Button
         type="submit"
-        className="shrink-0 overflow-hidden h-[42px] flex items-center justify-center text-sm relative text-white"
+        className="shrink-0 overflow-hidden h-[42px] flex items-center justify-center text-sm relative text-primary-foreground hover:bg-foreground hover:text-muted dark:hover:bg-background dark:hover:text-foreground"
         style={{
           width: isInputFocused ? '42px' : 'auto',
           paddingLeft: isInputFocused ? '0' : '24px',
@@ -141,7 +141,7 @@ export default function TransitionedInputButtonExample() {
 // Component showcases
 export function PrimaryButton() {
   return (
-    <Button className="text-white">
+    <Button className="text-primary-foreground hover:bg-foreground hover:text-muted dark:hover:bg-background dark:hover:text-foreground">
       Click me
     </Button>
   );
@@ -151,7 +151,7 @@ export function OutlineButton() {
   return (
     <Button 
       variant="outline" 
-      className="border-2 border-[#262626] dark:border-white text-[#262626] dark:text-white shadow-none hover:bg-[#262626] hover:text-white dark:hover:bg-white dark:hover:text-[#262626]"
+      className="border-2 border-foreground text-foreground shadow-none hover:bg-foreground hover:text-muted dark:hover:bg-background dark:hover:text-foreground"
     >
       Dashboard
     </Button>
@@ -163,7 +163,7 @@ export function OutlineIconButton() {
     <Button
       variant="outline"
       size="icon"
-      className="bg-transparent border-2 border-[#262626] dark:border-white text-[#262626] dark:text-white shadow-none hover:bg-[#262626] hover:text-white dark:hover:bg-white dark:hover:text-[#262626]"
+      className="bg-transparent border-2 border-foreground text-foreground shadow-none hover:bg-foreground hover:text-muted dark:hover:bg-background dark:hover:text-foreground"
     >
       <Github className="h-4 w-4" />
     </Button>
@@ -172,8 +172,8 @@ export function OutlineIconButton() {
 
 export function SecondaryButton() {
   return (
-    <div className="bg-[oklch(0.5_0.134_242.749)] p-8 rounded-lg">
-      <Button className="bg-white text-[#262626] hover:bg-white/90">
+    <div className="bg-primary p-8 rounded-lg">
+      <Button className="bg-card text-foreground hover:bg-foreground hover:text-background dark:hover:bg-foreground dark:hover:text-background">
         Get Started
       </Button>
     </div>
@@ -206,20 +206,20 @@ export function TransitionedInputButton() {
         e.preventDefault();
         console.log('Submitted:', email);
       }}
-      className="w-full max-w-[450px] bg-[oklch(0.922_0_0)] dark:bg-[#262626] rounded-xl p-1.5 flex items-center gap-1"
+      className="w-full max-w-[450px] bg-accent dark:bg-secondary rounded-xl p-1.5 flex items-center gap-1"
     >
       <input
         type="email"
         placeholder="Add your email address"
         value={email}
         onChange={(e) => setEmail(e.target.value)}
-        className="flex-1 bg-transparent px-3 py-2 text-sm text-[#262626] dark:text-white placeholder:text-[#262626] dark:placeholder:text-white/70 outline-none"
+        className="flex-1 bg-transparent px-3 py-2 text-sm text-foreground placeholder:text-foreground/70 outline-none"
         onFocus={() => setIsInputFocused(true)}
         onBlur={() => setIsInputFocused(false)}
       />
       <Button
         type="submit"
-        className="shrink-0 overflow-hidden h-[42px] flex items-center justify-center text-sm relative text-white"
+        className="shrink-0 overflow-hidden h-[42px] flex items-center justify-center text-sm relative text-primary-foreground hover:bg-foreground hover:text-muted dark:hover:bg-background dark:hover:text-foreground"
         style={{
           width: isInputFocused ? '42px' : 'auto',
           paddingLeft: isInputFocused ? '0' : '24px',
