@@ -12,13 +12,13 @@ export default function SideBySide() {
 
   return (
     <section className="w-full bg-[#F4F7F3] dark:bg-neutral-900">
-      <div className="container mx-auto px-4 py-16 md:py-24 space-y-24 md:space-y-32">
+      <div className="container mx-auto px-8 md:px-12 lg:px-4 py-16 md:py-24 space-y-24 md:space-y-32">
         {/* First Row: Content Left, Image Right */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
           {/* Left Column: Content */}
           <div className="space-y-6">
             {/* Pill */}
-            <PillBadge />
+            <PillBadge text="Developer Friendly" />
 
             {/* Heading */}
             <h2
@@ -51,10 +51,10 @@ export default function SideBySide() {
           <div className="relative">
             {/* Background Layer */}
             <div
-              className="absolute inset-0 rounded-2xl"
+              className="hidden lg:block absolute inset-0 rounded-2xl"
               style={{
                 backgroundColor: 'oklch(0.5 0.134 242.749 / 0.1)',
-                transform: 'translate(20px, 20px)',
+                transform: 'translate(12px, 12px)',
                 zIndex: 0
               }}
             />
@@ -77,10 +77,10 @@ export default function SideBySide() {
           <div className="relative order-2 lg:order-1">
             {/* Background Layer */}
             <div
-              className="absolute inset-0 rounded-2xl"
+              className="hidden lg:block absolute inset-0 rounded-2xl"
               style={{
                 backgroundColor: 'oklch(0.5 0.134 242.749 / 0.1)',
-                transform: 'translate(20px, 20px)',
+                transform: 'translate(12px, 12px)',
                 zIndex: 0
               }}
             />
@@ -99,7 +99,7 @@ export default function SideBySide() {
           {/* Right Column: Content */}
           <div className="space-y-6 order-1 lg:order-2">
             {/* Pill */}
-            <PillBadge />
+            <PillBadge text="Collaboration" />
 
             {/* Heading */}
             <h2

@@ -4,13 +4,13 @@ import { PillBadge } from '@/components/daniels-elements/elements/card-elements'
 export default function Map() {
   return (
     <section className="w-full">
-      <div className="container mx-auto px-4 py-8 md:py-12">
+      <div className="container mx-auto px-6 md:px-8 lg:px-4 py-8 md:py-12">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12">
           {/* Left Column: Info */}
           <div className="space-y-8">
             {/* Pill */}
             <div className="flex justify-start">
-              <PillBadge />
+              <PillBadge text="Our Address" />
             </div>
 
             {/* Heading */}

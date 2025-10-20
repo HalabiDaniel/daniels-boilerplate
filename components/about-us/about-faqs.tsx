@@ -38,12 +38,12 @@ export default function AboutFaqs() {
 
   return (
     <section className="w-full">
-      <div className="container mx-auto px-4 py-16 md:py-24">
+      <div className="container mx-auto px-6 md:px-8 lg:px-4 py-16 md:py-24">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 max-w-7xl mx-auto">
           {/* Left Column */}
           <div className="space-y-6 lg:pr-4">
             {/* Pill */}
-            <PillBadge />
+            <PillBadge text="FAQs" />
 
             {/* Title */}
             <h2

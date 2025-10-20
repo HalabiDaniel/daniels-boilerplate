@@ -1,8 +1,9 @@
 "use client";
 
+import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { Moon, Sun } from "lucide-react";
+import { Moon, Sun, Menu } from "lucide-react";
 import { useTheme } from "next-themes";
 import { Button } from "@/components/ui/button";
 import { SignUpButton, useUser } from "@clerk/nextjs";
@@ -12,8 +13,17 @@ import {
     NavigationMenuLink,
     NavigationMenuList,
 } from "@/components/ui/navigation-menu";
+import { MobileMenu, type NavItem } from "@/components/layouts/mobile-menu";
+
+const NAV_ITEMS: NavItem[] = [
+    { label: "Home", href: "/" },
+    { label: "About Us", href: "/about-us" },
+    { label: "Contact Us", href: "/contact-us" },
+];
 
 export function InnerHeader() {
+    const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
     return (
         <header className="w-full border-b">
             <div className="container mx-auto px-4 py-4">
@@ -35,8 +45,8 @@ export function InnerHeader() {
                         </Link>
                     </div>
 
-                    {/* Column 2: Navigation - Center-Right */}
-                    <div className="flex-1 flex justify-center md:justify-end md:mr-8">
+                    {/* Column 2: Navigation - Center-Right (Desktop only) */}
+                    <div className="hidden lg:flex flex-1 justify-center md:justify-end md:mr-8">
                         <NavigationMenu>
                             <NavigationMenuList>
                                 <NavigationMenuItem>
@@ -58,13 +68,31 @@ export function InnerHeader() {
                         </NavigationMenu>
                     </div>
 
-                    {/* Column 3: Theme Toggle & Action Button - Far Right */}
-                    <div className="flex-shrink-0 flex items-center gap-3">
+                    {/* Column 3: Theme Toggle & Action Button - Far Right (Desktop only) */}
+                    <div className="hidden lg:flex flex-shrink-0 items-center gap-3">
                         <ThemeToggle />
                         <HeaderButton />
                     </div>
+
+                    {/* Mobile: Hamburger Menu Icon - Far Right */}
+                    <Button
+                        variant="ghost"
+                        size="icon"
+                        className="lg:hidden"
+                        onClick={() => setIsMobileMenuOpen(true)}
+                        aria-label="Open menu"
+                    >
+                        <Menu className="h-6 w-6" />
+                    </Button>
                 </div>
             </div>
+
+            {/* Mobile Menu */}
+            <MobileMenu
+                isOpen={isMobileMenuOpen}
+                onClose={() => setIsMobileMenuOpen(false)}
+                navItems={NAV_ITEMS}
+            />
         </header>
     );
 }

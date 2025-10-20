@@ -15,7 +15,7 @@ export default function PageTitle({
 }: PageTitleProps) {
     return (
         <section className="w-full bg-[#F4F7F3] dark:bg-neutral-900 relative">
-            <div className="container mx-auto px-4 py-12 md:py-16 flex items-center justify-center">
+            <div className="container mx-auto px-6 md:px-8 lg:px-4 py-12 md:py-16 flex items-center justify-center">
                 {/* Content wrapper with max-width */}
                 <div className="w-full max-w-[720px] flex flex-col items-center text-center space-y-6">
                     {/* Pill */}

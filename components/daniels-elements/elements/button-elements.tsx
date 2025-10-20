@@ -10,7 +10,7 @@ export const PRIMARY_BUTTON_CODE = `import { Button } from '@/components/ui/butt
 
 export default function PrimaryButtonExample() {
   return (
-    <Button className="text-primary-foreground hover:bg-foreground hover:text-muted dark:hover:bg-background dark:hover:text-foreground">
+    <Button className="bg-primary text-white hover:bg-foreground hover:text-background">
       Click me
     </Button>
   );
@@ -22,7 +22,7 @@ export default function OutlineButtonExample() {
   return (
     <Button 
       variant="outline" 
-      className="border-2 border-foreground text-foreground shadow-none hover:bg-foreground hover:text-muted dark:hover:bg-background dark:hover:text-foreground"
+      className="border-2 border-foreground text-foreground shadow-none hover:bg-foreground hover:text-background"
     >
       Dashboard
     </Button>
@@ -37,7 +37,7 @@ export default function OutlineIconButtonExample() {
     <Button
       variant="outline"
       size="icon"
-      className="bg-transparent border-2 border-foreground text-foreground shadow-none hover:bg-foreground hover:text-muted dark:hover:bg-background dark:hover:text-foreground"
+      className="bg-transparent border-2 border-foreground text-foreground shadow-none hover:bg-foreground hover:text-background"
     >
       <Github className="h-4 w-4" />
     </Button>
@@ -105,7 +105,7 @@ export default function TransitionedInputButtonExample() {
       />
       <Button
         type="submit"
-        className="shrink-0 overflow-hidden h-[42px] flex items-center justify-center text-sm relative text-primary-foreground hover:bg-foreground hover:text-muted dark:hover:bg-background dark:hover:text-foreground"
+        className="shrink-0 overflow-hidden h-[42px] flex items-center justify-center text-sm relative bg-primary text-white hover:bg-foreground hover:text-background"
         style={{
           width: isInputFocused ? '42px' : 'auto',
           paddingLeft: isInputFocused ? '0' : '24px',
@@ -141,7 +141,7 @@ export default function TransitionedInputButtonExample() {
 // Component showcases
 export function PrimaryButton() {
   return (
-    <Button className="text-primary-foreground hover:bg-foreground hover:text-muted dark:hover:bg-background dark:hover:text-foreground">
+    <Button className="bg-primary text-white hover:bg-foreground hover:text-background">
       Click me
     </Button>
   );
@@ -151,7 +151,7 @@ export function OutlineButton() {
   return (
     <Button 
       variant="outline" 
-      className="border-2 border-foreground text-foreground shadow-none hover:bg-foreground hover:text-muted dark:hover:bg-background dark:hover:text-foreground"
+      className="border-2 border-foreground text-foreground shadow-none hover:bg-foreground hover:text-background"
     >
       Dashboard
     </Button>
@@ -163,7 +163,7 @@ export function OutlineIconButton() {
     <Button
       variant="outline"
       size="icon"
-      className="bg-transparent border-2 border-foreground text-foreground shadow-none hover:bg-foreground hover:text-muted dark:hover:bg-background dark:hover:text-foreground"
+      className="bg-transparent border-2 border-foreground text-foreground shadow-none hover:bg-foreground hover:text-background"
     >
       <Github className="h-4 w-4" />
     </Button>
@@ -219,7 +219,7 @@ export function TransitionedInputButton() {
       />
       <Button
         type="submit"
-        className="shrink-0 overflow-hidden h-[42px] flex items-center justify-center text-sm relative text-primary-foreground hover:bg-foreground hover:text-muted dark:hover:bg-background dark:hover:text-foreground"
+        className="shrink-0 overflow-hidden h-[42px] flex items-center justify-center text-sm relative bg-primary text-white hover:bg-foreground hover:text-background"
         style={{
           width: isInputFocused ? '42px' : 'auto',
           paddingLeft: isInputFocused ? '0' : '24px',

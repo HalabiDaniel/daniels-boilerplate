@@ -10,6 +10,7 @@ import { SUBSCRIPTION_PLANS } from '@/lib/subscription-plans';
 import { Lock } from 'lucide-react';
 import { PillBadge } from '@/components/daniels-elements/elements/card-elements';
 import { HighlightedText } from '@/components/daniels-elements/elements/highlighted-text';
+import { Carousel } from '@/components/ui/carousel';
 
 export default function Pricing() {
     const [isAnnual, setIsAnnual] = useState(false);
@@ -88,11 +89,11 @@ export default function Pricing() {
 
     return (
         <section id="pricing" className="w-full py-16 md:py-20 bg-background scroll-mt-20">
-            <div className="container mx-auto px-4 max-w-[1200px]">
+            <div className="container mx-auto px-8 md:px-12 lg:px-4 max-w-[1200px]">
                 {/* Header Section - Centered */}
                 <div className="flex flex-col items-center text-center space-y-4 mb-12">
                     {/* Pill */}
-                    <PillBadge />
+                    <PillBadge text="Pricing" />
 
                     {/* Heading */}
                     <h2
@@ -135,8 +136,8 @@ export default function Pricing() {
                     </span>
                 </div>
 
-                {/* Pricing Cards */}
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                {/* Pricing Cards - Desktop Grid */}
+                <div className="hidden lg:grid grid-cols-1 md:grid-cols-3 gap-8">
                     {SUBSCRIPTION_PLANS.map((plan) => {
                         const isLocked = plan.locked || false;
                         const isFree = plan.monthlyPrice === 0;
@@ -144,7 +145,7 @@ export default function Pricing() {
                         return (
                             <div
                                 key={plan.id}
-                                className={`rounded-2xl p-8 bg-card border ${plan.featured ? 'scale-105' : ''} ${isLocked ? 'opacity-60' : ''} relative`}
+                                className={`rounded-2xl p-8 bg-card border ${plan.featured ? 'scale-105' : ''} ${isLocked ? 'opacity-60' : ''} relative flex flex-col`}
                             >
                                 {isLocked && (
                                     <div className="absolute top-4 right-4">
@@ -185,7 +186,7 @@ export default function Pricing() {
                                     )}
                                 </div>
 
-                                <ul className="space-y-3 mb-8">
+                                <ul className="space-y-3 mb-8 flex-grow">
                                     {plan.features.map((feature, featureIndex) => (
                                         <li key={featureIndex} className="flex items-start gap-2">
                                             <svg
@@ -273,6 +274,152 @@ export default function Pricing() {
                             </div>
                         );
                     })}
+                </div>
+
+                {/* Pricing Cards - Mobile/Tablet Carousel */}
+                <div className="lg:hidden">
+                    <Carousel
+                        slidesPerView={{ mobile: 1, tablet: 2, desktop: 3 }}
+                        gap={32}
+                        showDots={true}
+                    >
+                        {SUBSCRIPTION_PLANS.map((plan) => {
+                            const isLocked = plan.locked || false;
+                            const isFree = plan.monthlyPrice === 0;
+                            
+                            return (
+                            <div
+                                key={plan.id}
+                                className={`rounded-2xl p-8 bg-card border ${plan.featured ? 'lg:scale-105' : ''} ${isLocked ? 'opacity-60' : ''} relative flex flex-col`}
+                            >
+                                    {isLocked && (
+                                        <div className="absolute top-4 right-4">
+                                            <Lock className="h-5 w-5 text-muted-foreground" />
+                                        </div>
+                                    )}
+
+                                    {plan.featured && !isLocked && (
+                                        <div
+                                            className="inline-block px-3 py-1 rounded-full text-white text-xs font-semibold mb-4"
+                                            style={{
+                                                background: 'oklch(0.5 0.134 242.749)'
+                                            }}
+                                        >
+                                            Most Popular
+                                        </div>
+                                    )}
+
+                                    <h3 className="text-2xl font-bold mb-2 text-foreground">
+                                        {plan.name}
+                                    </h3>
+                                    <p className="text-sm mb-6 text-muted-foreground">
+                                        {plan.description}
+                                    </p>
+
+                                    <div className="mb-8">
+                                        {isFree ? (
+                                            <span className="text-4xl font-bold text-foreground">Free</span>
+                                        ) : (
+                                            <>
+                                                <span className="text-4xl font-bold text-foreground">
+                                                    ${isAnnual ? plan.annualPrice : plan.monthlyPrice}
+                                                </span>
+                                                <span className="text-sm text-muted-foreground">
+                                                    /{isAnnual ? 'year' : 'month'}
+                                                </span>
+                                            </>
+                                        )}
+                                    </div>
+
+                                    <ul className="space-y-3 mb-8 flex-grow">
+                                        {plan.features.map((feature, featureIndex) => (
+                                            <li key={featureIndex} className="flex items-start gap-2">
+                                                <svg
+                                                    className="w-5 h-5 mt-0.5 flex-shrink-0"
+                                                    style={{ color: 'oklch(0.5 0.134 242.749)' }}
+                                                    fill="none"
+                                                    stroke="currentColor"
+                                                    viewBox="0 0 24 24"
+                                                >
+                                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                                                </svg>
+                                                <span className="text-sm text-muted-foreground">
+                                                    {feature}
+                                                </span>
+                                            </li>
+                                        ))}
+                                    </ul>
+
+                                    {(() => {
+                                        if (isLocked) {
+                                            return (
+                                                <Button
+                                                    className="w-full"
+                                                    disabled
+                                                >
+                                                    Coming Soon
+                                                </Button>
+                                            );
+                                        }
+
+                                        const buttonConfig = getButtonConfig(plan);
+
+                                        if (buttonConfig.action === 'signup') {
+                                            // For free plan, redirect to dashboard
+                                            if (isFree) {
+                                                return (
+                                                    <SignUpButton 
+                                                        mode="modal" 
+                                                        forceRedirectUrl="/dashboard"
+                                                    >
+                                                        <Button className="w-full">
+                                                            {buttonConfig.text}
+                                                        </Button>
+                                                    </SignUpButton>
+                                                );
+                                            }
+                                            
+                                            // For paid plans, redirect to checkout handler with plan info
+                                            const checkoutUrl = `/checkout-handler?planId=${plan.id}&billingPeriod=${isAnnual ? 'annual' : 'monthly'}`;
+                                            return (
+                                                <SignUpButton 
+                                                    mode="modal" 
+                                                    forceRedirectUrl={checkoutUrl}
+                                                >
+                                                    <Button className="w-full">
+                                                        {buttonConfig.text}
+                                                    </Button>
+                                                </SignUpButton>
+                                            );
+                                        }
+
+                                        if (buttonConfig.action === 'dashboard') {
+                                            return (
+                                                <Button
+                                                    onClick={handleDashboardRedirect}
+                                                    className="w-full"
+                                                    disabled={isLoadingSubscription || isProcessing}
+                                                >
+                                                    {buttonConfig.text}
+                                                </Button>
+                                            );
+                                        }
+
+                                        // buttonConfig.action === 'upgrade'
+                                        return (
+                                            <Button
+                                                onClick={() => handleUpgrade(plan.id)}
+                                                className="w-full"
+                                                disabled={isLoadingSubscription || isProcessing}
+                                            >
+                                                {buttonConfig.text}
+                                            </Button>
+                                        );
+                                    })()}
+                                </div>
+                            );
+                        })}
+                    </Carousel>
                 </div>
             </div>
         </section>

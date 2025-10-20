@@ -12,6 +12,7 @@ import { LayoutDashboard, Users, CreditCard, BarChart, Shield, Settings, Moon, S
 import { useTheme } from 'next-themes';
 import { useState } from 'react';
 import { ExpandableUserCard } from '@/components/layouts/expandable-user-card';
+import { AdminMobileHeader } from '@/components/layouts/admin-mobile-header';
 import { getPlanById, getDefaultPlan } from '@/lib/subscription-plans';
 import { formatDateOnly } from '@/lib/subscription-helpers';
 
@@ -75,6 +76,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
   const { user } = useUser();
   const [retryCount, setRetryCount] = useState(0);
   const [isUserCardExpanded, setIsUserCardExpanded] = useState(false);
+  const [isMobileSidebarOpen, setIsMobileSidebarOpen] = useState(false);
 
   // Fetch admin data from Convex
   const adminData = useQuery(
@@ -227,12 +229,83 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
     </div>
   );
 
+  // Sidebar content component (reused in desktop and mobile)
+  const sidebarContent = (
+    <div className="flex flex-col h-full">
+      {/* Navigation Pages - Scrollable when needed, Hidden when user card is expanded */}
+      {!isUserCardExpanded && (
+        <nav className="flex-1 overflow-y-auto px-6 pt-6 space-y-2 min-h-0">
+          {isLoading ? (
+            // Skeleton loader for navigation
+            <>
+              {[1, 2, 3, 4, 5, 6].map((i) => (
+                <div key={i} className="h-9 bg-muted animate-pulse rounded-md" />
+              ))}
+            </>
+          ) : (
+            filteredAdminPages.map((page) => {
+              const Icon = page.icon;
+              const isActive = pathname === page.href;
+              return (
+                <Link key={page.href} href={page.href}>
+                  <Button
+                    variant="ghost"
+                    className={`w-full justify-start gap-3 text-sm font-medium transition-colors ${isActive
+                      ? 'text-white pointer-events-none'
+                      : 'hover:!bg-transparent dark:hover:text-[oklch(0.5_0.134_242.749)]'
+                      }`}
+                    style={
+                      isActive
+                        ? { backgroundColor: 'oklch(0.5 0.134 242.749)' }
+                        : {}
+                    }
+                  >
+                    <Icon className="h-4 w-4" />
+                    {page.name}
+                  </Button>
+                </Link>
+              );
+            })
+          )}
+        </nav>
+      )}
+
+      {/* Bottom Section - Always visible at bottom */}
+      <div className={`flex-shrink-0 ${isUserCardExpanded ? 'flex-1 flex flex-col p-6' : 'p-6 space-y-3'}`}>
+        {/* Admin Access Level Card - Hidden when user card is expanded */}
+        {!isUserCardExpanded && adminCard}
+
+        {/* User Card */}
+        <div className={isUserCardExpanded ? 'flex-1' : ''}>
+          <ExpandableUserCard
+            userInitials={getUserInitials()}
+            userDisplayName={getUserDisplayName()}
+            userFullName={getUserFullName()}
+            userEmail={getUserEmail()}
+            membershipCard={membershipCard}
+            adminCard={adminCard}
+            isAdmin={!!adminData}
+            onExpandChange={setIsUserCardExpanded}
+          />
+        </div>
+      </div>
+    </div>
+  );
+
   return (
     <div className="flex min-h-screen">
-      {/* Sidebar */}
-      <aside className="w-[17.5%] min-w-[220px] max-w-[17.5%] rounded-2xl border bg-card m-4 p-6 flex flex-col">
+      {/* Mobile Header and Sidebar */}
+      <AdminMobileHeader
+        isOpen={isMobileSidebarOpen}
+        onToggle={() => setIsMobileSidebarOpen(!isMobileSidebarOpen)}
+        onClose={() => setIsMobileSidebarOpen(false)}
+        sidebarContent={sidebarContent}
+      />
+
+      {/* Desktop Sidebar - Hidden on mobile/tablet */}
+      <aside className="hidden lg:flex w-[17.5%] min-w-[220px] max-w-[17.5%] rounded-2xl border bg-card m-4 flex-col">
         {/* Logo and Theme Toggle */}
-        <div className="flex items-center justify-between mb-6">
+        <div className="flex items-center justify-between p-6 pb-0">
           <Link href="/" className="flex items-center gap-3">
             <Image
               src="/daniel-logo.png"
@@ -249,69 +322,14 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
         </div>
 
         {/* Divider */}
-        <div className="w-full h-px bg-border mb-6"></div>
+        <div className="w-full h-px bg-border mt-6"></div>
 
-        {/* Navigation Pages - Hidden when user card is expanded */}
-        {!isUserCardExpanded && (
-          <nav className="flex-1 space-y-2">
-            {isLoading ? (
-              // Skeleton loader for navigation
-              <>
-                {[1, 2, 3, 4, 5, 6].map((i) => (
-                  <div key={i} className="h-9 bg-muted animate-pulse rounded-md" />
-                ))}
-              </>
-            ) : (
-              filteredAdminPages.map((page) => {
-                const Icon = page.icon;
-                const isActive = pathname === page.href;
-                return (
-                  <Link key={page.href} href={page.href}>
-                    <Button
-                      variant="ghost"
-                      className={`w-full justify-start gap-3 text-sm font-medium transition-colors ${isActive
-                        ? 'text-white pointer-events-none'
-                        : 'hover:!bg-transparent dark:hover:text-[oklch(0.5_0.134_242.749)]'
-                        }`}
-                      style={
-                        isActive
-                          ? { backgroundColor: 'oklch(0.5 0.134 242.749)' }
-                          : {}
-                      }
-                    >
-                      <Icon className="h-4 w-4" />
-                      {page.name}
-                    </Button>
-                  </Link>
-                );
-              })
-            )}
-          </nav>
-        )}
-
-        {/* Bottom Section */}
-        <div className={`${isUserCardExpanded ? 'flex-1 flex flex-col' : 'space-y-3'}`}>
-          {/* Admin Access Level Card - Hidden when user card is expanded */}
-          {!isUserCardExpanded && adminCard}
-
-          {/* User Card */}
-          <div className={isUserCardExpanded ? 'flex-1' : ''}>
-            <ExpandableUserCard
-              userInitials={getUserInitials()}
-              userDisplayName={getUserDisplayName()}
-              userFullName={getUserFullName()}
-              userEmail={getUserEmail()}
-              membershipCard={membershipCard}
-              adminCard={adminCard}
-              isAdmin={!!adminData}
-              onExpandChange={setIsUserCardExpanded}
-            />
-          </div>
-        </div>
+        {/* Sidebar Content */}
+        {sidebarContent}
       </aside>
 
       {/* Main Content Area */}
-      <main className="flex-1 p-8">
+      <main className="flex-1 p-4 pt-20 lg:pt-8 lg:p-8">
         {children}
       </main>
       

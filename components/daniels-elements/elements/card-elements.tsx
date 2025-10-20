@@ -39,7 +39,7 @@ export const TESTIMONIAL_CARD_CODE = `import Image from 'next/image';
 
 <div className="rounded-2xl p-6 space-y-6 bg-primary-alpha-50">
   {/* Quote */}
-  <p className="text-primary-foreground text-base md:text-[16px] leading-relaxed">
+  <p className="text-white text-base md:text-[16px] leading-relaxed">
     Your testimonial quote goes here.
   </p>
 
@@ -57,24 +57,24 @@ export const TESTIMONIAL_CARD_CODE = `import Image from 'next/image';
 
     {/* Name and Position */}
     <div>
-      <p className="text-primary-foreground font-semibold text-sm">
+      <p className="text-white font-semibold text-sm">
         Person Name
       </p>
-      <p className="text-primary-foreground/70 text-xs">
+      <p className="text-white/70 text-xs">
         Job Title
       </p>
     </div>
   </div>
 
   {/* Divider */}
-  <div className="h-px bg-primary-foreground/20" />
+  <div className="h-px bg-white/20" />
 
   {/* Metric Section */}
   <div>
-    <p className="text-primary-foreground font-bold text-2xl md:text-3xl mb-1">
+    <p className="text-white font-bold text-2xl md:text-3xl mb-1">
       50+
     </p>
-    <p className="text-primary-foreground/70 text-xs">
+    <p className="text-white/70 text-xs">
       metric description
     </p>
   </div>
@@ -171,56 +171,58 @@ export function ImageWithOffset() {
   );
 }
 
-export function PillBadge() {
+export function PillBadge({ text }: { text: string }) {
   return (
     <div className="inline-block px-3 py-1 rounded-full text-[13px] border-2 bg-primary text-background dark:text-foreground border-background dark:border-foreground">
-      v1.0 available for free
+      {text}
     </div>
   );
 }
 
 export function TestimonialCard() {
   return (
-    <div className="rounded-2xl p-6 space-y-6 max-w-[400px] bg-primary-alpha-50">
-      {/* Quote */}
-      <p className="text-primary-foreground text-base md:text-[16px] leading-relaxed">
-        I used to spend hours hunting down tiny bugs. Now I just point at this template and poof, the problem solved before I even finish my coffee.
-      </p>
+    <div className="bg-chart-4 p-8 rounded-lg">
+      <div className="rounded-2xl p-6 space-y-6 max-w-[400px] bg-primary-alpha-50">
+        {/* Quote */}
+        <p className="text-white text-base md:text-[16px] leading-relaxed">
+          I used to spend hours hunting down tiny bugs. Now I just point at this template and poof, the problem solved before I even finish my coffee.
+        </p>
 
-      {/* Person Info */}
-      <div className="flex items-center gap-3">
-        {/* Photo Circle */}
-        <div className="relative w-12 h-12 rounded-full overflow-hidden flex-shrink-0">
-          <Image
-            src="/testimonials.png"
-            alt="Alex Morgan"
-            fill
-            className="object-cover"
-          />
+        {/* Person Info */}
+        <div className="flex items-center gap-3">
+          {/* Photo Circle */}
+          <div className="relative w-12 h-12 rounded-full overflow-hidden flex-shrink-0">
+            <Image
+              src="/testimonials.png"
+              alt="Alex Morgan"
+              fill
+              className="object-cover"
+            />
+          </div>
+
+          {/* Name and Position */}
+          <div>
+            <p className="text-white font-semibold text-sm">
+              Alex Morgan
+            </p>
+            <p className="text-white/70 text-xs">
+              Freelance Developer
+            </p>
+          </div>
         </div>
 
-        {/* Name and Position */}
+        {/* Divider */}
+        <div className="h-px bg-white/20" />
+
+        {/* Metric Section */}
         <div>
-          <p className="text-primary-foreground font-semibold text-sm">
-            Alex Morgan
+          <p className="text-white font-bold text-2xl md:text-3xl mb-1">
+            40+
           </p>
-          <p className="text-primary-foreground/70 text-xs">
-            Freelance Developer
+          <p className="text-white/70 text-xs">
+            hours saved on coding in the first day.
           </p>
         </div>
-      </div>
-
-      {/* Divider */}
-      <div className="h-px bg-primary-foreground/20" />
-
-      {/* Metric Section */}
-      <div>
-        <p className="text-primary-foreground font-bold text-2xl md:text-3xl mb-1">
-          40+
-        </p>
-        <p className="text-primary-foreground/70 text-xs">
-          hours saved on coding in the first day.
-        </p>
       </div>
     </div>
   );

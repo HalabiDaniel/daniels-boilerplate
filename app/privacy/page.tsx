@@ -11,7 +11,7 @@ export default function PrivacyPage() {
         description={<>Our Privacy Policy page explains how we collect, use, and protect your personal information to ensure your data stays safe and secure.<br /><b>Last updated on:</b> October 18, 2025.</>}
       />
 
-      <section className="container mx-auto px-4 py-12 max-w-4xl">
+      <section className="container mx-auto px-6 md:px-8 lg:px-4 py-12 max-w-4xl">
         <div className="prose max-w-none">
           <p>This Privacy Policy explains how we collect, use, and protect your personal information when you use our website. By using this website, you agree to the terms described below.</p>
 

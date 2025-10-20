@@ -7,6 +7,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSub, DropdownMenuSubContent, DropdownMenuSubTrigger, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { ChevronDown, Loader2, AlertCircle, RefreshCw } from 'lucide-react';
 import Image from 'next/image';
 import { useState } from 'react';
@@ -250,102 +251,206 @@ export default function AdministratorsPage() {
         )}
 
         {!isLoading && !hasError && admins && admins.length > 0 && (
-
-        <div className="border rounded-lg">
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead>Name</TableHead>
-                <TableHead>Email</TableHead>
-                <TableHead>Access Level</TableHead>
-                <TableHead>Account Created</TableHead>
-                <TableHead>Became Admin</TableHead>
-                <TableHead className="w-[50px]"></TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {admins.map((admin) => {
-              const isCurrentUser = admin.clerkId === user?.id;
-              
-              return (
-                <TableRow key={admin._id}>
-                  <TableCell>
-                    <div className="flex items-center gap-3">
-                      <div
-                        className="h-10 w-10 rounded-md flex items-center justify-center text-white text-sm font-semibold"
-                        style={{ backgroundColor: 'oklch(0.5 0.134 242.749)' }}
-                      >
-                        {getUserInitials(admin.name)}
-                      </div>
-                      <span className="font-medium">{formatDisplayName(admin.name)}</span>
-                    </div>
-                  </TableCell>
-                  <TableCell>{admin.email}</TableCell>
-                  <TableCell>
-                    <div className="flex items-center gap-2">
-                      <Image
-                        src={ACCESS_LEVEL_IMAGES[admin.accessLevel as AccessLevel]}
-                        alt={admin.accessLevel}
-                        width={20}
-                        height={20}
-                      />
-                      <span>{admin.accessLevel}</span>
-                    </div>
-                  </TableCell>
-                  <TableCell>{formatAccountCreatedDate(admin.accountCreatedAt)}</TableCell>
-                  <TableCell>{formatBecameAdminDate(admin.becameAdminAt)}</TableCell>
-                  <TableCell>
-                    <DropdownMenu>
-                      <DropdownMenuTrigger asChild>
-                        <Button
-                          variant="ghost"
-                          size="icon-sm"
-                          disabled={isCurrentUser || isUpdating}
-                        >
-                          <ChevronDown className="h-4 w-4" />
-                        </Button>
-                      </DropdownMenuTrigger>
-                      <DropdownMenuContent align="end">
-                        <DropdownMenuSub>
-                          <DropdownMenuSubTrigger>
-                            Edit access level
-                          </DropdownMenuSubTrigger>
-                          <DropdownMenuSubContent>
-                            <DropdownMenuItem
-                              onClick={() => handleAccessLevelChange(admin._id, "Full Access")}
-                              disabled={admin.accessLevel === "Full Access"}
-                            >
-                              Full Access
-                            </DropdownMenuItem>
-                            <DropdownMenuItem
-                              onClick={() => handleAccessLevelChange(admin._id, "Partial Access")}
-                              disabled={admin.accessLevel === "Partial Access"}
-                            >
-                              Partial Access
-                            </DropdownMenuItem>
-                            <DropdownMenuItem
-                              onClick={() => handleAccessLevelChange(admin._id, "Limited Access")}
-                              disabled={admin.accessLevel === "Limited Access"}
-                            >
-                              Limited Access
-                            </DropdownMenuItem>
-                          </DropdownMenuSubContent>
-                        </DropdownMenuSub>
-                        <DropdownMenuItem
-                          className="text-destructive focus:text-destructive"
-                          onClick={() => handleDeleteClick(admin._id, admin.name)}
-                        >
-                          Delete admin
-                        </DropdownMenuItem>
-                      </DropdownMenuContent>
-                    </DropdownMenu>
-                  </TableCell>
+        <>
+          {/* Desktop Table View - Hidden on mobile/tablet */}
+          <div className="hidden lg:block border rounded-lg">
+            <Table>
+              <TableHeader>
+                <TableRow>
+                  <TableHead>Name</TableHead>
+                  <TableHead>Email</TableHead>
+                  <TableHead>Access Level</TableHead>
+                  <TableHead>Account Created</TableHead>
+                  <TableHead>Became Admin</TableHead>
+                  <TableHead className="w-[50px]"></TableHead>
                 </TableRow>
-              );
+              </TableHeader>
+              <TableBody>
+                {admins.map((admin) => {
+                const isCurrentUser = admin.clerkId === user?.id;
+                
+                return (
+                  <TableRow key={admin._id}>
+                    <TableCell>
+                      <div className="flex items-center gap-3">
+                        <div
+                          className="h-10 w-10 rounded-md flex items-center justify-center text-white text-sm font-semibold"
+                          style={{ backgroundColor: 'oklch(0.5 0.134 242.749)' }}
+                        >
+                          {getUserInitials(admin.name)}
+                        </div>
+                        <span className="font-medium">{formatDisplayName(admin.name)}</span>
+                      </div>
+                    </TableCell>
+                    <TableCell>{admin.email}</TableCell>
+                    <TableCell>
+                      <div className="flex items-center gap-2">
+                        <Image
+                          src={ACCESS_LEVEL_IMAGES[admin.accessLevel as AccessLevel]}
+                          alt={admin.accessLevel}
+                          width={20}
+                          height={20}
+                        />
+                        <span>{admin.accessLevel}</span>
+                      </div>
+                    </TableCell>
+                    <TableCell>{formatAccountCreatedDate(admin.accountCreatedAt)}</TableCell>
+                    <TableCell>{formatBecameAdminDate(admin.becameAdminAt)}</TableCell>
+                    <TableCell>
+                      <DropdownMenu>
+                        <DropdownMenuTrigger asChild>
+                          <Button
+                            variant="ghost"
+                            size="icon-sm"
+                            disabled={isCurrentUser || isUpdating}
+                          >
+                            <ChevronDown className="h-4 w-4" />
+                          </Button>
+                        </DropdownMenuTrigger>
+                        <DropdownMenuContent align="end">
+                          <DropdownMenuSub>
+                            <DropdownMenuSubTrigger>
+                              Edit access level
+                            </DropdownMenuSubTrigger>
+                            <DropdownMenuSubContent>
+                              <DropdownMenuItem
+                                onClick={() => handleAccessLevelChange(admin._id, "Full Access")}
+                                disabled={admin.accessLevel === "Full Access"}
+                              >
+                                Full Access
+                              </DropdownMenuItem>
+                              <DropdownMenuItem
+                                onClick={() => handleAccessLevelChange(admin._id, "Partial Access")}
+                                disabled={admin.accessLevel === "Partial Access"}
+                              >
+                                Partial Access
+                              </DropdownMenuItem>
+                              <DropdownMenuItem
+                                onClick={() => handleAccessLevelChange(admin._id, "Limited Access")}
+                                disabled={admin.accessLevel === "Limited Access"}
+                              >
+                                Limited Access
+                              </DropdownMenuItem>
+                            </DropdownMenuSubContent>
+                          </DropdownMenuSub>
+                          <DropdownMenuItem
+                            className="text-destructive focus:text-destructive"
+                            onClick={() => handleDeleteClick(admin._id, admin.name)}
+                          >
+                            Delete admin
+                          </DropdownMenuItem>
+                        </DropdownMenuContent>
+                      </DropdownMenu>
+                    </TableCell>
+                  </TableRow>
+                );
+                })}
+              </TableBody>
+            </Table>
+          </div>
+
+          {/* Mobile/Tablet Accordion View - Hidden on desktop */}
+          <div className="lg:hidden border rounded-lg">
+            <Accordion type="single" collapsible className="w-full">
+              {admins.map((admin) => {
+                const isCurrentUser = admin.clerkId === user?.id;
+                
+                return (
+                  <AccordionItem key={admin._id} value={admin._id} className="border-b last:border-b-0">
+                    <AccordionTrigger className="px-4 py-3 hover:no-underline">
+                      <div className="flex items-center gap-3 w-full">
+                        <div
+                          className="h-10 w-10 rounded-md flex items-center justify-center text-white text-sm font-semibold flex-shrink-0"
+                          style={{ backgroundColor: 'oklch(0.5 0.134 242.749)' }}
+                        >
+                          {getUserInitials(admin.name)}
+                        </div>
+                        <div className="flex flex-col items-start text-left flex-1 min-w-0">
+                          <span className="font-medium text-sm truncate w-full">{admin.email}</span>
+                        </div>
+                      </div>
+                    </AccordionTrigger>
+                    <AccordionContent className="px-4 pb-4 pt-2">
+                      <div className="space-y-3">
+                        <div>
+                          <p className="text-xs text-muted-foreground mb-1">Name</p>
+                          <p className="text-sm font-medium">{admin.name}</p>
+                        </div>
+                        
+                        <div>
+                          <p className="text-xs text-muted-foreground mb-1">Access Level</p>
+                          <div className="flex items-center gap-2">
+                            <Image
+                              src={ACCESS_LEVEL_IMAGES[admin.accessLevel as AccessLevel]}
+                              alt={admin.accessLevel}
+                              width={20}
+                              height={20}
+                            />
+                            <span className="text-sm">{admin.accessLevel}</span>
+                          </div>
+                        </div>
+                        
+                        <div>
+                          <p className="text-xs text-muted-foreground mb-1">Account Created</p>
+                          <p className="text-sm">{formatAccountCreatedDate(admin.accountCreatedAt)}</p>
+                        </div>
+                        
+                        <div>
+                          <p className="text-xs text-muted-foreground mb-1">Became Admin</p>
+                          <p className="text-sm">{formatBecameAdminDate(admin.becameAdminAt)}</p>
+                        </div>
+                        
+                        <div className="flex gap-2 pt-2">
+                          <DropdownMenu>
+                            <DropdownMenuTrigger asChild>
+                              <Button
+                                variant="outline"
+                                size="sm"
+                                className="flex-1"
+                                disabled={isCurrentUser || isUpdating}
+                              >
+                                Edit Access Level
+                              </Button>
+                            </DropdownMenuTrigger>
+                            <DropdownMenuContent align="start" className="w-48">
+                              <DropdownMenuItem
+                                onClick={() => handleAccessLevelChange(admin._id, "Full Access")}
+                                disabled={admin.accessLevel === "Full Access"}
+                              >
+                                Full Access
+                              </DropdownMenuItem>
+                              <DropdownMenuItem
+                                onClick={() => handleAccessLevelChange(admin._id, "Partial Access")}
+                                disabled={admin.accessLevel === "Partial Access"}
+                              >
+                                Partial Access
+                              </DropdownMenuItem>
+                              <DropdownMenuItem
+                                onClick={() => handleAccessLevelChange(admin._id, "Limited Access")}
+                                disabled={admin.accessLevel === "Limited Access"}
+                              >
+                                Limited Access
+                              </DropdownMenuItem>
+                            </DropdownMenuContent>
+                          </DropdownMenu>
+                          
+                          <Button
+                            variant="destructive"
+                            size="sm"
+                            onClick={() => handleDeleteClick(admin._id, admin.name)}
+                            disabled={isCurrentUser || isUpdating}
+                          >
+                            Delete
+                          </Button>
+                        </div>
+                      </div>
+                    </AccordionContent>
+                  </AccordionItem>
+                );
               })}
-            </TableBody>
-          </Table>
-        </div>
+            </Accordion>
+          </div>
+        </>
         )}
 
         {/* Delete Confirmation Dialog */}

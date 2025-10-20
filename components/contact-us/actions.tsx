@@ -28,7 +28,7 @@ export default function Actions() {
 
   return (
     <section className="w-full">
-      <div className="container mx-auto px-4 py-8 md:py-12">
+      <div className="container mx-auto px-6 md:px-8 lg:px-4 py-8 md:py-12">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12">
           {actions.map((action, index) => (
             <ActionElement

@@ -13,6 +13,7 @@ import { formatDateOnly } from '@/lib/subscription-helpers';
 import { useEffect, useState } from 'react';
 import { useTheme } from 'next-themes';
 import { ExpandableUserCard } from '@/components/layouts/expandable-user-card';
+import { DashboardMobileHeader } from '@/components/layouts/dashboard-mobile-header';
 
 const dashboardPages = [
   { name: 'My Dashboard', href: '/dashboard', icon: LayoutDashboard },
@@ -42,6 +43,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
   const pathname = usePathname();
   const { user } = useUser();
   const [isUserCardExpanded, setIsUserCardExpanded] = useState(false);
+  const [isMobileSidebarOpen, setIsMobileSidebarOpen] = useState(false);
 
   // Fetch user subscription data from Convex
   const convexUser = useQuery(
@@ -134,12 +136,73 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
     </div>
   );
 
+  // Sidebar content component (reused in desktop and mobile)
+  const sidebarContent = (
+    <div className="flex flex-col h-full">
+      {/* Navigation Pages - Scrollable when needed, Hidden when user card is expanded */}
+      {!isUserCardExpanded && (
+        <nav className="flex-1 overflow-y-auto px-6 pt-6 space-y-2 min-h-0">
+          {dashboardPages.map((page) => {
+            const Icon = page.icon;
+            const isActive = pathname === page.href;
+            return (
+              <Link key={page.href} href={page.href}>
+                <Button
+                  variant="ghost"
+                  className={`w-full justify-start gap-3 text-sm font-medium transition-colors ${isActive
+                    ? 'text-white pointer-events-none'
+                    : 'hover:!bg-transparent dark:hover:text-[oklch(0.5_0.134_242.749)]'
+                    }`}
+                  style={
+                    isActive
+                      ? { backgroundColor: 'oklch(0.5 0.134 242.749)' }
+                      : {}
+                  }
+                >
+                  <Icon className="h-4 w-4" />
+                  {page.name}
+                </Button>
+              </Link>
+            );
+          })}
+        </nav>
+      )}
+
+      {/* Bottom Section - Always visible at bottom */}
+      <div className={`flex-shrink-0 ${isUserCardExpanded ? 'flex-1 flex flex-col p-6' : 'p-6 space-y-3'}`}>
+        {/* Membership Card - Hidden when user card is expanded */}
+        {!isUserCardExpanded && membershipCard}
+
+        {/* User Card */}
+        <div className={isUserCardExpanded ? 'flex-1' : ''}>
+          <ExpandableUserCard
+            userInitials={getUserInitials()}
+            userDisplayName={getUserDisplayName()}
+            userFullName={getUserFullName()}
+            userEmail={getUserEmail()}
+            membershipCard={membershipCard}
+            isAdmin={false}
+            onExpandChange={setIsUserCardExpanded}
+          />
+        </div>
+      </div>
+    </div>
+  );
+
   return (
     <div className="flex min-h-screen">
-      {/* Sidebar */}
-      <aside className="w-[17.5%] min-w-[220px] max-w-[17.5%] rounded-2xl border bg-card m-4 p-6 flex flex-col">
+      {/* Mobile Header and Sidebar */}
+      <DashboardMobileHeader
+        isOpen={isMobileSidebarOpen}
+        onToggle={() => setIsMobileSidebarOpen(!isMobileSidebarOpen)}
+        onClose={() => setIsMobileSidebarOpen(false)}
+        sidebarContent={sidebarContent}
+      />
+
+      {/* Desktop Sidebar - Hidden on mobile/tablet */}
+      <aside className="hidden lg:flex w-[17.5%] min-w-[220px] max-w-[17.5%] rounded-2xl border bg-card m-4 flex-col">
         {/* Logo and Theme Toggle */}
-        <div className="flex items-center justify-between mb-6">
+        <div className="flex items-center justify-between p-6 pb-0">
           <Link href="/" className="flex items-center gap-3">
             <Image
               src="/daniel-logo.png"
@@ -156,59 +219,14 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
         </div>
 
         {/* Divider */}
-        <div className="w-full h-px bg-border mb-6"></div>
+        <div className="w-full h-px bg-border mt-6"></div>
 
-        {/* Navigation Pages - Hidden when user card is expanded */}
-        {!isUserCardExpanded && (
-          <nav className="flex-1 space-y-2">
-            {dashboardPages.map((page) => {
-              const Icon = page.icon;
-              const isActive = pathname === page.href;
-              return (
-                <Link key={page.href} href={page.href}>
-                  <Button
-                    variant="ghost"
-                    className={`w-full justify-start gap-3 text-sm font-medium transition-colors ${isActive
-                      ? 'text-white pointer-events-none'
-                      : 'hover:!bg-transparent dark:hover:text-[oklch(0.5_0.134_242.749)]'
-                      }`}
-                    style={
-                      isActive
-                        ? { backgroundColor: 'oklch(0.5 0.134 242.749)' }
-                        : {}
-                    }
-                  >
-                    <Icon className="h-4 w-4" />
-                    {page.name}
-                  </Button>
-                </Link>
-              );
-            })}
-          </nav>
-        )}
-
-        {/* Bottom Section */}
-        <div className={`${isUserCardExpanded ? 'flex-1 flex flex-col' : 'space-y-3'}`}>
-          {/* Membership Card - Hidden when user card is expanded */}
-          {!isUserCardExpanded && membershipCard}
-
-          {/* User Card */}
-          <div className={isUserCardExpanded ? 'flex-1' : ''}>
-            <ExpandableUserCard
-              userInitials={getUserInitials()}
-              userDisplayName={getUserDisplayName()}
-              userFullName={getUserFullName()}
-              userEmail={getUserEmail()}
-              membershipCard={membershipCard}
-              isAdmin={false}
-              onExpandChange={setIsUserCardExpanded}
-            />
-          </div>
-        </div>
+        {/* Sidebar Content */}
+        {sidebarContent}
       </aside>
 
       {/* Main Content Area */}
-      <main className="flex-1 p-8">
+      <main className="flex-1 p-4 pt-20 lg:pt-8 lg:p-8">
         {children}
       </main>
     </div>

@@ -3,7 +3,7 @@
 import React from 'react';
 import Image from 'next/image';
 import { Button } from '@/components/ui/button';
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight, ArrowDown } from 'lucide-react';
 import { SignUpButton, useUser } from '@clerk/nextjs';
 import Link from 'next/link';
 import { PillBadge } from '@/components/daniels-elements/elements/card-elements';
@@ -32,12 +32,12 @@ export default function HowItWorks() {
 
   return (
     <section id="how-it-works" className="w-full bg-[#F4F7F3] dark:bg-neutral-900 scroll-mt-20">
-      <div className="container mx-auto px-4 py-16 md:py-24 space-y-16">
+      <div className="container mx-auto px-8 md:px-12 lg:px-4 py-16 md:py-24 space-y-16">
         {/* First Section: Steps */}
         <div className="space-y-8">
           {/* Pill */}
           <div className="flex justify-center">
-            <PillBadge />
+            <PillBadge text="How It Works" />
           </div>
 
           {/* Heading */}
@@ -62,7 +62,7 @@ export default function HowItWorks() {
               backgroundColor: 'oklch(0.5 0.134 242.749 / 0.1)'
             }}
           >
-            <div className="flex flex-col lg:flex-row items-stretch gap-6">
+            <div className="flex flex-col lg:flex-row items-stretch gap-8 lg:gap-6">
               {steps.map((step, index) => (
                 <React.Fragment key={step.number}>
                   {/* Step Column */}
@@ -91,7 +91,8 @@ export default function HowItWorks() {
                   {/* Arrow Column */}
                   {index < steps.length - 1 && (
                     <div className="flex items-center justify-center lg:w-12 lg:flex-shrink-0">
-                      <ArrowRight className="w-6 h-6 text-[#404040] dark:text-white/70" />
+                      <ArrowDown className="lg:hidden w-6 h-6 text-[#404040] dark:text-white/70" />
+                      <ArrowRight className="hidden lg:block w-6 h-6 text-[#404040] dark:text-white/70" />
                     </div>
                   )}
                 </React.Fragment>
@@ -140,13 +141,24 @@ export default function HowItWorks() {
             </div>
 
             {/* Right Column: Image */}
-            <div className="relative min-h-[300px] lg:min-h-[400px] pt-8 lg:pt-12">
-              <Image
-                src="/how-it-works.png"
-                alt="How it works"
-                fill
-                className="object-contain object-right-bottom"
-              />
+            <div className="w-full lg:relative lg:min-h-[400px] lg:pl-12 lg:pt-12 lg:pr-0 lg:pb-0">
+              <div className="w-full h-auto md:w-full md:h-auto lg:hidden pl-6 md:pl-8">
+                <Image
+                  src="/how-it-works.png"
+                  alt="How it works"
+                  width={800}
+                  height={600}
+                  className="w-full h-auto object-contain"
+                />
+              </div>
+              <div className="hidden lg:block lg:absolute lg:inset-0">
+                <Image
+                  src="/how-it-works.png"
+                  alt="How it works"
+                  fill
+                  className="object-contain object-right-bottom"
+                />
+              </div>
             </div>
           </div>
         </div>

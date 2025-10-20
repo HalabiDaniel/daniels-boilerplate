@@ -15,15 +15,16 @@ export default function ToggleSwitchExample() {
   return (
     <button
       onClick={() => setIsEnabled(!isEnabled)}
-      className={\`relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 \${
-        isEnabled ? 'bg-primary' : 'bg-muted'
-      }\`}
+      className="relative inline-flex h-7 w-14 items-center rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
+      style={{
+        backgroundColor: isEnabled ? 'oklch(0.5 0.134 242.749)' : 'oklch(0.391 0.09 240.876)'
+      }}
       role="switch"
       aria-checked={isEnabled}
     >
       <span
-        className={\`inline-block h-4 w-4 transform rounded-full bg-primary-foreground transition-transform \${
-          isEnabled ? 'translate-x-6' : 'translate-x-1'
+        className={\`inline-block h-5 w-5 transform rounded-full bg-white transition-transform \${
+          isEnabled ? 'translate-x-8' : 'translate-x-1'
         }\`}
       />
     </button>
@@ -42,7 +43,7 @@ export default function AccordionExample() {
     <div className="w-full max-w-2xl border border-border rounded-lg overflow-hidden">
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="w-full flex items-center justify-between p-4 text-left bg-card hover:bg-accent transition-colors"
+        className="w-full flex items-center justify-between p-4 text-left bg-primary-alpha-10 cursor-pointer"
       >
         <span className="font-semibold text-foreground">
           What is this accordion component?
@@ -58,8 +59,8 @@ export default function AccordionExample() {
           isOpen ? 'max-h-96' : 'max-h-0'
         }\`}
       >
-        <div className="p-4 bg-accent border-t border-border">
-          <p className="text-sm text-muted-foreground dark:text-foreground">
+        <div className="p-4 bg-primary-alpha-10 border-t border-border">
+          <p className="text-sm text-foreground">
             This is an accordion component that expands and collapses content with a smooth animation.
             It's perfect for FAQs, feature lists, or any content that needs to be progressively disclosed.
           </p>
@@ -114,15 +115,16 @@ export function ToggleSwitch() {
   return (
     <button
       onClick={() => setIsEnabled(!isEnabled)}
-      className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 ${
-        isEnabled ? 'bg-primary' : 'bg-muted'
-      }`}
+      className="relative inline-flex h-7 w-14 items-center rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
+      style={{
+        backgroundColor: isEnabled ? 'oklch(0.5 0.134 242.749)' : 'oklch(0.391 0.09 240.876)'
+      }}
       role="switch"
       aria-checked={isEnabled}
     >
       <span
-        className={`inline-block h-4 w-4 transform rounded-full bg-primary-foreground transition-transform ${
-          isEnabled ? 'translate-x-6' : 'translate-x-1'
+        className={`inline-block h-5 w-5 transform rounded-full bg-white transition-transform ${
+          isEnabled ? 'translate-x-8' : 'translate-x-1'
         }`}
       />
     </button>
@@ -136,7 +138,7 @@ export function Accordion() {
     <div className="w-full max-w-2xl border border-border rounded-lg overflow-hidden">
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="w-full flex items-center justify-between p-4 text-left bg-card hover:bg-accent transition-colors"
+        className="w-full flex items-center justify-between p-4 text-left bg-primary-alpha-10 cursor-pointer"
       >
         <span className="font-semibold text-foreground">
           What is this accordion component?
@@ -152,8 +154,8 @@ export function Accordion() {
           isOpen ? 'max-h-96' : 'max-h-0'
         }`}
       >
-        <div className="p-4 bg-accent border-t border-border">
-          <p className="text-sm text-muted-foreground dark:text-foreground">
+        <div className="p-4 bg-primary-alpha-10 border-t border-border">
+          <p className="text-sm text-foreground">
             This is an accordion component that expands and collapses content with a smooth animation.
             It&apos;s perfect for FAQs, feature lists, or any content that needs to be progressively disclosed.
           </p>

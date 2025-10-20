@@ -33,16 +33,16 @@ const testimonials = [
 export default function Testimonials() {
   return (
     <section
-      className="w-full py-16 md:py-24"
+      className="w-full py-16 md:py-24 px-8 md:px-12 lg:px-4"
       style={{
         backgroundColor: 'oklch(0.293 0.066 243.157)'
       }}
     >
-      <div className="container mx-auto px-4">
+      <div className="container mx-auto">
         {/* Header Section */}
         <div className="flex flex-col items-center text-center space-y-6 mb-16">
           {/* Pill */}
-          <PillBadge />
+          <PillBadge text="Testimonials" />
 
           {/* Heading */}
           <h2

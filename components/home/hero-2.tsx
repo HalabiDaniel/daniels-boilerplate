@@ -7,13 +7,13 @@ export default function Hero2() {
     <section
       className="w-full min-h-[500px] md:min-h-[550px] lg:min-h-[600px] xl:min-h-[650px] bg-[#F4F7F3] dark:bg-neutral-900 relative pb-16"
     >
-      <div className="container mx-auto px-4 py-16">
+      <div className="container mx-auto px-8 md:px-12 lg:px-4 py-16">
         {/* Content wrapper with left alignment */}
         <div className="w-full max-w-[1200px] mx-auto flex flex-col md:flex-row md:items-start md:justify-between gap-8">
           {/* Left side - Text content */}
           <div className="flex flex-col items-start text-left space-y-6 max-w-[720px]">
             {/* Pill */}
-            <PillBadge />
+            <PillBadge text="v1.0 Now Available" />
 
             {/* H1 */}
             <h1

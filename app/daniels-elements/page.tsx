@@ -200,7 +200,7 @@ export default function DanielsElementsPage() {
             description="Rounded pill badge with gradient blue background and white border. Perfect for labels, tags, and status indicators."
             code={PILL_BADGE_CODE}
           >
-            <PillBadge />
+            <PillBadge text="Put Your Text Here" />
           </ElementCard>
 
           <ElementCard

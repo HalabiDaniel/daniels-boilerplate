@@ -18,9 +18,9 @@ export default function Hero1() {
   return (
     <>
       <section
-        className="w-full min-h-[500px] md:min-h-[550px] lg:min-h-[600px] xl:min-h-[650px] bg-[#F4F7F3] dark:bg-neutral-900 relative pb-32"
+        className="w-full min-h-[400px] md:min-h-[550px] lg:min-h-[600px] xl:min-h-[650px] bg-[#F4F7F3] dark:bg-neutral-900 relative pb-32"
       >
-        <div className="container mx-auto px-4 py-18 flex items-center justify-center gap-8">
+        <div className="container mx-auto px-8 md:px-12 lg:px-4 py-18 flex items-center justify-center gap-8">
           {/* Left side image */}
           <div className="hidden lg:block relative w-[20%] h-[300px]">
             <Image
@@ -34,7 +34,7 @@ export default function Hero1() {
           {/* Content wrapper with max-width */}
           <div className="w-full max-w-[720px] flex flex-col items-center text-center space-y-6">
             {/* Pill */}
-            <PillBadge />
+            <PillBadge text="v1.0 Now Available" />
 
             {/* H1 */}
             <h1

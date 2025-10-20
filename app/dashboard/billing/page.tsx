@@ -106,7 +106,7 @@ export default function BillingPage() {
 
       {/* Loading State */}
       {isLoading && (
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           <div className="rounded-2xl p-8 bg-card border animate-pulse">
             <div className="h-6 bg-muted rounded w-1/3 mb-4"></div>
             <div className="h-4 bg-muted rounded w-2/3 mb-6"></div>
@@ -123,7 +123,7 @@ export default function BillingPage() {
       {/* Cards Grid */}
       {!isLoading && currentPlan && (
         <>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             {/* Card 1: Current Plan Status */}
             <div className="rounded-2xl p-8 bg-card border">
               <div className="flex gap-6 items-center">

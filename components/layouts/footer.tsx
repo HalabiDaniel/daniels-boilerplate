@@ -21,10 +21,10 @@ export default function Footer() {
         background: 'oklch(0.293 0.066 243.157)'
       }}
     >
-      <div className="container mx-auto px-4 pb-16">
+      <div className="container mx-auto px-6 md:px-8 lg:px-4 pb-16">
         {/* Call to Action */}
         <div
-          className="rounded-3xl p-12 md:p-16 flex flex-col items-center text-center space-y-6 mb-16 -mt-48"
+          className="rounded-3xl p-8 md:p-12 lg:p-16 flex flex-col items-center text-center space-y-6 mb-16 -mt-48"
           style={{
             background: 'oklch(0.5 0.134 242.749)'
           }}
@@ -59,10 +59,10 @@ export default function Footer() {
         </div>
 
         {/* Footer Content */}
-        <div className="grid grid-cols-1 md:grid-cols-16 gap-8 mb-12">
-          {/* Column 1 - Logo and Text (20%) */}
-          <div className="md:col-span-4">
-            <div className="flex items-center gap-3 mb-4">
+        <div className="grid grid-cols-1 md:grid-cols-10 gap-8 mb-12 text-center md:text-left">
+          {/* Column 1 - Logo and Text (40%) */}
+          <div className="md:col-span-4 lg:col-span-2">
+            <div className="flex items-center gap-3 mb-4 justify-center md:justify-start">
               <Image
                 src="/daniel-logo-white.png"
                 alt="Daniel's Next Logo"
@@ -79,8 +79,8 @@ export default function Footer() {
             </p>
           </div>
 
-          {/* Column 2 - Links (15%) */}
-          <div className="md:col-span-2">
+          {/* Column 2 - Links (20%) */}
+          <div className="md:col-span-2 lg:col-span-2">
             <h5 className="text-white font-semibold text-sm mb-4">Product</h5>
             <ul className="space-y-3">
               <li>
@@ -101,8 +101,8 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* Column 3 - Links (15%) */}
-          <div className="md:col-span-2">
+          {/* Column 3 - Links (20%) */}
+          <div className="md:col-span-2 lg:col-span-2">
             <h5 className="text-white font-semibold text-sm mb-4">Company</h5>
             <ul className="space-y-3">
               <li>
@@ -123,8 +123,8 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* Column 4 - Links (15%) */}
-          <div className="md:col-span-2">
+          {/* Column 4 - Links (20%) */}
+          <div className="md:col-span-2 lg:col-span-2">
             <h5 className="text-white font-semibold text-sm mb-4">Resources</h5>
             <ul className="space-y-3">
               <li>
@@ -145,8 +145,8 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* Column 5 - Newsletter (30%) */}
-          <div className="md:col-span-6">
+          {/* Column 5 - Newsletter - Full width on tablet, positioned under logo and links */}
+          <div className="md:col-span-10 lg:col-span-4">
             <h5 className="text-white font-semibold text-sm mb-4">Sign up to newsletter</h5>
             <form
               onSubmit={(e) => {

@@ -35,10 +35,10 @@ export default function AboutTeam() {
 
     return (
         <section className="w-full bg-[#F4F7F3] dark:bg-neutral-900">
-            <div className="container mx-auto px-4 py-12 md:py-16 space-y-6">
+            <div className="container mx-auto px-6 md:px-8 lg:px-4 py-12 md:py-16 space-y-6">
                 {/* Pill */}
                 <div className="flex justify-center">
-                    <PillBadge />
+                    <PillBadge text="Our Team" />
                 </div>
 
                 {/* Heading */}

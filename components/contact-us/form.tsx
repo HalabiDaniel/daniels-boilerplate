@@ -27,13 +27,13 @@ export default function ContactForm() {
 
   return (
     <section className="w-full -mt-16 md:-mt-20 relative z-10">
-      <div className="container mx-auto px-4 py-8 md:py-12">
+      <div className="container mx-auto px-6 md:px-8 lg:px-4 py-8 md:py-12">
         <div className="rounded-2xl overflow-hidden grid grid-cols-1 lg:grid-cols-2 border border-gray-200 dark:border-gray-800">
           {/* Left Column: Form */}
           <div className="p-8 md:p-12 space-y-6" style={{ background: 'oklch(0.5 0.134 242.749)' }}>
             {/* Pill */}
             <div className="flex justify-start">
-              <PillBadge />
+              <PillBadge text="Contact Form" />
             </div>
 
             {/* Heading */}

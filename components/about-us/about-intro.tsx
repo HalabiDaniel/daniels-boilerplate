@@ -40,9 +40,9 @@ export default function AboutIntro() {
       id="about-intro"
       className="w-full bg-white dark:bg-transparent pt-8 pb-16 md:pt-10 md:pb-20 lg:pt-12 lg:pb-24"
     >
-      <div className="container mx-auto px-4 space-y-8">
+      <div className="container mx-auto px-6 md:px-8 lg:px-4 space-y-8">
         {/* Pill */}
-        <PillBadge />
+        <PillBadge text="Who Are We" />
 
         {/* First Row: Two Columns */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16">
@@ -69,7 +69,7 @@ export default function AboutIntro() {
                 <button
                   key={index}
                   onClick={() => setActiveTab(index)}
-                  className={`flex-1 px-6 py-3 text-sm md:text-base font-semibold transition-all cursor-pointer ${getButtonRoundedClass(index)}`}
+                  className={`flex-1 px-4 md:px-6 py-3 text-sm md:text-base font-semibold transition-all cursor-pointer ${getButtonRoundedClass(index)}`}
                   style={{
                     backgroundColor: activeTab === index 
                       ? 'var(--primary)' 
@@ -119,7 +119,7 @@ export default function AboutIntro() {
               >
                 {counter.number}<span className="text-2xl md:text-3xl relative top-[-0.35em]">+</span>
               </div>
-              <div className="text-sm md:text-[15px] text-[#262626]/80 dark:text-white/80">
+              <div className="text-xs md:text-sm text-[#262626]/80 dark:text-white/80">
                 {counter.label}
               </div>
             </div>

@@ -27,15 +27,16 @@ export default function TeamMember({
   memberPosition,
   memberEmail
 }: TeamMemberProps) {
-  const [isHovered, setIsHovered] = useState(false);
+  const [isCardHovered, setIsCardHovered] = useState(false);
+  const [isButtonHovered, setIsButtonHovered] = useState(false);
 
   return (
     <div
       className={\`rounded-2xl p-6 border transition-all duration-300 flex flex-col items-center text-center \${
-        isHovered ? 'bg-primary' : 'bg-card'
+        isCardHovered ? 'bg-primary' : 'bg-card'
       }\`}
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
+      onMouseEnter={() => setIsCardHovered(true)}
+      onMouseLeave={() => setIsCardHovered(false)}
     >
       {/* Profile Picture */}
       <div className="relative w-full aspect-square rounded-lg overflow-hidden mb-5">
@@ -50,7 +51,7 @@ export default function TeamMember({
       {/* Name */}
       <h3
         className={\`text-xl font-semibold transition-colors duration-300 \${
-          isHovered ? 'text-primary-foreground' : 'text-foreground'
+          isCardHovered ? 'text-white' : 'text-foreground'
         }\`}
       >
         {memberName}
@@ -59,7 +60,7 @@ export default function TeamMember({
       {/* Position */}
       <p
         className={\`text-sm transition-colors duration-300 mt-1 \${
-          isHovered ? 'text-primary-foreground' : 'text-muted-foreground'
+          isCardHovered ? 'text-white' : 'text-muted-foreground'
         }\`}
       >
         {memberPosition}
@@ -68,7 +69,11 @@ export default function TeamMember({
       {/* Email Button */}
       <a href={memberEmail} className="w-full mt-5">
         <Button
-          className="w-full text-primary-foreground hover:bg-foreground hover:text-muted dark:hover:bg-background dark:hover:text-foreground transition-colors duration-300"
+          className={\`w-full text-white transition-colors duration-300 \${
+            isCardHovered || isButtonHovered ? 'bg-pure-gray' : 'bg-primary'
+          }\`}
+          onMouseEnter={() => setIsButtonHovered(true)}
+          onMouseLeave={() => setIsButtonHovered(false)}
         >
           <Mail className="w-4 h-4 mr-2" />
           Email Me
@@ -165,16 +170,17 @@ export const USER_INITIALS_AVATAR_CODE = `export default function UserInitialsAv
 // Component showcases
 
 export function TeamMemberCard() {
-  const [isHovered, setIsHovered] = useState(false);
+  const [isCardHovered, setIsCardHovered] = useState(false);
+  const [isButtonHovered, setIsButtonHovered] = useState(false);
 
   return (
     <div className="max-w-xs mx-auto">
       <div
         className={`rounded-2xl p-6 border transition-all duration-300 flex flex-col items-center text-center ${
-          isHovered ? 'bg-primary' : 'bg-card'
+          isCardHovered ? 'bg-primary' : 'bg-card'
         }`}
-        onMouseEnter={() => setIsHovered(true)}
-        onMouseLeave={() => setIsHovered(false)}
+        onMouseEnter={() => setIsCardHovered(true)}
+        onMouseLeave={() => setIsCardHovered(false)}
       >
         {/* Profile Picture */}
         <div className="relative w-full aspect-square rounded-lg overflow-hidden mb-5">
@@ -189,7 +195,7 @@ export function TeamMemberCard() {
         {/* Name */}
         <h3
           className={`text-xl font-semibold transition-colors duration-300 ${
-            isHovered ? 'text-primary-foreground' : 'text-foreground'
+            isCardHovered ? 'text-white' : 'text-foreground'
           }`}
         >
           John Doe
@@ -198,7 +204,7 @@ export function TeamMemberCard() {
         {/* Position */}
         <p
           className={`text-sm transition-colors duration-300 mt-1 ${
-            isHovered ? 'text-primary-foreground' : 'text-muted-foreground'
+            isCardHovered ? 'text-white' : 'text-muted-foreground'
           }`}
         >
           Founder and CEO
@@ -207,7 +213,11 @@ export function TeamMemberCard() {
         {/* Email Button */}
         <a href="mailto:john@example.com" className="w-full mt-5">
           <Button
-            className="w-full text-primary-foreground hover:bg-foreground hover:text-muted dark:hover:bg-background dark:hover:text-foreground transition-colors duration-300"
+            className={`w-full text-white transition-colors duration-300 ${
+              isCardHovered || isButtonHovered ? 'bg-pure-gray' : 'bg-primary'
+            }`}
+            onMouseEnter={() => setIsButtonHovered(true)}
+            onMouseLeave={() => setIsButtonHovered(false)}
           >
             <Mail className="w-4 h-4 mr-2" />
             Email Me

@@ -11,7 +11,7 @@ export default function TermsPage() {
         description={<>Our Terms and Conditions page outlines the rules, responsibilities, and guidelines for using our website and services.<br/><b>Last updated on:</b> October 18, 2025.</>}
       />
 
-      <section className="container mx-auto px-4 py-12 max-w-4xl">
+      <section className="container mx-auto px-6 md:px-8 lg:px-4 py-12 max-w-4xl">
         <div className="prose max-w-none">
           <p>Welcome to [Your Website Name]. By accessing or using this website, you agree to comply with and be bound by these Terms and Conditions. Please read them carefully before using our services.</p>
           

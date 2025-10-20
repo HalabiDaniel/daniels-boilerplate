@@ -34,12 +34,12 @@ export default function AboutInfo() {
 
     return (
         <section className="w-full bg-white dark:bg-transparent">
-            <div className="container mx-auto px-4 py-8 md:py-16">
+            <div className="container mx-auto px-6 md:px-8 lg:px-4 py-8 md:py-16">
                 <div className="grid grid-cols-1 lg:grid-cols-[60%_40%] gap-12 lg:gap-16 items-center">
                     {/* Left Column: Content */}
                     <div className="space-y-8">
                         {/* Pill */}
-                        <PillBadge />
+                        <PillBadge text="Why Choose Us" />
 
                         {/* Heading */}
                         <h2
@@ -73,7 +73,7 @@ export default function AboutInfo() {
                     <div className="relative">
                         {/* Background Layer */}
                         <div
-                            className="absolute inset-0 rounded-2xl"
+                            className="hidden lg:block absolute inset-0 rounded-2xl"
                             style={{
                                 backgroundColor: 'oklch(0.5 0.134 242.749 / 0.1)',
                                 transform: 'translate(20px, 20px)',

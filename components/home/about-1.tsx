@@ -41,7 +41,7 @@ export default function About1() {
       style={{ backgroundColor: 'oklch(0.293 0.066 243.157)' }}
     >
       {/* Hero Image Overlay */}
-      <div className="absolute top-0 left-0 right-0 w-full px-4 -translate-y-[40%] z-10">
+      <div className="absolute top-0 left-0 right-0 w-full px-4 md:px-12 lg:px-4 -translate-y-[50%] md:-translate-y-[40%] z-10">
         <div className="container mx-auto max-w-[1200px]">
           <div className="relative w-full aspect-[16/9] max-h-[500px] overflow-hidden rounded-2xl shadow-2xl">
             <img
@@ -53,9 +53,9 @@ export default function About1() {
         </div>
       </div>
 
-      <div className="container mx-auto px-4 pb-16 pt-[320px] md:pt-[360px] space-y-8">
+      <div className="container mx-auto px-8 md:px-12 lg:px-4 pb-16 pt-28 md:pt-72 lg:pt-[360px] space-y-8">
         {/* Pill */}
-        <PillBadge />
+        <PillBadge text="About the Boilerplate" />
         {/* First Row: Two Columns */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16">
           {/* Left Column: Pill-Title-Subtitle */}
@@ -81,7 +81,7 @@ export default function About1() {
                 <button
                   key={index}
                   onClick={() => setActiveTab(index)}
-                  className={`flex-1 px-6 py-3 text-sm md:text-base font-semibold transition-all cursor-pointer ${getButtonRoundedClass(index)}`}
+                  className={`flex-1 px-4 md:px-6 py-3 text-sm md:text-base font-semibold transition-all cursor-pointer ${getButtonRoundedClass(index)}`}
                   style={{
                     backgroundColor: activeTab === index 
                       ? 'var(--primary)' 
