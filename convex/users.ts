@@ -238,3 +238,140 @@ export const hasActiveSubscription = query({
     };
   },
 });
+
+// Query: Get all users for admin management (Admin only)
+export const getAllUsersForAdmin = query({
+  args: { adminClerkId: v.string() },
+  handler: async (ctx, args) => {
+    // Validate input
+    if (!args.adminClerkId || args.adminClerkId.trim() === "") {
+      throw new Error("Invalid admin Clerk ID provided");
+    }
+
+    // Verify the requesting user is an admin
+    const admin = await ctx.db
+      .query("admins")
+      .withIndex("by_clerk_id", (q) => q.eq("clerkId", args.adminClerkId))
+      .first();
+
+    if (!admin) {
+      throw new Error("Access denied: Admin privileges required");
+    }
+
+    try {
+      // Fetch all users with their subscription data
+      const users = await ctx.db
+        .query("users")
+        .order("desc")
+        .collect();
+
+      // Sort by creation date (newest first) and return with all necessary data
+      const sortedUsers = users.sort((a, b) => b.createdAt - a.createdAt);
+
+      return sortedUsers.map(user => ({
+        _id: user._id,
+        clerkId: user.clerkId,
+        email: user.email,
+        name: user.name,
+        profilePictureUrl: user.profilePictureUrl,
+        subscriptionPlanId: user.subscriptionPlanId,
+        subscriptionStatus: user.subscriptionStatus,
+        currentPeriodEnd: user.currentPeriodEnd,
+        autoRenew: user.autoRenew,
+        stripeCustomerId: user.stripeCustomerId,
+        stripeSubscriptionId: user.stripeSubscriptionId,
+        createdAt: user.createdAt,
+        updatedAt: user.updatedAt,
+      }));
+    } catch (error) {
+      console.error("Error fetching users for admin:", error);
+      throw new Error("Failed to retrieve user data. Please try again.");
+    }
+  },
+});
+
+// Mutation: Delete user completely from Convex (Admin only)
+export const deleteUserCompletely = mutation({
+  args: {
+    userId: v.id("users"),
+    adminClerkId: v.string(),
+  },
+  handler: async (ctx, args) => {
+    // Validate input parameters
+    if (!args.userId) {
+      throw new Error("User ID is required");
+    }
+    
+    if (!args.adminClerkId || args.adminClerkId.trim() === "") {
+      throw new Error("Invalid admin Clerk ID provided");
+    }
+
+    // Verify the requesting user is an admin with appropriate permissions
+    const admin = await ctx.db
+      .query("admins")
+      .withIndex("by_clerk_id", (q) => q.eq("clerkId", args.adminClerkId))
+      .first();
+
+    if (!admin) {
+      throw new Error("Access denied: Admin privileges required");
+    }
+
+    // Get the user to be deleted
+    const userToDelete = await ctx.db.get(args.userId);
+    
+    if (!userToDelete) {
+      throw new Error("User not found or already deleted");
+    }
+
+    // Prevent deletion of admin users (check if user is also an admin)
+    const userAdmin = await ctx.db
+      .query("admins")
+      .withIndex("by_clerk_id", (q) => q.eq("clerkId", userToDelete.clerkId))
+      .first();
+
+    if (userAdmin) {
+      throw new Error("Cannot delete user: User has admin privileges. Remove admin access first.");
+    }
+
+    // Prevent self-deletion
+    if (userToDelete.clerkId === args.adminClerkId) {
+      throw new Error("Cannot delete your own user account");
+    }
+
+    try {
+      // Delete related uploads first (to maintain referential integrity)
+      const userUploads = await ctx.db
+        .query("uploads")
+        .withIndex("by_user_id", (q) => q.eq("userId", userToDelete.clerkId))
+        .collect();
+
+      // Delete all user uploads
+      for (const upload of userUploads) {
+        await ctx.db.delete(upload._id);
+      }
+
+      // Store user data for external cleanup before deletion
+      const userData = {
+        clerkId: userToDelete.clerkId,
+        email: userToDelete.email,
+        stripeCustomerId: userToDelete.stripeCustomerId,
+        stripeSubscriptionId: userToDelete.stripeSubscriptionId,
+        profilePicturePublicId: userToDelete.profilePicturePublicId,
+      };
+
+      // Delete the user record
+      await ctx.db.delete(args.userId);
+
+      // Return user data for external system cleanup
+      return {
+        success: true,
+        deletedUser: userData,
+        uploadsDeleted: userUploads.length,
+        message: `User ${userToDelete.email} successfully deleted from Convex`,
+      };
+    } catch (error) {
+      console.error("Error during user deletion:", error);
+      throw new Error("Failed to delete user from database. Please try again.");
+    }
+  },
+});

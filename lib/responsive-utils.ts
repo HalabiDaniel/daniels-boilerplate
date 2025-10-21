@@ -86,3 +86,80 @@ export const SECTION_PADDING: ResponsivePadding = {
 export function getResponsivePadding(): string {
   return `${SECTION_PADDING.mobile} ${SECTION_PADDING.tablet} ${SECTION_PADDING.desktop}`;
 }
+
+/**
+ * Hook to detect if current viewport is desktop (>= lg breakpoint)
+ * Specifically for admin user management layout switching
+ * @returns true if desktop, false if mobile/tablet
+ */
+export function useIsDesktop(): boolean {
+  const [isDesktop, setIsDesktop] = useState(false);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsDesktop(window.innerWidth >= BREAKPOINTS.lg);
+    };
+
+    // Initial check
+    handleResize();
+    
+    // Add resize listener with debouncing for performance
+    let timeoutId: NodeJS.Timeout;
+    const debouncedResize = () => {
+      clearTimeout(timeoutId);
+      timeoutId = setTimeout(handleResize, 100);
+    };
+
+    window.addEventListener("resize", debouncedResize);
+    return () => {
+      window.removeEventListener("resize", debouncedResize);
+      clearTimeout(timeoutId);
+    };
+  }, []);
+
+  return isDesktop;
+}
+
+/**
+ * Hook to detect if user prefers reduced motion
+ * @returns true if user prefers reduced motion
+ */
+export function usePrefersReducedMotion(): boolean {
+  const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+    setPrefersReducedMotion(mediaQuery.matches);
+
+    const handleChange = (event: MediaQueryListEvent) => {
+      setPrefersReducedMotion(event.matches);
+    };
+
+    mediaQuery.addEventListener('change', handleChange);
+    return () => mediaQuery.removeEventListener('change', handleChange);
+  }, []);
+
+  return prefersReducedMotion;
+}
+
+/**
+ * Hook to detect if user prefers high contrast
+ * @returns true if user prefers high contrast
+ */
+export function usePrefersHighContrast(): boolean {
+  const [prefersHighContrast, setPrefersHighContrast] = useState(false);
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia('(prefers-contrast: high)');
+    setPrefersHighContrast(mediaQuery.matches);
+
+    const handleChange = (event: MediaQueryListEvent) => {
+      setPrefersHighContrast(event.matches);
+    };
+
+    mediaQuery.addEventListener('change', handleChange);
+    return () => mediaQuery.removeEventListener('change', handleChange);
+  }, []);
+
+  return prefersHighContrast;
+}
