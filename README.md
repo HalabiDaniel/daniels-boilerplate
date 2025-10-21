@@ -1,5 +1,28 @@
 # Next.js Daniel's Boilerplate
 
+
+![Next.js Daniel's Boilerplate](https://res.cloudinary.com/dbactyzwl/image/upload/v1761045720/thumbnail_odybfx.png)
+
+
+## Table of Contents
+
+- [About the Boilerplate](#about-the-boilerplate)
+- [Upcoming Features](#upcoming-features)
+- [License & Usage](#license--usage)
+- [Getting Started](#getting-started)
+- [Tech Stack](#tech-stack)
+- [Environment Setup](#environment-setup)
+- [Editing the Theme](#editing-the-theme)
+- [Database Setup (Convex)](#database-setup-convex)
+- [Authentication Setup (Clerk)](#authentication-setup-clerk)
+- [Using ngrok for Local Development](#using-ngrok-for-local-development)
+- [Adding Admin Users](#adding-admin-users)
+- [Payments Setup (Stripe)](#payments-setup-stripe)
+- [File Storage Setup (Cloudinary)](#file-storage-setup-cloudinary)
+- [Email System (Resend)](#email-system-resend)
+- [Next Steps](#next-steps)
+
+
 ## About the Boilerplate
 
 A production-ready Next.js boilerplate designed to accelerate your development workflow. Created by Daniel Halabi, this project comes fully configured with essential integrations and pre-built pages, so you can focus on building your product instead of infrastructure.
@@ -20,9 +43,9 @@ Start building immediately with a beautiful, functional website foundation.
 - [x] Organized components & sections library
 - [x] Dynamic theming (colors & fonts)
 - [x] Admin dashboard (users, subscriptions, more)
+- [x] Cloudinary image/file upload & storage
 
 **In Development:**
-- [x] Cloudinary image/file upload & storage
 - [ ] PostHog analytics integration
 - [ ] Resend email system
 - [ ] Animated pages
@@ -75,7 +98,7 @@ This boilerplate is built with modern, battle-tested technologies:
 
 ## Environment Setup
 
-Getting your API keys configured is straightforward. All the environment variables you'll need are documented in the `.env.example` file—it serves as a complete checklist of what to set up.
+Getting your API keys configured is straightforward. All the environment variables you'll need are documented in the `.env.example` file, it serves as a complete checklist of what to set up.
 
 Before you start any integrations (Convex, Clerk, Stripe, etc.), copy `.env.example` to `.env.local` and fill in your API keys as you configure each service. Detailed setup instructions for each integration are provided in their respective sections below.
 
@@ -92,30 +115,45 @@ Customize your site's colors and typography globally with a few simple CSS edits
 This centralized approach makes rebranding or theming your site a breeze.
 
 
+## Database Setup (Convex)
+
+Start your Convex database:
+```bash
+npx convex dev
+```
+
+The terminal will guide you through authentication and project creation when you run this for the first time. Just follow the prompts!
+
+Keep this running while you develop. When deploying to production:
+```bash
+npx convex deploy
+```
+
+
 ## Authentication Setup (Clerk)
 
 Clerk handles all your authentication needs with minimal configuration. It's easy to set up, affordable, and rock-solid reliable.
 
 **Step-by-step setup:**
 
-1. **Create a Clerk account** — Sign up for free at https://clerk.com
+1. **Create a Clerk account**. Sign up for free at https://clerk.com
 
-2. **Create your application** — Click "Create Application," enter a name, and select your preferred sign-in methods
+2. **Create your application**. Click "Create Application," enter a name, and select your preferred sign-in methods
 
-3. **Add API keys** — From the quickstart page, select Next.js, then copy your API keys:
+3. **Add API keys**. From the quickstart page, select Next.js, then copy your API keys:
    - `NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY`
    - `CLERK_SECRET_KEY`
    
    Paste these into your `.env.local` file (see `.env.example` for reference)
 
-4. **Configure webhooks** — Sync user data with Convex:
+4. **Configure webhooks**. Sync user data with Convex:
    - Go to **Webhooks** in your Clerk Dashboard
    - Click **+ Add Endpoint**
    - Set URL to `https://yourdomain.com/api/webhooks/clerk` (use ngrok for local development)
    - Select these events: `user.created` and `user.updated`
    - Copy the **Signing Secret** and add it as `CLERK_WEBHOOK_SECRET` to `.env.local`
 
-5. **Finish configuration** — Follow Clerk's on-screen prompts to configure sign-up and sign-in flows, then start your server
+5. **Finish configuration**. Follow Clerk's on-screen prompts to configure sign-up and sign-in flows, then start your server
 
 
 ## Using ngrok for Local Development
@@ -129,23 +167,23 @@ When testing webhooks locally, you need to expose your local server to the inter
 
 **Setup with a static domain (recommended):**
 
-1. **Install ngrok** — Download from https://ngrok.com/download and follow the installation for your OS
+1. **Install ngrok**. Download from https://ngrok.com/download and follow the installation for your OS
 
-2. **Create account & get auth token** — Sign up at https://ngrok.com, go to your dashboard, and copy your auth token
+2. **Create account & get auth token**. Sign up at https://ngrok.com, go to your dashboard, and copy your auth token
 
-3. **Configure your auth token in your terminal:**
+3. **Configure your auth token in your terminal:**.
 ```bash
 ngrok config add-authtoken YOUR_AUTH_TOKEN
 ```
 
-4. **Claim a static domain** — In your ngrok dashboard, claim a free static domain (e.g., `https://yourname-yourname-yourname.ngrok-free.dev/`)
+4. **Claim a static domain**. In your ngrok dashboard, claim a free static domain (e.g., `https://yourname-yourname-yourname.ngrok-free.dev/`)
 
-5. **Start ngrok with your static domain** — In a terminal, run:
+5. **Start ngrok with your static domain**. In a terminal, run:
 ```bash
 ngrok http 3000 --domain yourname-yourname-yourname.ngrok-free.dev
 ```
 
-6. **Use your static URL** — Add your domain to your Clerk and Stripe webhook endpoints (e.g., `https://yourname-yourname-yourname.ngrok-free.dev/api/webhooks/clerk`)
+6. **Use your static URL**. Add your domain to your Clerk and Stripe webhook endpoints (e.g., `https://yourname-yourname-yourname.ngrok-free.dev/api/webhooks/clerk`)
 
 **Keep it running:** Leave ngrok running in a terminal while you develop. Since you have a static domain, you only set up your webhooks once!
 
@@ -219,7 +257,7 @@ export const SUBSCRIPTION_PLANS: SubscriptionPlan[] = [
    - Go to **Settings** → **Billing** → **Customer portal**
    - Click **Activate test link** (for test mode)
    - Add your business details (name, email, privacy policy URL)
-   - Copy the portal URL and save it somewhere
+   - Make sure you see the customer portal URL. You don't need to put this anywhere, the website will automatically retrieve it if you enabled it.
 
 5. **Add your API keys**. Back in the Stripe Dashboard, find your **Publishable Key** and **Secret Key** under your API keys. Copy both to your `.env.local` file.
 
@@ -245,23 +283,23 @@ You're all set! Your payment system is ready to handle real transactions once yo
 
 ## File Storage Setup (Cloudinary)
 
-Cloudinary stores and optimizes your images, videos, and documents in the cloud. This boilerplate comes with pre-built upload components that handle everything—just add your credentials and you're ready to go.
+Cloudinary stores and optimizes your images, videos, and documents in the cloud. This boilerplate comes with pre-built upload components that handle everything. Just add your credentials and you're ready to go.
 
-1. **Create a Cloudinary account** — Sign up for free at https://cloudinary.com
+1. **Create a Cloudinary account**. Sign up for free at https://cloudinary.com
 
-2. **Get your credentials** — From your Cloudinary Dashboard, copy:
+2. **Get your credentials**. From your Cloudinary Dashboard, copy:
    - Cloud Name
    - API Key
    - API Secret
 
-3. **Add to your environment** — Paste these into `.env.local`:
+3. **Add to your environment**. Paste these into `.env.local`:
 ```env
 NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME=your_cloud_name
 CLOUDINARY_API_KEY=your_api_key
 CLOUDINARY_API_SECRET=your_api_secret
 ```
 
-4. **Start uploading** — Use the pre-built components:
+4. **Start uploading**. Use the pre-built components:
 ```tsx
 import { UploadButton, UploadCard } from '@/components/daniels-elements/elements/upload-elements';
 ```
