@@ -5,6 +5,9 @@ export default defineSchema({
   users: defineTable({
     clerkId: v.string(),
     email: v.string(),
+    name: v.optional(v.string()), // User's full name
+    profilePictureUrl: v.optional(v.string()), // Cloudinary URL for profile picture
+    profilePicturePublicId: v.optional(v.string()), // Cloudinary public ID for deletion
     subscriptionPlanId: v.string(), // References SUBSCRIPTION_PLANS[].id
     stripeCustomerId: v.optional(v.string()),
     stripeSubscriptionId: v.optional(v.string()),
@@ -43,4 +46,21 @@ export default defineSchema({
     .index("by_user_id", ["userId"])
     .index("by_access_level", ["accessLevel"])
     .index("by_email", ["email"]),
+
+  uploads: defineTable({
+    userId: v.string(),                     // Clerk user ID
+    filename: v.string(),                   // Original or user-edited filename
+    cloudinaryUrl: v.string(),              // Full Cloudinary URL
+    cloudinaryPublicId: v.string(),         // Cloudinary public ID for deletion
+    fileType: v.string(),                   // MIME type (image/jpeg, application/pdf, etc.)
+    fileSize: v.number(),                   // File size in bytes
+    description: v.optional(v.string()),    // Optional user description
+    width: v.optional(v.number()),          // Image width (if applicable)
+    height: v.optional(v.number()),         // Image height (if applicable)
+    createdAt: v.number(),                  // Unix timestamp
+    updatedAt: v.number(),                  // Unix timestamp
+  })
+    .index("by_user_id", ["userId"])
+    .index("by_created_at", ["createdAt"])
+    .index("by_file_type", ["fileType"]),
 });

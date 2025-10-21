@@ -30,7 +30,7 @@ export default function Footer() {
           }}
         >
           {/* Pill */}
-          <PillBadge />
+          <PillBadge text='Get Started Today'/>
 
           {/* Heading */}
           <h2 className="font-semibold text-3xl md:text-[42px] md:leading-[52px] text-white">
@@ -59,9 +59,9 @@ export default function Footer() {
         </div>
 
         {/* Footer Content */}
-        <div className="grid grid-cols-1 md:grid-cols-10 gap-8 mb-12 text-center md:text-left">
-          {/* Column 1 - Logo and Text (40%) */}
-          <div className="md:col-span-4 lg:col-span-2">
+        <div className="grid grid-cols-1 md:grid-cols-10 lg:grid-cols-20 gap-8 mb-12 text-center md:text-left">
+          {/* Column 1 - Logo and Text (20% on desktop) */}
+          <div className="md:col-span-4 lg:col-span-4">
             <div className="flex items-center gap-3 mb-4 justify-center md:justify-start">
               <Image
                 src="/daniel-logo-white.png"
@@ -79,8 +79,8 @@ export default function Footer() {
             </p>
           </div>
 
-          {/* Column 2 - Links (20%) */}
-          <div className="md:col-span-2 lg:col-span-2">
+          {/* Column 2 - Links (15% on desktop) */}
+          <div className="md:col-span-2 lg:col-span-3">
             <h5 className="text-white font-semibold text-sm mb-4">Product</h5>
             <ul className="space-y-3">
               <li>
@@ -101,8 +101,8 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* Column 3 - Links (20%) */}
-          <div className="md:col-span-2 lg:col-span-2">
+          {/* Column 3 - Links (15% on desktop) */}
+          <div className="md:col-span-2 lg:col-span-3">
             <h5 className="text-white font-semibold text-sm mb-4">Company</h5>
             <ul className="space-y-3">
               <li>
@@ -123,8 +123,8 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* Column 4 - Links (20%) */}
-          <div className="md:col-span-2 lg:col-span-2">
+          {/* Column 4 - Links (15% on desktop) */}
+          <div className="md:col-span-2 lg:col-span-3">
             <h5 className="text-white font-semibold text-sm mb-4">Resources</h5>
             <ul className="space-y-3">
               <li>
@@ -145,8 +145,8 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* Column 5 - Newsletter - Full width on tablet, positioned under logo and links */}
-          <div className="md:col-span-10 lg:col-span-4">
+          {/* Column 5 - Newsletter (35% on desktop, full width on tablet) */}
+          <div className="md:col-span-10 lg:col-span-7">
             <h5 className="text-white font-semibold text-sm mb-4">Sign up to newsletter</h5>
             <form
               onSubmit={(e) => {

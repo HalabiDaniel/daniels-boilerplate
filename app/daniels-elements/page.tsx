@@ -57,6 +57,12 @@ import {
   MEMBERSHIP_CARD_CODE,
   USER_INITIALS_AVATAR_CODE,
 } from '@/components/daniels-elements/elements/specialized-elements';
+import {
+  UploadButtonShowcase,
+  UploadCardShowcase,
+  UPLOAD_BUTTON_CODE,
+  UPLOAD_CARD_CODE,
+} from '@/components/daniels-elements/elements/upload-elements';
 import PageTitle from '@/components/layouts/page-title';
 
 export default function DanielsElementsPage() {
@@ -293,6 +299,28 @@ export default function DanielsElementsPage() {
             code={USER_INITIALS_AVATAR_CODE}
           >
             <UserInitialsAvatar />
+          </ElementCard>
+        </div>
+      </section>
+
+      {/* File Upload Elements */}
+      <section className="mb-8 sm:mb-10 lg:mb-12" aria-labelledby="upload-heading">
+        <h2 id="upload-heading" className="text-xl sm:text-2xl font-semibold mb-4 sm:mb-6">File Upload</h2>
+        <div className="space-y-4 sm:space-y-6">
+          <ElementCard
+            name="Upload Button"
+            description="Simple upload button with file selection. Supports optimization rules, file type restrictions, and loading states. Perfect for quick file uploads with minimal UI."
+            code={UPLOAD_BUTTON_CODE}
+          >
+            <UploadButtonShowcase />
+          </ElementCard>
+
+          <ElementCard
+            name="Upload Card"
+            description="Complete upload interface with drag-and-drop, file preview, and progress tracking. Configurable optimization and validation. Ideal for rich upload experiences."
+            code={UPLOAD_CARD_CODE}
+          >
+            <UploadCardShowcase />
           </ElementCard>
         </div>
       </section>

@@ -34,6 +34,7 @@ export const upsertUser = mutation({
   args: {
     clerkId: v.string(),
     email: v.string(),
+    name: v.optional(v.string()),
     subscriptionPlanId: v.optional(v.string()),
     stripeCustomerId: v.optional(v.string()),
     stripeSubscriptionId: v.optional(v.string()),
@@ -53,6 +54,7 @@ export const upsertUser = mutation({
       // Update existing user
       await ctx.db.patch(existingUser._id, {
         email: args.email,
+        name: args.name ?? existingUser.name,
         subscriptionPlanId: args.subscriptionPlanId ?? existingUser.subscriptionPlanId,
         stripeCustomerId: args.stripeCustomerId ?? existingUser.stripeCustomerId,
         stripeSubscriptionId: args.stripeSubscriptionId ?? existingUser.stripeSubscriptionId,
@@ -68,6 +70,7 @@ export const upsertUser = mutation({
       const userId = await ctx.db.insert("users", {
         clerkId: args.clerkId,
         email: args.email,
+        name: args.name,
         subscriptionPlanId: args.subscriptionPlanId ?? "free",
         stripeCustomerId: args.stripeCustomerId,
         stripeSubscriptionId: args.stripeSubscriptionId,
@@ -80,6 +83,46 @@ export const upsertUser = mutation({
       
       return userId;
     }
+  },
+});
+
+// Mutation: Update user profile (name and profile picture)
+export const updateUserProfile = mutation({
+  args: {
+    clerkId: v.string(),
+    name: v.optional(v.string()),
+    profilePictureUrl: v.optional(v.string()),
+    profilePicturePublicId: v.optional(v.string()),
+  },
+  handler: async (ctx, args) => {
+    const user = await ctx.db
+      .query("users")
+      .withIndex("by_clerk_id", (q) => q.eq("clerkId", args.clerkId))
+      .first();
+
+    if (!user) {
+      throw new Error("User not found");
+    }
+
+    const updates: any = {
+      updatedAt: Date.now(),
+    };
+
+    if (args.name !== undefined) {
+      updates.name = args.name;
+    }
+
+    if (args.profilePictureUrl !== undefined) {
+      updates.profilePictureUrl = args.profilePictureUrl;
+    }
+
+    if (args.profilePicturePublicId !== undefined) {
+      updates.profilePicturePublicId = args.profilePicturePublicId;
+    }
+
+    await ctx.db.patch(user._id, updates);
+
+    return user._id;
   },
 });
 

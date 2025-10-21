@@ -282,6 +282,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
             userDisplayName={getUserDisplayName()}
             userFullName={getUserFullName()}
             userEmail={getUserEmail()}
+            profilePictureUrl={convexUser?.profilePictureUrl}
             membershipCard={membershipCard}
             adminCard={adminCard}
             isAdmin={!!adminData}

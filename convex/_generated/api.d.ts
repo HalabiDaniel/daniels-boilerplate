@@ -11,6 +11,7 @@
 import type * as adminSetup from "../adminSetup.js";
 import type * as admins from "../admins.js";
 import type * as fixSubscription from "../fixSubscription.js";
+import type * as uploads from "../uploads.js";
 import type * as users from "../users.js";
 
 import type {
@@ -31,6 +32,7 @@ declare const fullApi: ApiFromModules<{
   adminSetup: typeof adminSetup;
   admins: typeof admins;
   fixSubscription: typeof fixSubscription;
+  uploads: typeof uploads;
   users: typeof users;
 }>;
 declare const fullApiWithMounts: typeof fullApi;

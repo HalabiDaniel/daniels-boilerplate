@@ -1,153 +1,288 @@
 # Next.js Daniel's Boilerplate
 
-A personal boilerplate created by Daniel Halabi to facilitate building Next.js websites quickly and efficiently. The project includes a full landing page with at least 10 separate and interchangeable sections, a full "About Us" page, a full "Contact Us" page, privacy policy and terms pages, and a complete dashboard layout. The boilerplate has pre-prepared integrations with Convex as database, Clerk for authentication, Stripe for payment and subscription handling, Resend for emails, and Cloudinary for file storage. All you have to do is follow the simple steps below and you will have a fully functional and beautiful website to kickstart your projects.
+## About the Boilerplate
+
+A production-ready Next.js boilerplate designed to accelerate your development workflow. Created by Daniel Halabi, this project comes fully configured with essential integrations and pre-built pages, so you can focus on building your product instead of infrastructure.
+
+**What's included:**
+- Complete landing page with 10+ customizable sections
+- Full "About Us," "Contact Us," privacy policy, and terms pages
+- Admin dashboard for user and subscription management
+- Pre-configured integrations: Convex (database), Clerk (auth), Stripe (payments), Resend (email), Cloudinary (storage)
+
+Start building immediately with a beautiful, functional website foundation.
+
 
 ## Upcoming Features
-- [ ] Full mobile responsiveness across the website
-- [x] Organized list of components and sections allowing you to easily insert them anywhere
-- [x] Fully dynamic theming, which lets you change the website's colors and fonts in a matter of seconds.
-- [x] Admin dashboard to manage users, subscriptions, and more.
-- [ ] Analytics integration via PostHog
+
+**Done:**
+- [x] Full mobile responsiveness
+- [x] Organized components & sections library
+- [x] Dynamic theming (colors & fonts)
+- [x] Admin dashboard (users, subscriptions, more)
+
+**In Development:**
+- [x] Cloudinary image/file upload & storage
+- [ ] PostHog analytics integration
+- [ ] Resend email system
+- [ ] Animated pages
+
 
 ## License & Usage
 
-This project is released under the MIT license and is freely available for anyone to use, replicate, expand, or reproduce. I'd love to see what you build with it - feel free to share your work at daniel@eddan.co
+This project is released under the MIT license and is completely free to use, modify, extend, and share. I'd genuinely love to see what you build with it. Feel free to reach out and share your projects at `daniel@eddan.co`. Your feedback and creations inspire future improvements!
+
 
 ## Getting Started
 
-1. Install dependencies:
+Get up and running in just a few commands. Make sure you have Node.js installed, then follow these steps:
+
+1. **Install dependencies:**
 ```bash
 npm install
 ```
 
-2. Start the development server:
+2. **Start the development server:**
 ```bash
 npm run dev
 ```
 
-3. Initialize Convex (for database):
+3. **Initialize your database (Convex):**
 ```bash
 npx convex dev
 ```
 
-4. Deploy when ready:
+4. **Ready to deploy?**
 ```bash
 npm run build
 ```
 
+Your site will be available at `http://localhost:3000` during development.
+
+
 ## Tech Stack
 
-- **Next.js** (with TypeScript)
-- **UI Components**: ShadCN
-- **Database**: Convex
-- **Authentication**: Clerk
-- **Email**: Resend
-- **File Storage**: Cloudinary (for user content and photos)
-- **Payments**: Stripe
-- **Linting**: ESLint
+This boilerplate is built with modern, battle-tested technologies:
+
+- **Frontend:** Next.js with TypeScript for type safety and scalability
+- **UI Components:** ShadCN for beautiful, accessible components
+- **Database:** Convex for real-time data syncing and scalability
+- **Authentication:** Clerk for secure user management
+- **Payments:** Stripe for subscription handling and transactions
+- **Email:** Resend for reliable email delivery
+- **File Storage:** Cloudinary for image and media management
+- **Code Quality:** ESLint for consistent code standards
 
 ## Environment Setup
 
-Check the `.env.example` file to understand what environment variables and API keys are needed for the project.
+Getting your API keys configured is straightforward. All the environment variables you'll need are documented in the `.env.example` file—it serves as a complete checklist of what to set up.
 
-## Editing the Theme (colors, fonts, and more)
+Before you start any integrations (Convex, Clerk, Stripe, etc.), copy `.env.example` to `.env.local` and fill in your API keys as you configure each service. Detailed setup instructions for each integration are provided in their respective sections below.
 
-The website uses an organized CSS theme. The way the website's elements work is by referring to the variables in /app/globals.css. To change the website's main colors or typography, modify the CSS code in globals.css. This will apply the changes to all elements across the website. If you still need to edit specific elements, all you need to do is open the element file (e.g., `button-elements.tsx`) and edit the component's style.
+
+## Editing the Theme
+
+Customize your site's colors and typography globally with a few simple CSS edits. No need to hunt through component files unless you want to fine-tune specific elements.
+
+**How it works:**
+- All design tokens (colors, fonts, spacing) are stored in `/app/globals.css`
+- Update these variables and the changes instantly apply across your entire site
+- For element-specific customization, open the corresponding component file (e.g., `button-elements.tsx`) and modify its styles
+
+This centralized approach makes rebranding or theming your site a breeze.
+
 
 ## Authentication Setup (Clerk)
 
-The authentication system in this boilerplate uses Clerk. Clerk is easy to use and setup, relatively affordable, and stable. 
+Clerk handles all your authentication needs with minimal configuration. It's easy to set up, affordable, and rock-solid reliable.
 
-1. Signup for a free Clerk account by visiting https://clerk.com.
+**Step-by-step setup:**
 
-2. Click create application, enter a name, and select the sign in options.
+1. **Create a Clerk account** — Sign up for free at https://clerk.com
 
-3. This will show you the quickstart page. Make sure you choose Next.js, and then copy the Clerk API Keys (NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY and CLERK_SECRET_KEY) and paste them in your .env.local file. See .env.example for more information.
+2. **Create your application** — Click "Create Application," enter a name, and select your preferred sign-in methods
 
-4. Configure Clerk webhooks to sync users with your Convex database:
-   - In your Clerk Dashboard, navigate to **Webhooks** in the sidebar
+3. **Add API keys** — From the quickstart page, select Next.js, then copy your API keys:
+   - `NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY`
+   - `CLERK_SECRET_KEY`
+   
+   Paste these into your `.env.local` file (see `.env.example` for reference)
+
+4. **Configure webhooks** — Sync user data with Convex:
+   - Go to **Webhooks** in your Clerk Dashboard
    - Click **+ Add Endpoint**
-   - Set the **Endpoint URL** to `https://yourdomain.com/api/webhooks/clerk` (use ngrok for local development)
-   - Select the following events:
-     - ✅ `user.created`
-     - ✅ `user.updated`
-   - Copy the **Signing Secret** and add it to your `.env.local` as `CLERK_WEBHOOK_SECRET`
+   - Set URL to `https://yourdomain.com/api/webhooks/clerk` (use ngrok for local development)
+   - Select these events: `user.created` and `user.updated`
+   - Copy the **Signing Secret** and add it as `CLERK_WEBHOOK_SECRET` to `.env.local`
 
-5. Follow the on-screen steps, configure your Clerk sign-up and sign-in settings, and run your server.
+5. **Finish configuration** — Follow Clerk's on-screen prompts to configure sign-up and sign-in flows, then start your server
+
+
+## Using ngrok for Local Development
+
+When testing webhooks locally, you need to expose your local server to the internet so external services like Clerk and Stripe can reach your webhook endpoints. ngrok creates a secure tunnel from your machine to a public URL. While this section explains how to setup your local development server with ngrok, you can also use an alternative service like pinggy.io. Both services offer reasonable free plans, but if you need the paid plans, pinggy.io offers a more affordable service.
+
+**Why you need this:**
+- Webhook services can't reach `localhost:3000` from the internet
+- ngrok gives you a public URL that forwards requests to your local server
+- Perfect for testing before deploying to production
+
+**Setup with a static domain (recommended):**
+
+1. **Install ngrok** — Download from https://ngrok.com/download and follow the installation for your OS
+
+2. **Create account & get auth token** — Sign up at https://ngrok.com, go to your dashboard, and copy your auth token
+
+3. **Configure your auth token in your terminal:**
+```bash
+ngrok config add-authtoken YOUR_AUTH_TOKEN
+```
+
+4. **Claim a static domain** — In your ngrok dashboard, claim a free static domain (e.g., `https://yourname-yourname-yourname.ngrok-free.dev/`)
+
+5. **Start ngrok with your static domain** — In a terminal, run:
+```bash
+ngrok http 3000 --domain yourname-yourname-yourname.ngrok-free.dev
+```
+
+6. **Use your static URL** — Add your domain to your Clerk and Stripe webhook endpoints (e.g., `https://yourname-yourname-yourname.ngrok-free.dev/api/webhooks/clerk`)
+
+**Keep it running:** Leave ngrok running in a terminal while you develop. Since you have a static domain, you only set up your webhooks once!
+
+
+## Adding Admin Users
+
+Grant admin access to users quickly using our interactive admin script. This handles everything for you, so no manual database updates are needed.
+
+**Before you start:**
+- The user must already have an account (signed up at least once)
+- Your `.env.local` file must have: `NEXT_PUBLIC_CONVEX_URL` and `CLERK_SECRET_KEY`
+
+**Add an admin:**
+
+1. **Run the admin script:**
+```bash
+npm run add-admin
+```
+
+2. **Follow the prompts:**
+   - Enter the user's Clerk ID (starts with `user_`)
+   - Choose an access level
+
+3. **Done!** The script handles all the backend setup
+
+**Finding a Clerk ID:**
+1. Go to your Clerk Dashboard
+2. Click **Users**
+3. Select the user you want to promote
+4. Copy their User ID (starts with `user_`)
+
+**Access Levels:**
+- **Full Access** — Manage other admins and full dashboard control
+- **Partial Access** — Reduced admin capabilities
+- **Limited Access** — Very minimal admin access
+
 
 ## Payments Setup (Stripe)
 
-This section walks you through setting up Stripe payment integration for subscription management in Daniel's Next.js Boilerplate.
+Set up Stripe to handle subscriptions and payments. This boilerplate comes pre-configured to work with Stripe, you just need to create your products and add your API keys.
 
-1. Log in to your Stripe Dashboard at https://dashboard.stripe.com and access test/sandbox mode in your project.
+**Step-by-step setup:**
 
-2. Create a product for each paid subscription tier. Add the product details, select "recurring" if it's a subscription, and set a price. You can set more than one price for a single product, for example, a monthly price and a yearly price.
+1. **Access your Stripe Dashboard**. Log in at https://dashboard.stripe.com. Make sure you're in **test mode** or **sandbox mode** while setting up.
 
-3. Update `lib/subscription-plans.ts` with your Stripe PriceIDs (not the ProductID). 
+2. **Create subscription products**. For each pricing tier:
+   - Click **Products** in the sidebar and select **+ Add Product**
+   - Enter product details and select "Recurring" for subscriptions
+   - Set your prices (you can have monthly AND yearly pricing for the same product)
+   - Save and copy the **Price ID** (not the Product ID)
+
+3. **Update your subscription plans**. Open `lib/subscription-plans.ts` and add your Stripe Price IDs:
 ```typescript
 export const SUBSCRIPTION_PLANS: SubscriptionPlan[] = [
   {
     id: "free",
     name: "Free Plan",
-    // ... other fields
-    stripePriceIdMonthly: null,
-    stripePriceIdAnnual: null,
+    stripePriceIdMonthly: null, // Free plan does not need a Stripe priceID
+    stripePriceIdAnnual: null, // Free plan does not need a Stripe priceID
   },
   {
     id: "pro",
     name: "Pro Plan",
-    // ... other fields
-    stripePriceIdMonthly: "price_YOUR_PRO_MONTHLY_ID", // Replace with your Price ID
-    stripePriceIdAnnual: "price_YOUR_PRO_ANNUAL_ID",   // Replace with your Price ID
+    stripePriceIdMonthly: "price_YOUR_PRO_MONTHLY_ID",
+    stripePriceIdAnnual: "price_YOUR_PRO_ANNUAL_ID",
   },
 ];
 ```
 
-4. Configure your customer portal by navigating to **Settings** → **Billing** → **Customer portal**, and clicking **Activate test link** (for test mode). You will need to add business details like name, email, and privacy policy URL. Copy the URL of the billing page.
+4. **Configure your customer portal**. Users need a way to manage their subscriptions:
+   - Go to **Settings** → **Billing** → **Customer portal**
+   - Click **Activate test link** (for test mode)
+   - Add your business details (name, email, privacy policy URL)
+   - Copy the portal URL and save it somewhere
 
-5. Back in the Stripe dashboard, you can see the Publishable Key and Secret Key. Copy and add those to your .env.local file. 
+5. **Add your API keys**. Back in the Stripe Dashboard, find your **Publishable Key** and **Secret Key** under your API keys. Copy both to your `.env.local` file.
 
-6. Now we need to configure the webhook for Stripe. Navigate to **Developers** → **Webhooks** and click **+ Add endpoint**. Configure the endpoint by adding the **Endpoint URL** which is `https://yourdomain.com/api/webhooks/stripe`. If you're still in local development, you can use ngrok to point your local server to a static domain. Make sure to select the following events to listen to:
-   - ✅ `checkout.session.completed`
-   - ✅ `customer.subscription.created`
-   - ✅ `customer.subscription.updated`
-   - ✅ `customer.subscription.deleted`
-   - ✅ `invoice.payment_failed`
-Finally, copy the signing secret (starts with `whsec_`) and paste it in your .env.local file. 
+6. **Set up webhooks**. Stripe needs to notify your app about payment events:
+   - Go to **Developers** → **Webhooks** and click **+ Add endpoint**
+   - Set the URL to `https://yourdomain.com/api/webhooks/stripe` (use ngrok for local development)
+   - Select these events:
+     - ✅ `checkout.session.completed`
+     - ✅ `customer.subscription.created`
+     - ✅ `customer.subscription.updated`
+     - ✅ `customer.subscription.deleted`
+     - ✅ `invoice.payment_failed`
+   - Copy the **Signing Secret** and add it to `.env.local` as `STRIPE_WEBHOOK_SECRET`
 
-Now you can make test payments and subscriptions on your website. Use the test credit-card numbers `4242 4242 4242 4242` for Visa `5555 5555 5555 4444` for Mastercard.
+**Test your setup:**
+- Use these test card numbers to make test payments:
+  - Visa: `4242 4242 4242 4242`
+  - Mastercard: `5555 5555 5555 4444`
+- Try subscribing to different plans and check that webhooks are being received
 
-## Adding Admin Users
+You're all set! Your payment system is ready to handle real transactions once you switch to live mode.
 
-To grant admin access to users, use the interactive admin script:
 
-```bash
-npm run add-admin
+## File Storage Setup (Cloudinary)
+
+Cloudinary stores and optimizes your images, videos, and documents in the cloud. This boilerplate comes with pre-built upload components that handle everything—just add your credentials and you're ready to go.
+
+1. **Create a Cloudinary account** — Sign up for free at https://cloudinary.com
+
+2. **Get your credentials** — From your Cloudinary Dashboard, copy:
+   - Cloud Name
+   - API Key
+   - API Secret
+
+3. **Add to your environment** — Paste these into `.env.local`:
+```env
+NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME=your_cloud_name
+CLOUDINARY_API_KEY=your_api_key
+CLOUDINARY_API_SECRET=your_api_secret
 ```
 
-It will ask for the user's clerkID and their chosen access level. Then it will completely handle giving the user admin access.
-
-**Note**: User must already be signed up (exist in Convex users table), and `.env.local` file must contain: `NEXT_PUBLIC_CONVEX_URL` + `CLERK_SECRET_KEY`.
-
-### Finding a User's Clerk ID
-
-1. Go to your Clerk Dashboard
-2. Navigate to Users
-3. Click on the user
-4. Copy their User ID (starts with `user_`)
-
-### Access Levels
-
-- **Full Access**: Can manage other admins, full dashboard access
-- **Partial Access**: Limited admin capabilities
-- **Limited Access**: Read-only or minimal admin access
-
-### Configure the session token in Clerk
-
-1. In the Clerk Dashboard, under the `Configure` tab, navigate to the `Sessions` page.
-2. Under `Customize` session token, in the `Claims` editor, enter the following JSON and click save.
-``` json
-{
-  "metadata": "{{user.public_metadata}}"
-}
+4. **Start uploading** — Use the pre-built components:
+```tsx
+import { UploadButton, UploadCard } from '@/components/daniels-elements/elements/upload-elements';
 ```
+
+The components handle drag-and-drop, validation, and automatic optimization out of the box.
+
+
+## Email System (Resend)
+
+Send reliable transactional emails with Resend. Setup instructions and integration guide are coming in the next update. Stay tuned!
+
+
+## Next Steps
+
+You've got everything set up! Your boilerplate is now ready to go. Here's what to do next:
+
+1. **Explore the components**: Check out the organized component library to see what's available
+2. **Customize your branding**: Update the theme colors and typography in `/app/globals.css`
+3. **Start building**: Use the pre-built pages as a foundation and add your unique features
+4. **Deploy**: When you're ready, use `npm run build` and deploy to your favorite platform
+
+If you run into any issues or have feedback, reach out at daniel@eddan.co. I'd love to hear about what you're building!
+
+Happy coding! 🚀

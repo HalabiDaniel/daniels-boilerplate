@@ -14,6 +14,7 @@ import { useEffect, useState } from 'react';
 import { useTheme } from 'next-themes';
 import { ExpandableUserCard } from '@/components/layouts/expandable-user-card';
 import { DashboardMobileHeader } from '@/components/layouts/dashboard-mobile-header';
+import { Toaster } from '@/components/ui/sonner';
 
 const dashboardPages = [
   { name: 'My Dashboard', href: '/dashboard', icon: LayoutDashboard },
@@ -180,6 +181,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
             userDisplayName={getUserDisplayName()}
             userFullName={getUserFullName()}
             userEmail={getUserEmail()}
+            profilePictureUrl={convexUser?.profilePictureUrl}
             membershipCard={membershipCard}
             isAdmin={false}
             onExpandChange={setIsUserCardExpanded}
@@ -229,6 +231,9 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
       <main className="flex-1 p-4 pt-20 lg:pt-8 lg:p-8">
         {children}
       </main>
+      
+      {/* Toast Notifications */}
+      <Toaster />
     </div>
   );
 }

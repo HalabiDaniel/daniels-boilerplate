@@ -5,12 +5,14 @@ import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 import { LogOut, X, Edit } from 'lucide-react';
 import { useClerk } from '@clerk/nextjs';
+import Image from 'next/image';
 
 interface ExpandableUserCardProps {
   userInitials: string;
   userDisplayName: string;
   userFullName: string;
   userEmail: string;
+  profilePictureUrl?: string;
   membershipCard: React.ReactNode;
   adminCard?: React.ReactNode;
   isAdmin?: boolean;
@@ -22,6 +24,7 @@ export function ExpandableUserCard({
   userDisplayName,
   userFullName,
   userEmail,
+  profilePictureUrl,
   membershipCard,
   adminCard,
   isAdmin = false,
@@ -89,12 +92,22 @@ export function ExpandableUserCard({
           onClick={handleCardClick}
         >
           <div className="flex items-center gap-3">
-            <div
-              className="h-8 w-8 rounded flex items-center justify-center text-white text-sm font-semibold flex-shrink-0"
-              style={{ backgroundColor: 'oklch(0.5 0.134 242.749)' }}
-            >
-              {userInitials}
-            </div>
+            {profilePictureUrl ? (
+              <Image
+                src={profilePictureUrl}
+                alt="Profile"
+                width={32}
+                height={32}
+                className="h-8 w-8 rounded-full object-cover flex-shrink-0"
+              />
+            ) : (
+              <div
+                className="h-8 w-8 rounded-full flex items-center justify-center text-white text-sm font-semibold flex-shrink-0"
+                style={{ backgroundColor: 'oklch(0.5 0.134 242.749)' }}
+              >
+                {userInitials}
+              </div>
+            )}
             <div className="flex-1 min-w-0">
               <p className="text-sm font-medium truncate">{userDisplayName}</p>
             </div>
@@ -125,12 +138,22 @@ export function ExpandableUserCard({
               <Edit className="h-[1.2rem] w-[1.2rem]" />
             </Button>
             
-            <div
-              className="h-12 w-12 rounded flex items-center justify-center text-white text-lg font-semibold"
-              style={{ backgroundColor: 'oklch(0.5 0.134 242.749)' }}
-            >
-              {userInitials}
-            </div>
+            {profilePictureUrl ? (
+              <Image
+                src={profilePictureUrl}
+                alt="Profile"
+                width={48}
+                height={48}
+                className="h-12 w-12 rounded-full object-cover"
+              />
+            ) : (
+              <div
+                className="h-12 w-12 rounded-full flex items-center justify-center text-white text-lg font-semibold"
+                style={{ backgroundColor: 'oklch(0.5 0.134 242.749)' }}
+              >
+                {userInitials}
+              </div>
+            )}
 
             <Button
               variant="ghost"
