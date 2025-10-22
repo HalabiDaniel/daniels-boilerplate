@@ -1,7 +1,14 @@
+/**
+ * Subscription Plan Filter Component
+ * 
+ * Provides filtering controls for the subscription management interface.
+ * Filters by subscription plan (which subscription users have).
+ */
+
 'use client';
 
 import { useState } from 'react';
-import { Check, ChevronDown } from 'lucide-react';
+import { Check, ChevronDown, Filter } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import {
   DropdownMenu,
@@ -9,10 +16,10 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import { FilterOption } from '@/lib/user-management-utils';
+import { FilterOption } from '@/lib/subscription-management-utils';
 import { cn } from '@/lib/utils';
 
-interface SubscriptionFilterProps {
+interface SubscriptionPlanFilterProps {
   /**
    * Current filter value
    */
@@ -45,19 +52,19 @@ interface SubscriptionFilterProps {
 }
 
 /**
- * SubscriptionFilter Component
+ * SubscriptionPlanFilter Component
  * 
- * Provides a dropdown filter for subscription status with user counts.
+ * Provides a dropdown filter for subscription plans with subscription counts.
  * Supports both desktop and mobile layouts with consistent styling.
  */
-export function SubscriptionFilter({
+export function SubscriptionPlanFilter({
   value,
   options,
   onValueChange,
   disabled = false,
   className,
   'aria-label': ariaLabel,
-}: SubscriptionFilterProps) {
+}: SubscriptionPlanFilterProps) {
   const [open, setOpen] = useState(false);
   
   // Find the current selected option
@@ -81,19 +88,20 @@ export function SubscriptionFilter({
         <Button
           variant="outline"
           className={cn(
-            "justify-between min-w-[240px] border-2 border-foreground text-foreground shadow-none hover:bg-foreground hover:text-background focus:ring-2 focus:ring-ring focus:ring-offset-2",
+            "justify-between min-w-[180px] focus:ring-2 focus:ring-ring focus:ring-offset-2",
             className
           )}
           disabled={disabled}
-          aria-label={ariaLabel || `Filter users by subscription status. Currently showing: ${selectedOption?.label || 'All Users'}`}
+          aria-label={ariaLabel || `Filter subscriptions by plan. Currently showing: ${selectedOption?.label || 'All Subscriptions'}`}
           aria-expanded={open}
           aria-haspopup="menu"
           onKeyDown={handleKeyDown}
         >
           <div className="flex items-center gap-2">
-            <span>{selectedOption?.label || 'All Users'}</span>
+            <Filter className="h-4 w-4" aria-hidden="true" />
+            <span>{selectedOption?.label || 'All Subscriptions'}</span>
             {selectedOption?.count !== undefined && (
-              <span className="text-muted-foreground" aria-label={`${selectedOption.count} users`}>
+              <span className="text-muted-foreground" aria-label={`${selectedOption.count} subscriptions`}>
                 ({selectedOption.count})
               </span>
             )}
@@ -106,7 +114,7 @@ export function SubscriptionFilter({
         align="start" 
         className="min-w-[200px]"
         role="menu"
-        aria-label="Subscription filter options"
+        aria-label="Subscription plan filter options"
       >
         {options.map((option) => (
           <DropdownMenuItem
@@ -114,7 +122,7 @@ export function SubscriptionFilter({
             onClick={() => handleSelect(option.value)}
             className="flex items-center justify-between cursor-pointer focus:ring-2 focus:ring-ring focus:ring-offset-2"
             role="menuitem"
-            aria-label={`Filter by ${option.label}${option.count !== undefined ? `, ${option.count} users` : ''}`}
+            aria-label={`Filter by ${option.label}${option.count !== undefined ? `, ${option.count} subscriptions` : ''}`}
           >
             <div className="flex items-center gap-2">
               <span>{option.label}</span>
@@ -135,16 +143,16 @@ export function SubscriptionFilter({
 }
 
 /**
- * Compact version of the subscription filter for mobile layouts
+ * Compact version of the subscription plan filter for mobile layouts
  */
-export function SubscriptionFilterCompact({
+export function SubscriptionPlanFilterCompact({
   value,
   options,
   onValueChange,
   disabled = false,
   className,
   'aria-label': ariaLabel,
-}: SubscriptionFilterProps) {
+}: SubscriptionPlanFilterProps) {
   const [open, setOpen] = useState(false);
   
   // Find the current selected option for accessibility
@@ -167,17 +175,22 @@ export function SubscriptionFilterCompact({
       <DropdownMenuTrigger asChild>
         <Button
           variant="outline"
+          size="sm"
           className={cn(
-            "flex-1 h-10 border-2 border-foreground text-foreground shadow-none hover:bg-foreground hover:text-background focus:ring-2 focus:ring-ring focus:ring-offset-2",
+            "justify-between focus:ring-2 focus:ring-ring focus:ring-offset-2",
             className
           )}
           disabled={disabled}
-          aria-label={ariaLabel || `Filter users by subscription status. Currently: ${selectedOption?.label || 'All Users'}`}
+          aria-label={ariaLabel || `Filter subscriptions by plan. Currently: ${selectedOption?.label || 'All Subscriptions'}`}
           aria-expanded={open}
           aria-haspopup="menu"
           onKeyDown={handleKeyDown}
         >
-          <span>Filter</span>
+          <div className="flex items-center gap-1">
+            <Filter className="h-3 w-3" aria-hidden="true" />
+            <span className="text-sm">Filter</span>
+          </div>
+          <ChevronDown className="h-3 w-3 opacity-50" aria-hidden="true" />
         </Button>
       </DropdownMenuTrigger>
       
@@ -185,7 +198,7 @@ export function SubscriptionFilterCompact({
         align="start" 
         className="min-w-[180px]"
         role="menu"
-        aria-label="Subscription filter options"
+        aria-label="Subscription plan filter options"
       >
         {options.map((option) => (
           <DropdownMenuItem
@@ -193,7 +206,7 @@ export function SubscriptionFilterCompact({
             onClick={() => handleSelect(option.value)}
             className="flex items-center justify-between cursor-pointer focus:ring-2 focus:ring-ring focus:ring-offset-2"
             role="menuitem"
-            aria-label={`Filter by ${option.label}${option.count !== undefined ? `, ${option.count} users` : ''}`}
+            aria-label={`Filter by ${option.label}${option.count !== undefined ? `, ${option.count} subscriptions` : ''}`}
           >
             <div className="flex items-center gap-2">
               <span className="text-sm">{option.label}</span>

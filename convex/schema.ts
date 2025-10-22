@@ -63,4 +63,25 @@ export default defineSchema({
     .index("by_user_id", ["userId"])
     .index("by_created_at", ["createdAt"])
     .index("by_file_type", ["fileType"]),
+
+  refunds: defineTable({
+    userId: v.id("users"),                  // Reference to users table
+    clerkId: v.string(),                    // Clerk user ID
+    stripeCustomerId: v.string(),           // Stripe customer ID
+    stripeSubscriptionId: v.string(),       // Stripe subscription ID
+    stripeRefundId: v.string(),             // Stripe refund ID
+    stripeChargeId: v.string(),             // Stripe charge ID that was refunded
+    amount: v.number(),                     // Refund amount in dollars
+    reason: v.string(),                     // Refund reason
+    adminClerkId: v.string(),               // Admin who processed the refund
+    refundType: v.union(
+      v.literal("immediate"),
+      v.literal("end_of_period")
+    ),
+    createdAt: v.number(),                  // Unix timestamp
+  })
+    .index("by_user_id", ["userId"])
+    .index("by_clerk_id", ["clerkId"])
+    .index("by_stripe_customer_id", ["stripeCustomerId"])
+    .index("by_created_at", ["createdAt"]),
 });

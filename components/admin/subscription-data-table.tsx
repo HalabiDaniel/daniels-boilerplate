@@ -1,17 +1,43 @@
 'use client';
 
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import { Button } from '@/components/ui/button';
-import { ChevronDown, ChevronUp, ArrowUpDown, MoreHorizontal } from 'lucide-react';
-import { UserDisplayData } from '@/lib/user-management-utils';
-import { SortState } from '@/lib/hooks/use-admin-users';
+import { ChevronDown, ChevronUp, ArrowUpDown } from 'lucide-react';
+import { AutoRenewToggle } from '@/components/admin/auto-renew-toggle';
 
-interface UserDataTableProps {
-  users: UserDisplayData[];
+export interface SubscriptionDisplayData {
+  id: string;
+  userId: string;
+  clerkId: string;
+  fullName: string;
+  email: string;
+  initials: string;
+  profilePictureUrl?: string;
+  subscriptionPlan: {
+    name: string;
+    displayName: string;
+  };
+  subscriptionStatus: 'active' | 'inactive' | 'canceled' | 'past_due' | 'trialing';
+  currentPeriodEnd: number;
+  currentPeriodEndFormatted: string;
+  autoRenew: boolean;
+  paymentAmount: number;
+  billingFrequency: 'monthly' | 'yearly';
+  paymentAmountFormatted: string;
+  stripeSubscriptionId?: string;
+  stripeCustomerId?: string;
+  isCancelledWithRefund?: boolean;
+}
+
+export interface SortState {
+  field: string;
+  direction: 'asc' | 'desc';
+}
+
+interface SubscriptionDataTableProps {
+  subscriptions: SubscriptionDisplayData[];
   sort: SortState;
   onSortChange: (sort: SortState) => void;
-  onDeleteUser: (user: UserDisplayData) => void;
   'aria-label'?: string;
 }
 
@@ -82,38 +108,17 @@ function SortableHeader({ field, label, currentSort, onSortChange, className }: 
 
 
 
-function UserActionDropdown({ user, onDeleteUser }: { user: UserDisplayData; onDeleteUser: (user: UserDisplayData) => void }) {
-  return (
-    <DropdownMenu>
-      <DropdownMenuTrigger asChild>
-        <Button 
-          variant="ghost" 
-          size="icon-sm"
-          aria-label={`Actions for ${user.fullName}`}
-        >
-          <MoreHorizontal className="h-4 w-4" aria-hidden="true" />
-          <span className="sr-only">Open actions menu for {user.fullName}</span>
-        </Button>
-      </DropdownMenuTrigger>
-      <DropdownMenuContent align="end" aria-label={`Actions for ${user.fullName}`}>
-        <DropdownMenuItem
-          className="text-destructive focus:text-destructive"
-          onClick={() => onDeleteUser(user)}
-          aria-label={`Delete user ${user.fullName}`}
-        >
-          Delete User
-        </DropdownMenuItem>
-      </DropdownMenuContent>
-    </DropdownMenu>
-  );
-}
-
-export function UserDataTable({ users, sort, onSortChange, onDeleteUser, 'aria-label': ariaLabel }: UserDataTableProps) {
+export function SubscriptionDataTable({ 
+  subscriptions, 
+  sort, 
+  onSortChange,
+  'aria-label': ariaLabel 
+}: SubscriptionDataTableProps) {
   return (
     <div className="border rounded-lg overflow-hidden">
       <Table 
         role="table" 
-        aria-label={ariaLabel || `User management table with ${users.length} users`}
+        aria-label={ariaLabel || `Subscription management table with ${subscriptions.length} subscriptions`}
       >
         <TableHeader>
           <TableRow role="row">
@@ -136,46 +141,55 @@ export function UserDataTable({ users, sort, onSortChange, onDeleteUser, 'aria-l
               onSortChange={onSortChange}
             />
             <SortableHeader
-              field="currentPeriodEnd"
+              field="date"
               label="End Date"
               currentSort={sort}
               onSortChange={onSortChange}
             />
+            <TableHead aria-label="Auto Renew">
+              Auto Renew
+            </TableHead>
             <SortableHeader
-              field="createdAt"
-              label="Created"
+              field="amount"
+              label="Payment"
               currentSort={sort}
               onSortChange={onSortChange}
             />
-            <TableHead className="w-[50px]" aria-label="Actions">
-              <span className="sr-only">Actions</span>
-            </TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
-          {users.map((user, index) => (
+          {subscriptions.map((subscription, index) => (
             <TableRow 
-              key={user.id} 
+              key={subscription.id} 
               role="row"
               aria-rowindex={index + 2} // +2 because header is row 1
             >
               <TableCell role="gridcell">
-                <span className="font-medium">{user.displayName}</span>
+                <span className="font-medium">{subscription.fullName}</span>
               </TableCell>
-              <TableCell role="gridcell" aria-label={`Email: ${user.email}`}>
-                {user.email}
+              <TableCell role="gridcell" aria-label={`Email: ${subscription.email}`}>
+                {subscription.email}
               </TableCell>
-              <TableCell role="gridcell" aria-label={`Subscription: ${user.subscriptionPlan.displayName}`}>
-                <span>{user.subscriptionPlan.displayName}</span>
+              <TableCell role="gridcell" aria-label={`Subscription: ${subscription.subscriptionPlan.displayName}`}>
+                <span>{subscription.subscriptionPlan.displayName}</span>
               </TableCell>
-              <TableCell role="gridcell" aria-label={`End date: ${user.currentPeriodEndFormatted || 'No end date'}`}>
-                {user.currentPeriodEndFormatted || '-'}
+              <TableCell role="gridcell" aria-label={`End date: ${subscription.currentPeriodEndFormatted}`}>
+                {subscription.currentPeriodEndFormatted}
               </TableCell>
-              <TableCell role="gridcell" aria-label={`Account created: ${user.accountCreatedFormatted}`}>
-                {user.accountCreatedFormatted}
+              <TableCell role="gridcell" aria-label={`Auto renew: ${subscription.autoRenew ? 'On' : 'Off'}`}>
+                {subscription.stripeSubscriptionId && subscription.stripeCustomerId ? (
+                  <AutoRenewToggle
+                    stripeCustomerId={subscription.stripeCustomerId}
+                    subscriptionId={subscription.stripeSubscriptionId}
+                    initialValue={subscription.autoRenew}
+                    disabled={subscription.isCancelledWithRefund}
+                  />
+                ) : (
+                  <span>{subscription.autoRenew ? 'On' : 'Off'}</span>
+                )}
               </TableCell>
-              <TableCell role="gridcell">
-                <UserActionDropdown user={user} onDeleteUser={onDeleteUser} />
+              <TableCell role="gridcell" aria-label={`Payment: ${subscription.paymentAmountFormatted}`}>
+                {subscription.paymentAmountFormatted}
               </TableCell>
             </TableRow>
           ))}

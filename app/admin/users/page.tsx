@@ -9,19 +9,19 @@ import { DeleteUserDialog } from '@/components/admin/delete-user-dialog';
 import { SubscriptionFilter, SubscriptionFilterCompact } from '@/components/admin/subscription-filter';
 import { SortButtonCompact } from '@/components/admin/sort-button';
 import { ErrorBoundary } from '@/components/admin/error-boundary';
-import { 
-  ErrorCard, 
-  EmptyState, 
+import {
+  ErrorCard,
+  EmptyState,
   NetworkStatus,
   TableSkeleton,
   AccordionSkeleton
 } from '@/components/admin/loading-states';
 import { useAdminUsers } from '@/lib/hooks/use-admin-users';
 import { UserDisplayData } from '@/lib/user-management-utils';
-import { 
-  enhancedFetch, 
-  showErrorToast, 
-  showSuccessToast, 
+import {
+  enhancedFetch,
+  showErrorToast,
+  showSuccessToast,
   showWarningToast,
   getUserFriendlyErrorMessage,
   analyzeFetchError
@@ -34,7 +34,7 @@ export default function AdminUsersPage() {
   const containerRef = useRef<HTMLDivElement>(null);
   const announce = useScreenReaderAnnouncement();
   const { prefersHighContrast } = useAccessibilityPreferences();
-  
+
   // Use the custom hook for user management with enhanced error handling
   const {
     filteredUsers,
@@ -53,7 +53,7 @@ export default function AdminUsersPage() {
 
   // Set up keyboard navigation for the user list
   useKeyboardNavigation(
-    containerRef,
+    containerRef as React.RefObject<HTMLElement>,
     isDesktop ? 'tbody tr' : '[role="button"][aria-expanded]',
     {
       orientation: 'vertical',
@@ -65,10 +65,10 @@ export default function AdminUsersPage() {
   useEffect(() => {
     if (filteredUsers && !isLoading && !error) {
       const count = filteredUsers.length;
-      const filterText = filter.subscriptionStatus 
+      const filterText = filter.subscriptionStatus
         ? ` with ${filterOptions.find(opt => opt.value === filter.subscriptionStatus)?.label || 'selected'} subscription`
         : '';
-      
+
       announce(`${count} user${count !== 1 ? 's' : ''} found${filterText}`);
     }
   }, [filteredUsers, filter.subscriptionStatus, filterOptions, isLoading, error, announce]);
@@ -115,13 +115,13 @@ export default function AdminUsersPage() {
       });
 
       const result = await response.json();
-      
+
       if (result.success) {
         showSuccessToast(
           'User deleted successfully',
           `${userToDelete.fullName} has been removed from all systems.`
         );
-        
+
         // Refresh the user list
         refreshData();
       } else {
@@ -129,12 +129,12 @@ export default function AdminUsersPage() {
         if (result.cleanupResults) {
           const { convex, clerk, stripe } = result.cleanupResults;
           let message = 'User deletion completed with some issues:';
-          
+
           if (!clerk) message += ' Failed to remove from authentication system.';
           if (!stripe && userToDelete.hasStripeData) message += ' Failed to remove from payment system.';
-          
+
           showWarningToast('Partial deletion completed', message);
-          
+
           // Still refresh the data since Convex deletion succeeded
           if (convex) {
             refreshData();
@@ -145,18 +145,18 @@ export default function AdminUsersPage() {
       }
     } catch (error) {
       console.error('Failed to delete user:', error);
-      
+
       // Use enhanced error handling
-      const enhancedError = error instanceof Error ? 
-        analyzeFetchError(error) : 
+      const enhancedError = error instanceof Error ?
+        analyzeFetchError(error) :
         new Error('An unexpected error occurred');
-      
+
       showErrorToast(enhancedError, {
         title: 'Failed to delete user',
         showRetry: 'retryable' in enhancedError ? Boolean(enhancedError.retryable) : false,
         onRetry: () => handleDeleteConfirm(userToDelete),
       });
-      
+
       throw error; // Re-throw to let the dialog handle the loading state
     }
   };
@@ -169,34 +169,59 @@ export default function AdminUsersPage() {
         }}
         showDetails={process.env.NODE_ENV === 'development'}
       >
-        {/* Skip to content link for screen readers */}
-        <a
-          href="#main-content"
-          className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-primary focus:text-primary-foreground focus:rounded-md focus:outline-none focus:ring-2 focus:ring-ring"
-        >
-          Skip to main content
-        </a>
-
-        <div 
+        <div
           ref={containerRef}
           className={prefersHighContrast ? 'high-contrast-mode' : ''}
         >
           {/* Page Header */}
           <header className="mb-8">
-            <h1 
-              id="page-title"
-              className="text-3xl font-semibold mb-6" 
-              style={{ letterSpacing: '-1px' }}
-            >
-              Users
-            </h1>
-            <p className="text-muted-foreground" id="page-description">
-              Manage user accounts and subscriptions
-            </p>
+            <div className="flex items-start justify-between gap-4">
+              <div className="flex-1">
+                <h1
+                  id="page-title"
+                  className="text-3xl font-semibold mb-2"
+                  style={{ letterSpacing: '-1px' }}
+                >
+                  Users
+                </h1>
+                <p className="text-muted-foreground" id="page-description">
+                  Manage user accounts and subscriptions
+                </p>
+              </div>
+
+              {/* Filter Controls - Desktop */}
+              {!isLoading && !error && isDesktop && (
+                <div className="flex items-center gap-4" role="toolbar" aria-label="User management controls">
+                  <SubscriptionFilter
+                    value={filter.subscriptionStatus}
+                    options={filterOptions}
+                    onValueChange={(value) => setFilter({ subscriptionStatus: value })}
+                    aria-label="Filter users by subscription status"
+                  />
+                </div>
+              )}
+            </div>
+
+            {/* Filter Controls - Mobile/Tablet - Below title */}
+            {!isLoading && !error && !isDesktop && (
+              <div className="flex items-center gap-2 mt-4" role="toolbar" aria-label="User management controls">
+                <SubscriptionFilterCompact
+                  value={filter.subscriptionStatus}
+                  options={filterOptions}
+                  onValueChange={(value) => setFilter({ subscriptionStatus: value })}
+                  aria-label="Filter users by subscription status"
+                />
+                <SortButtonCompact
+                  sort={sort}
+                  onSortChange={setSort}
+                  aria-label="Sort users by different criteria"
+                />
+              </div>
+            )}
           </header>
 
           {/* Network Status Warning */}
-          <NetworkStatus 
+          <NetworkStatus
             isOnline={networkStatus.isOnline}
             onRetry={handleRetry}
             className="mb-6"
@@ -216,7 +241,7 @@ export default function AdminUsersPage() {
                   </div>
                 )}
               </div>
-              
+
               {/* Show appropriate skeleton based on screen size */}
               {isDesktop ? (
                 <TableSkeleton rows={8} />
@@ -240,77 +265,37 @@ export default function AdminUsersPage() {
 
 
 
-          {/* Filter Controls */}
-          {!isLoading && !error && (
-          <section 
-            className="mb-6" 
-            aria-labelledby="filter-controls-heading"
-            role="region"
-          >
-            <h2 id="filter-controls-heading" className="sr-only">
-              Filter and Sort Controls
-            </h2>
-            
-            {/* Desktop Filter */}
-            {isDesktop && (
-              <div className="flex items-center gap-4" role="toolbar" aria-label="User management controls">
-                <SubscriptionFilter
-                  value={filter.subscriptionStatus}
-                  options={filterOptions}
-                  onValueChange={(value) => setFilter({ subscriptionStatus: value })}
-                  aria-label="Filter users by subscription status"
-                />
-              </div>
-            )}
 
-            {/* Mobile/Tablet Filter */}
-            {!isDesktop && (
-              <div className="flex items-center gap-2" role="toolbar" aria-label="User management controls">
-                <SubscriptionFilterCompact
-                  value={filter.subscriptionStatus}
-                  options={filterOptions}
-                  onValueChange={(value) => setFilter({ subscriptionStatus: value })}
-                  aria-label="Filter users by subscription status"
-                />
-                <SortButtonCompact
-                  sort={sort}
-                  onSortChange={setSort}
-                  aria-label="Sort users by different criteria"
-                />
-              </div>
-            )}
-          </section>
-        )}
 
           {/* Success State - Users Loaded */}
           {!isLoading && !error && filteredUsers && filteredUsers.length > 0 && (
-          <main id="main-content" className="space-y-4">
-            <div className="sr-only" aria-live="polite" aria-atomic="true">
-              {filteredUsers.length} user{filteredUsers.length !== 1 ? 's' : ''} found
-              {filter.subscriptionStatus && ` with ${filterOptions.find(opt => opt.value === filter.subscriptionStatus)?.label || 'selected'} subscription`}
-            </div>
-            
-            {/* Desktop Table View - Hidden on mobile/tablet */}
-            {isDesktop && (
-              <UserDataTable
-                users={filteredUsers}
-                sort={sort}
-                onSortChange={setSort}
-                onDeleteUser={handleDeleteUser}
-                aria-label={`User management table with ${filteredUsers.length} users`}
-              />
-            )}
+            <main id="main-content" className="space-y-4">
+              <div className="sr-only" aria-live="polite" aria-atomic="true">
+                {filteredUsers.length} user{filteredUsers.length !== 1 ? 's' : ''} found
+                {filter.subscriptionStatus && ` with ${filterOptions.find(opt => opt.value === filter.subscriptionStatus)?.label || 'selected'} subscription`}
+              </div>
 
-            {/* Mobile/Tablet Accordion View - Hidden on desktop */}
-            {!isDesktop && (
-              <UserAccordionList
-                users={filteredUsers}
-                onDeleteUser={handleDeleteUser}
-                aria-label={`User management list with ${filteredUsers.length} users`}
-              />
-            )}
-          </main>
-        )}
+              {/* Desktop Table View - Hidden on mobile/tablet */}
+              {isDesktop && (
+                <UserDataTable
+                  users={filteredUsers}
+                  sort={sort}
+                  onSortChange={setSort}
+                  onDeleteUser={handleDeleteUser}
+                  aria-label={`User management table with ${filteredUsers.length} users`}
+                />
+              )}
+
+              {/* Mobile/Tablet Accordion View - Hidden on desktop */}
+              {!isDesktop && (
+                <UserAccordionList
+                  users={filteredUsers}
+                  onDeleteUser={handleDeleteUser}
+                  aria-label={`User management list with ${filteredUsers.length} users`}
+                />
+              )}
+            </main>
+          )}
 
           {/* Empty State */}
           {!isLoading && !error && filteredUsers && filteredUsers.length === 0 && (
@@ -319,12 +304,7 @@ export default function AdminUsersPage() {
                 No users found
               </div>
               <EmptyState
-                title="No users found"
-                description={
-                  filter.subscriptionStatus 
-                    ? 'No users match the selected filter criteria.'
-                    : 'There are currently no users in the system.'
-                }
+                title="No users found."
                 action={filter.subscriptionStatus ? {
                   label: 'Clear Filter',
                   onClick: () => setFilter({ subscriptionStatus: null }),

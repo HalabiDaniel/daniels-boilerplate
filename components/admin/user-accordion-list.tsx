@@ -3,7 +3,6 @@
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { Button } from '@/components/ui/button';
 import { UserDisplayData } from '@/lib/user-management-utils';
-import Image from 'next/image';
 
 interface UserAccordionListProps {
   users: UserDisplayData[];
@@ -11,30 +10,7 @@ interface UserAccordionListProps {
   'aria-label'?: string;
 }
 
-function UserAvatar({ user }: { user: UserDisplayData }) {
-  if (user.profilePictureUrl) {
-    return (
-      <Image
-        src={user.profilePictureUrl}
-        alt={`Profile picture of ${user.fullName}`}
-        width={40}
-        height={40}
-        className="h-10 w-10 rounded-md object-cover flex-shrink-0"
-      />
-    );
-  }
 
-  return (
-    <div
-      className="h-10 w-10 rounded-md flex items-center justify-center text-white text-sm font-semibold flex-shrink-0"
-      style={{ backgroundColor: 'oklch(0.5 0.134 242.749)' }}
-      role="img"
-      aria-label={`Avatar for ${user.fullName} with initials ${user.initials}`}
-    >
-      {user.initials}
-    </div>
-  );
-}
 
 
 export function UserAccordionList({ users, onDeleteUser, 'aria-label': ariaLabel }: UserAccordionListProps) {
@@ -58,11 +34,8 @@ export function UserAccordionList({ users, onDeleteUser, 'aria-label': ariaLabel
               className="px-4 py-3 hover:no-underline focus:ring-2 focus:ring-ring focus:ring-offset-2"
               aria-label={`View details for ${user.fullName}, ${user.email}`}
             >
-              <div className="flex items-center gap-3 w-full">
-                <UserAvatar user={user} />
-                <div className="flex flex-col items-start text-left flex-1 min-w-0">
-                  <span className="font-medium text-sm truncate w-full">{user.email}</span>
-                </div>
+              <div className="flex flex-col items-start text-left flex-1 min-w-0">
+                <span className="font-medium text-sm truncate w-full">{user.email}</span>
               </div>
             </AccordionTrigger>
             <AccordionContent className="px-4 pb-4 pt-2">

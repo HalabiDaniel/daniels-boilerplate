@@ -34,6 +34,9 @@ export async function POST(req: NextRequest) {
       );
     }
 
+    // Combine first and last name from Clerk
+    const fullName = [clerkUser.firstName, clerkUser.lastName].filter(Boolean).join(' ').trim() || undefined;
+
     // Initialize Convex client
     const convex = new ConvexHttpClient(process.env.NEXT_PUBLIC_CONVEX_URL!);
     
@@ -49,6 +52,7 @@ export async function POST(req: NextRequest) {
       await convex.mutation((api as any).users.upsertUser, {
         clerkId: userId,
         email: primaryEmail,
+        name: fullName,
         subscriptionPlanId: 'free',
       });
 

@@ -202,7 +202,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
       />
 
       {/* Desktop Sidebar - Hidden on mobile/tablet */}
-      <aside className="hidden lg:flex w-[17.5%] min-w-[220px] max-w-[17.5%] rounded-2xl border bg-card m-4 flex-col">
+      <aside className="hidden lg:flex w-[17.5%] min-w-[220px] max-w-[17.5%] rounded-2xl border bg-card m-4 flex-col sticky top-4 h-[calc(100vh-2rem)] overflow-hidden">
         {/* Logo and Theme Toggle */}
         <div className="flex items-center justify-between p-6 pb-0">
           <Link href="/" className="flex items-center gap-3">
@@ -228,7 +228,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
       </aside>
 
       {/* Main Content Area */}
-      <main className="flex-1 p-4 pt-20 lg:pt-8 lg:p-8">
+      <main className="flex-1 p-4 pt-24 lg:pt-8 lg:p-8">
         {children}
       </main>
       

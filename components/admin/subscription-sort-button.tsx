@@ -1,3 +1,10 @@
+/**
+ * Subscription Sort Button Component
+ * 
+ * Provides sorting controls for the subscription management interface.
+ * Reuses the core logic from sort-button.tsx but with subscription-specific sort options.
+ */
+
 'use client';
 
 import { useState } from 'react';
@@ -9,11 +16,11 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import { SORT_OPTIONS } from '@/lib/user-management-utils';
-import { SortState } from '@/lib/hooks/use-admin-users';
+import { SUBSCRIPTION_SORT_OPTIONS } from '@/lib/subscription-management-utils';
+import { SortState } from '@/lib/hooks/use-admin-subscriptions';
 import { cn } from '@/lib/utils';
 
-interface SortButtonProps {
+interface SubscriptionSortButtonProps {
   /**
    * Current sort state
    */
@@ -41,25 +48,25 @@ interface SortButtonProps {
 }
 
 /**
- * SortButton Component
+ * SubscriptionSortButton Component
  * 
  * Provides a dropdown for sorting options with direction indicators.
  * Supports both desktop and mobile layouts with consistent styling.
  */
-export function SortButton({
+export function SubscriptionSortButton({
   sort,
   onSortChange,
   disabled = false,
   className,
   'aria-label': ariaLabel,
-}: SortButtonProps) {
+}: SubscriptionSortButtonProps) {
   const [open, setOpen] = useState(false);
   
-  const currentSortOption = SORT_OPTIONS.find(option => option.field === sort.field);
+  const currentSortOption = SUBSCRIPTION_SORT_OPTIONS.find(option => option.field === sort.field);
   const currentLabel = currentSortOption?.label || 'Name';
   
   const handleSortChange = (field: string) => {
-    const sortOption = SORT_OPTIONS.find(option => option.field === field);
+    const sortOption = SUBSCRIPTION_SORT_OPTIONS.find(option => option.field === field);
     const defaultDirection = sortOption?.defaultDirection || 'asc';
     
     if (sort.field === field) {
@@ -96,7 +103,7 @@ export function SortButton({
             className
           )}
           disabled={disabled}
-          aria-label={ariaLabel || `Sort users by ${currentLabel}, currently ${sortDirection}`}
+          aria-label={ariaLabel || `Sort subscriptions by ${currentLabel}, currently ${sortDirection}`}
           aria-expanded={open}
           aria-haspopup="menu"
           onKeyDown={handleKeyDown}
@@ -119,7 +126,7 @@ export function SortButton({
         role="menu"
         aria-label="Sort options"
       >
-        {SORT_OPTIONS.map((option) => (
+        {SUBSCRIPTION_SORT_OPTIONS.map((option) => (
           <DropdownMenuItem
             key={option.field}
             onClick={() => handleSortChange(option.field)}
@@ -143,22 +150,22 @@ export function SortButton({
 }
 
 /**
- * Compact version of the sort button for mobile layouts
+ * Compact version of the subscription sort button for mobile layouts
  */
-export function SortButtonCompact({
+export function SubscriptionSortButtonCompact({
   sort,
   onSortChange,
   disabled = false,
   className,
   'aria-label': ariaLabel,
-}: SortButtonProps) {
+}: SubscriptionSortButtonProps) {
   const [open, setOpen] = useState(false);
   
-  const currentSortOption = SORT_OPTIONS.find(option => option.field === sort.field);
+  const currentSortOption = SUBSCRIPTION_SORT_OPTIONS.find(option => option.field === sort.field);
   const currentLabel = currentSortOption?.label || 'Name';
   
   const handleSortChange = (field: string) => {
-    const sortOption = SORT_OPTIONS.find(option => option.field === field);
+    const sortOption = SUBSCRIPTION_SORT_OPTIONS.find(option => option.field === field);
     const defaultDirection = sortOption?.defaultDirection || 'asc';
     
     if (sort.field === field) {
@@ -190,17 +197,26 @@ export function SortButtonCompact({
       <DropdownMenuTrigger asChild>
         <Button
           variant="outline"
+          size="sm"
           className={cn(
-            "flex-1 h-10 focus:ring-2 focus:ring-ring focus:ring-offset-2",
+            "justify-between focus:ring-2 focus:ring-ring focus:ring-offset-2",
             className
           )}
           disabled={disabled}
-          aria-label={ariaLabel || `Sort users by ${currentLabel}, currently ${sortDirection}`}
+          aria-label={ariaLabel || `Sort subscriptions by ${currentLabel}, currently ${sortDirection}`}
           aria-expanded={open}
           aria-haspopup="menu"
           onKeyDown={handleKeyDown}
         >
-          <span>Sort</span>
+          <div className="flex items-center gap-1">
+            <ArrowUpDown className="h-3 w-3" aria-hidden="true" />
+            <span className="text-sm">Sort</span>
+          </div>
+          {sort.direction === 'asc' ? (
+            <ChevronUp className="h-3 w-3 opacity-50" aria-hidden="true" />
+          ) : (
+            <ChevronDown className="h-3 w-3 opacity-50" aria-hidden="true" />
+          )}
         </Button>
       </DropdownMenuTrigger>
       
@@ -210,7 +226,7 @@ export function SortButtonCompact({
         role="menu"
         aria-label="Sort options"
       >
-        {SORT_OPTIONS.map((option) => (
+        {SUBSCRIPTION_SORT_OPTIONS.map((option) => (
           <DropdownMenuItem
             key={option.field}
             onClick={() => handleSortChange(option.field)}

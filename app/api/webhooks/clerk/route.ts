@@ -60,27 +60,31 @@ export async function POST(req: NextRequest) {
     switch (eventType) {
       case 'user.created':
         // Create user in Convex when they sign up
-        const { id: clerkId, email_addresses } = evt.data;
+        const { id: clerkId, email_addresses, first_name, last_name } = evt.data;
         const primaryEmail = email_addresses?.[0]?.email_address;
+        const fullName = [first_name, last_name].filter(Boolean).join(' ').trim() || undefined;
 
         if (clerkId && primaryEmail) {
           await convex.mutation((api as any).users.upsertUser, {
             clerkId,
             email: primaryEmail,
+            name: fullName,
             subscriptionPlanId: 'free',
           });
         }
         break;
 
       case 'user.updated':
-        // Update user email if it changed
-        const { id: userId, email_addresses: updatedEmails } = evt.data;
+        // Update user email and name if they changed
+        const { id: userId, email_addresses: updatedEmails, first_name: updatedFirstName, last_name: updatedLastName } = evt.data;
         const updatedPrimaryEmail = updatedEmails?.[0]?.email_address;
+        const updatedFullName = [updatedFirstName, updatedLastName].filter(Boolean).join(' ').trim() || undefined;
 
         if (userId && updatedPrimaryEmail) {
           await convex.mutation((api as any).users.upsertUser, {
             clerkId: userId,
             email: updatedPrimaryEmail,
+            name: updatedFullName,
           });
         }
         break;

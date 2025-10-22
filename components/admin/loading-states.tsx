@@ -153,10 +153,10 @@ export function EmptyState({
 }: EmptyStateProps) {
   return (
     <div className={cn(
-      'flex items-center justify-center h-64 border rounded-lg',
+      'flex items-center justify-center h-64 rounded-2xl p-8 bg-card border',
       className
     )}>
-      <div className="text-center space-y-4 max-w-md px-4">
+      <div className="text-center space-y-4 max-w-md">
         {icon && (
           <div className="mx-auto text-muted-foreground">
             {icon}
@@ -164,14 +164,19 @@ export function EmptyState({
         )}
         
         <div className="space-y-2">
-          <h3 className="text-lg font-semibold">{title}</h3>
+          <h5 className="text-base md:text-xl font-normal text-foreground">{title}</h5>
           {description && (
             <p className="text-sm text-muted-foreground">{description}</p>
           )}
         </div>
 
         {action && (
-          <Button onClick={action.onClick} variant="outline" size="sm">
+          <Button 
+            onClick={action.onClick} 
+            variant="outline" 
+            size="sm"
+            className="border-2 border-foreground text-foreground shadow-none hover:bg-foreground hover:text-background"
+          >
             {action.label}
           </Button>
         )}
