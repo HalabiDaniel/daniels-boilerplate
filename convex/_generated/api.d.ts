@@ -8,6 +8,7 @@
  * @module
  */
 
+import type * as accountDeletion from "../accountDeletion.js";
 import type * as adminSetup from "../adminSetup.js";
 import type * as admins from "../admins.js";
 import type * as fixSubscription from "../fixSubscription.js";
@@ -30,6 +31,7 @@ import type {
  * ```
  */
 declare const fullApi: ApiFromModules<{
+  accountDeletion: typeof accountDeletion;
   adminSetup: typeof adminSetup;
   admins: typeof admins;
   fixSubscription: typeof fixSubscription;

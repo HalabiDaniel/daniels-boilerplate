@@ -166,9 +166,9 @@ export default function BillingPage() {
 
             {/* Card 2: Subscription Management */}
             <div className="rounded-2xl p-8 bg-card border">
-              <h2 className="text-2xl font-bold mb-2 text-foreground">
-                Manage Your Subscription
-              </h2>
+              <h5 className="text-sm md:text-xl font-semibold text-foreground mb-4">
+                  Manage Your Subscription
+                </h5>
 
               <p className="text-sm text-muted-foreground mb-6">
                 Update payment methods, view invoices, or cancel your subscription.
