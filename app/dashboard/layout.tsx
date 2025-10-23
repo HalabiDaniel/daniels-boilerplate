@@ -20,7 +20,7 @@ const dashboardPages = [
   { name: 'My Dashboard', href: '/dashboard', icon: LayoutDashboard },
   { name: 'Components', href: '/dashboard/components', icon: Package },
   { name: 'Billing', href: '/dashboard/billing', icon: CreditCard },
-  { name: 'Profile Settings', href: '/dashboard/profile-settings', icon: Settings },
+  { name: 'My Account', href: '/dashboard/my-account', icon: Settings },
 ];
 
 function ThemeToggle() {

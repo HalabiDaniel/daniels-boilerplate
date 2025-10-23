@@ -7,7 +7,6 @@ import { SummaryCards } from '@/components/admin/summary-cards';
 import { SubscriptionDataTable, SubscriptionDisplayData } from '@/components/admin/subscription-data-table';
 import { SubscriptionAccordionList } from '@/components/admin/subscription-accordion-list';
 
-import { SubscriptionFilter, SubscriptionFilterCompact } from '@/components/admin/subscription-filter';
 import { SortButtonCompact } from '@/components/admin/sort-button';
 import {
   ErrorCard,
@@ -33,10 +32,7 @@ export default function AdminSubscriptionsPage() {
   // Use the custom hook for subscription management with enhanced error handling
   const {
     filteredSubscriptions,
-    filterOptions,
     analytics: analyticsData,
-    filter,
-    setFilter,
     sort,
     setSort,
     isLoading,
@@ -61,13 +57,9 @@ export default function AdminSubscriptionsPage() {
   useEffect(() => {
     if (filteredSubscriptions && !isLoading && !error) {
       const count = filteredSubscriptions.length;
-      const filterText = filter.subscriptionPlan
-        ? ` with ${filterOptions.find(opt => opt.value === filter.subscriptionPlan)?.label || 'selected'} plan`
-        : '';
-
-      announce(`${count} subscription${count !== 1 ? 's' : ''} found${filterText}`);
+      announce(`${count} subscription${count !== 1 ? 's' : ''} found`);
     }
-  }, [filteredSubscriptions, filter.subscriptionPlan, filterOptions, isLoading, error, announce]);
+  }, [filteredSubscriptions, isLoading, error, announce]);
 
 
 
@@ -120,29 +112,11 @@ export default function AdminSubscriptionsPage() {
                   Manage subscription accounts and billing
                 </p>
               </div>
-
-              {/* Filter Controls - Desktop */}
-              {!isLoading && !error && isDesktop && (
-                <div className="flex items-center gap-4" role="toolbar" aria-label="Subscription management controls">
-                  <SubscriptionFilter
-                    value={filter.subscriptionPlan}
-                    options={filterOptions}
-                    onValueChange={(value) => setFilter({ subscriptionPlan: value })}
-                    aria-label="Filter subscriptions by plan"
-                  />
-                </div>
-              )}
             </div>
 
-            {/* Filter Controls - Mobile/Tablet - Below title */}
+            {/* Sort Controls - Mobile/Tablet - Below title */}
             {!isLoading && !error && !isDesktop && (
               <div className="flex items-center gap-2 mt-4" role="toolbar" aria-label="Subscription management controls">
-                <SubscriptionFilterCompact
-                  value={filter.subscriptionPlan}
-                  options={filterOptions}
-                  onValueChange={(value) => setFilter({ subscriptionPlan: value })}
-                  aria-label="Filter subscriptions by plan"
-                />
                 <SortButtonCompact
                   sort={sort}
                   onSortChange={setSort}
@@ -171,18 +145,6 @@ export default function AdminSubscriptionsPage() {
           {/* Loading State */}
           {isLoading && (
             <div className="space-y-6">
-              {/* Show filter skeleton */}
-              <div className="flex items-center gap-4">
-                {isDesktop ? (
-                  <div className="h-10 w-48 bg-muted animate-pulse rounded-md" />
-                ) : (
-                  <div className="flex gap-2">
-                    <div className="h-8 w-20 bg-muted animate-pulse rounded-md" />
-                    <div className="h-8 w-16 bg-muted animate-pulse rounded-md" />
-                  </div>
-                )}
-              </div>
-
               {/* Show appropriate skeleton based on screen size */}
               {isDesktop ? (
                 <TableSkeleton rows={8} />
@@ -211,7 +173,6 @@ export default function AdminSubscriptionsPage() {
             <main id="main-content" className="space-y-4">
               <div className="sr-only" aria-live="polite" aria-atomic="true">
                 {filteredSubscriptions.length} subscription{filteredSubscriptions.length !== 1 ? 's' : ''} found
-                {filter.subscriptionPlan && ` with ${filterOptions.find(opt => opt.value === filter.subscriptionPlan)?.label || 'selected'} plan`}
               </div>
 
               {/* Desktop Table View - Hidden on mobile/tablet */}
@@ -242,10 +203,6 @@ export default function AdminSubscriptionsPage() {
               </div>
               <EmptyState
                 title="No subscriptions found."
-                action={filter.subscriptionPlan ? {
-                  label: 'Clear Filter',
-                  onClick: () => setFilter({ subscriptionPlan: null }),
-                } : undefined}
                 aria-label="Empty state: no subscriptions to display"
               />
             </main>

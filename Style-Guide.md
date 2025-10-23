@@ -469,7 +469,7 @@ The user card at the bottom of the sidebar in `/dashboard` and `/admin` layouts 
 #### Behavior
 - Clicking anywhere on collapsed card expands it (except logout button)
 - When expanded, sidebar navigation links and membership/admin cards are hidden
-- Edit button redirects to `/dashboard/profile-settings` (even from `/admin`)
+- Edit button redirects to `/dashboard/my-account` (even from `/admin`)
 - Close button returns card to collapsed state and restores sidebar content
 - Logout button signs out the user in both states
 

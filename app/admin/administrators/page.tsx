@@ -272,15 +272,7 @@ export default function AdministratorsPage() {
                 return (
                   <TableRow key={admin._id}>
                     <TableCell>
-                      <div className="flex items-center gap-3">
-                        <div
-                          className="h-10 w-10 rounded-md flex items-center justify-center text-white text-sm font-semibold"
-                          style={{ backgroundColor: 'oklch(0.5 0.134 242.749)' }}
-                        >
-                          {getUserInitials(admin.name)}
-                        </div>
-                        <span className="font-medium">{formatDisplayName(admin.name)}</span>
-                      </div>
+                      <span className="font-medium">{formatDisplayName(admin.name)}</span>
                     </TableCell>
                     <TableCell>{admin.email}</TableCell>
                     <TableCell>
@@ -359,12 +351,6 @@ export default function AdministratorsPage() {
                   <AccordionItem key={admin._id} value={admin._id} className="border-b last:border-b-0">
                     <AccordionTrigger className="px-4 py-3 hover:no-underline">
                       <div className="flex items-center gap-3 w-full">
-                        <div
-                          className="h-10 w-10 rounded-md flex items-center justify-center text-white text-sm font-semibold flex-shrink-0"
-                          style={{ backgroundColor: 'oklch(0.5 0.134 242.749)' }}
-                        >
-                          {getUserInitials(admin.name)}
-                        </div>
                         <div className="flex flex-col items-start text-left flex-1 min-w-0">
                           <span className="font-medium text-sm truncate w-full">{admin.email}</span>
                         </div>

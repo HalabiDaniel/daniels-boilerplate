@@ -25,8 +25,9 @@ import {
   DialogTitle,
 } from '@/components/ui/dialog';
 import { useRouter } from 'next/navigation';
+import { PasswordResetCard } from './password-reset-card';
 
-export default function ProfileSettingsPage() {
+export default function MyAccountPage() {
   const router = useRouter();
   const { user } = useUser();
   const [name, setName] = useState('');
@@ -166,7 +167,7 @@ export default function ProfileSettingsPage() {
   return (
     <div>
       <h1 className="text-3xl font-semibold mb-6" style={{ letterSpacing: '-1px' }}>
-        Profile Settings
+        My Account
       </h1>
       <p className="text-muted-foreground mb-8">Manage your account and profile details here.</p>
 
@@ -288,6 +289,11 @@ export default function ProfileSettingsPage() {
             </Button>
           </form>
         </div>
+      </div>
+
+      {/* Password Reset Section */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-6">
+        <PasswordResetCard />
       </div>
 
       {/* Danger Zone Section */}

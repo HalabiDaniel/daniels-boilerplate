@@ -6,7 +6,30 @@ import { api } from '@/convex/_generated/api';
 const isProtectedRoute = createRouteMatcher(['/dashboard(.*)']);
 const isAdminRoute = createRouteMatcher(['/admin(.*)']);
 
+// Add security headers to response
+function addSecurityHeaders(response: NextResponse) {
+    // Prevent clickjacking attacks
+    response.headers.set('X-Frame-Options', 'DENY');
+    
+    // Prevent MIME type sniffing
+    response.headers.set('X-Content-Type-Options', 'nosniff');
+    
+    // Enable XSS protection (legacy, but still useful for older browsers)
+    response.headers.set('X-XSS-Protection', '1; mode=block');
+    
+    // Control referrer information
+    response.headers.set('Referrer-Policy', 'strict-origin-when-cross-origin');
+    
+    // Permissions Policy (replace Feature Policy)
+    response.headers.set('Permissions-Policy', 'camera=(), microphone=(), geolocation=()');
+    
+    return response;
+}
+
 export default clerkMiddleware(async (auth, req) => {
+    // Create a NextResponse to potentially add headers to
+    let response = NextResponse.next();
+    
     // Protect dashboard routes
     if (isProtectedRoute(req)) await auth.protect();
 
@@ -16,7 +39,8 @@ export default clerkMiddleware(async (auth, req) => {
 
         // First check: User must be authenticated
         if (!userId) {
-            return NextResponse.redirect(new URL('/sign-in', req.url));
+            response = NextResponse.redirect(new URL('/sign-in', req.url));
+            return addSecurityHeaders(response);
         }
 
         // Try to get role from Clerk session claims first
@@ -67,9 +91,13 @@ export default clerkMiddleware(async (auth, req) => {
         );
 
         if (!hasAdminRole) {
-            return NextResponse.redirect(new URL('/dashboard', req.url));
+            response = NextResponse.redirect(new URL('/dashboard', req.url));
+            return addSecurityHeaders(response);
         }
     }
+    
+    // Add security headers to all responses
+    return addSecurityHeaders(response);
 });
 
 export const config = {

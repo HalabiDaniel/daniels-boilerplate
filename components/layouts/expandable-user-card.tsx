@@ -58,7 +58,7 @@ export function ExpandableUserCard({
   };
 
   const handleEdit = () => {
-    router.push('/dashboard/profile-settings');
+    router.push('/dashboard/my-account');
   };
 
   const handleLogout = () => {

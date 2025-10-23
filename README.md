@@ -278,8 +278,6 @@ export const SUBSCRIPTION_PLANS: SubscriptionPlan[] = [
   - Mastercard: `5555 5555 5555 4444`
 - Try subscribing to different plans and check that webhooks are being received
 
-You're all set! Your payment system is ready to handle real transactions once you switch to live mode.
-
 
 ## File Storage Setup (Cloudinary)
 
@@ -304,12 +302,26 @@ CLOUDINARY_API_SECRET=your_api_secret
 import { UploadButton, UploadCard } from '@/components/daniels-elements/elements/upload-elements';
 ```
 
-The components handle drag-and-drop, validation, and automatic optimization out of the box.
-
 
 ## Email System (Resend)
 
-Send reliable transactional emails with Resend. Setup instructions and integration guide are coming in the next update. Stay tuned!
+Send reliable transactional emails with Resend. The boilerplate comes pre-configured with a password reset email template, and you can easily add more templates for onboarding, notifications, and other user actions.
+
+1. **Create a Resend account**. Sign up for free at https://resend.com
+
+2. **Get your API key**. Navigate to the [API Keys](https://resend.com/api-keys) page and copy your API key (starts with `re_`). You can also obtain one during the onboarding process.
+
+3. **Configure your domain (optional)**. Go to the [Domains](https://resend.com/domains) page and add your domain. Then simply follow the DNS configuration steps provided.
+
+For development and testing, you can skip this and use Resend's default email instead (see below).
+
+**Add environment variables**. Paste these variables into `.env.local`:
+```env
+RESEND_API_KEY=re_your_actual_api_key_here
+RESEND_FROM_EMAIL=noreply@yourdomain.com
+```
+
+5. **Test your setup**. During development, you can use Resend's default email `onboarding@resend.dev` to send test emails (limited to your Resend account email only). Once you verify your domain, you can send to any email address.
 
 
 ## Next Steps

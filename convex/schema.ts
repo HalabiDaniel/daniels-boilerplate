@@ -84,4 +84,28 @@ export default defineSchema({
     .index("by_clerk_id", ["clerkId"])
     .index("by_stripe_customer_id", ["stripeCustomerId"])
     .index("by_created_at", ["createdAt"]),
+
+  verificationCodes: defineTable({
+    key: v.string(),                        // Email or userId (unique identifier)
+    code: v.string(),                        // 6-digit verification code
+    type: v.union(
+      v.literal("password_reset"),
+      v.literal("password_change")
+    ),
+    expiresAt: v.number(),                  // Unix timestamp
+    attempts: v.number(),                    // Number of verification attempts
+    createdAt: v.number(),                  // Unix timestamp
+  })
+    .index("by_key", ["key"])
+    .index("by_expires_at", ["expiresAt"]),
+
+  rateLimits: defineTable({
+    key: v.string(),                        // email:ip combination
+    action: v.string(),                      // Action being rate limited (e.g., "password_reset")
+    count: v.number(),                       // Number of attempts
+    resetTime: v.number(),                   // Unix timestamp when limit resets
+    createdAt: v.number(),                  // Unix timestamp
+  })
+    .index("by_key", ["key"])
+    .index("by_reset_time", ["resetTime"]),
 });
