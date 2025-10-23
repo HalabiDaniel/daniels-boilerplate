@@ -44,11 +44,12 @@ Start building immediately with a beautiful, functional website foundation.
 - [x] Dynamic theming (colors & fonts)
 - [x] Admin dashboard (users, subscriptions, more)
 - [x] Cloudinary image/file upload & storage
+- [x] Resend email system
 
 **In Development:**
 - [ ] PostHog analytics integration
-- [ ] Resend email system
 - [ ] Animated pages
+- [ ] Improved website security
 
 
 ## License & Usage
@@ -322,6 +323,8 @@ RESEND_FROM_EMAIL=noreply@yourdomain.com
 ```
 
 5. **Test your setup**. During development, you can use Resend's default email `onboarding@resend.dev` to send test emails (limited to your Resend account email only). Once you verify your domain, you can send to any email address.
+
+A full guide will be released later explaining how to easily create email templates and trigger them when specific events occur. 
 
 
 ## Next Steps
