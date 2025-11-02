@@ -47,8 +47,8 @@ Start building immediately with a beautiful, functional website foundation.
 - [x] Resend email system
 
 **In Development:**
+- [x] Improved design, animated components, and animated pages
 - [ ] PostHog analytics integration
-- [ ] Animated pages
 - [ ] Improved website security
 
 

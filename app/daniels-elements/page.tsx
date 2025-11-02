@@ -63,6 +63,10 @@ import {
   UPLOAD_BUTTON_CODE,
   UPLOAD_CARD_CODE,
 } from '@/components/daniels-elements/elements/upload-elements';
+import {
+  RotatingTextExample,
+  ROTATING_TEXT_CODE,
+} from '@/components/daniels-elements/elements/rotating-text';
 import PageTitle from '@/components/layouts/page-title';
 
 export default function DanielsElementsPage() {
@@ -223,6 +227,20 @@ export default function DanielsElementsPage() {
             code={PRICING_CARD_CODE}
           >
             <PricingCard />
+          </ElementCard>
+        </div>
+      </section>
+
+      {/* Animation Elements */}
+      <section className="mb-8 sm:mb-10 lg:mb-12" aria-labelledby="animation-heading">
+        <h2 id="animation-heading" className="text-xl sm:text-2xl font-semibold mb-4 sm:mb-6">Animations</h2>
+        <div className="space-y-4 sm:space-y-6">
+          <ElementCard
+            name="Rotating Text"
+            description="Animated text component that cycles through multiple strings with smooth character-by-character transitions. Fully customizable with stagger effects, spring animations, and theme-aware styling."
+            code={ROTATING_TEXT_CODE}
+          >
+            <RotatingTextExample />
           </ElementCard>
         </div>
       </section>
